@@ -1,21 +1,30 @@
 /*
 TOY:
 */
-#include <stdio.h>
-#include <sys/time.h>
+#include "utils.h"
 #include "sha1.h"
 
-void F0(int i){
-    printf("%d\n", i);
+void Bomb(){
+    printf("bomb triggered\n");
 }
-void F1(int i){
-    printf("%d\n", --i);
+void Foobar(){
+    printf("nomal execution\n");
 }
-void F2(int i){
-    printf("%d\n", ++i);
+int GetSec(){
+    time_t t_t;
+    struct tm* t_tm;
+    time(&t_t);
+    t_tm = gmtime(&t_t);
+    int sec = (int) t_tm->tm_sec;
+    printf("Current second: %d\n", sec);
+    return sec;
 }
-void F3(int i){
-    printf("%d\n", i++);
+
+long GetSecSince1970(){
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    printf("Seconds sine 1970: %ld\n", tv.tv_sec);
+    return tv.tv_sec;
 }
 
 int SHA1_COMP(int plaintext, unsigned ciphertext[5])
@@ -41,24 +50,4 @@ int SHA1_COMP(int plaintext, unsigned ciphertext[5])
             return 1;
     }
     return 0;
-}
-
-int main(){
-    int v1;
-    printf("v1:%d\n",v1);
-    unsigned cipher[5];
-    cipher[0] = 0X77de68da;
-    cipher[1] = 0Xecd823ba;
-    cipher[2] = 0Xbbb58edb;
-    cipher[3] = 0X1c8e14d7;
-    cipher[4] = 0X106e83bb;
-
-    while(SHA1_COMP(v1,cipher)){
-      if (v1==0||v1==100){
-        F0(v1);
-        v1++;
-      }else{
-        v1+=2;
-      }
-    }
 }
