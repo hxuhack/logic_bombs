@@ -3,7 +3,6 @@ TOY:
 */
 #include <stdio.h>
 #include <sys/time.h>
-#include "klee/klee.h"
 #include "sha1.h"
 
 void F0(int i){
@@ -46,7 +45,6 @@ int SHA1_COMP(int plaintext, unsigned ciphertext[5])
 
 int main(){
     int v1;
-    klee_make_symbolic(&v1, sizeof(v1), "v1");
     printf("v1:%d\n",v1);
     unsigned cipher[5];
     cipher[0] = 0X77de68da;
