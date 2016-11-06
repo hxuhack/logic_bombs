@@ -1,0 +1,7 @@
+# Python:
+*.py[cod]
+*.so
+*.o
+pin.log
+build
+gitupdate.sh

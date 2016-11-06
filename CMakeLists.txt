@@ -1,0 +1,23 @@
+PROJECT(logic_bombs)
+
+INCLUDE_DIRECTORIES(
+  include
+)
+
+AUX_SOURCE_DIRECTORY(src DIR_SRCS)
+
+
+SET(SRC_ENV
+  ${DIR_SRCS}
+)
+
+
+SET(LIBRARIES
+  libm.so
+)
+
+ADD_EXECUTABLE(time_bomb ${SRC_ENV})
+
+TARGET_LINK_LIBRARIES(time_bomb ${LIBRARIES})
+
+
