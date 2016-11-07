@@ -1,7 +1,7 @@
 This repository simulates some logic bomb examples.
 
 Lists of enclosed trigger types
-==============================
+_______________________________
 1. Pure Time
 2. Pure Hash
 3. Pure Net
