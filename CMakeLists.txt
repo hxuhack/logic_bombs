@@ -32,6 +32,11 @@ ADD_EXECUTABLE(bombs/pure_cpu
 		../src/utils/utils.c 
 		../src/pure_cpu.c)
 
+ADD_EXECUTABLE(bombs/self_checksum
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/self_checksum.c)
+
 ADD_EXECUTABLE(bombs/time_sha  
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
