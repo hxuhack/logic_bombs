@@ -27,6 +27,11 @@ ADD_EXECUTABLE(bombs/pure_net
 		../src/utils/utils.c 
 		../src/pure_net.c)
 
+ADD_EXECUTABLE(bombs/pure_cpu 
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/pure_cpu.c)
+
 ADD_EXECUTABLE(bombs/time_sha  
 		../src/utils/sha1.c 
 		../src/utils/utils.c 

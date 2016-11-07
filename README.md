@@ -4,8 +4,10 @@ This repository simulates some logic bomb examples.
 
 Lists of enclosed trigger types
 ----
-1. Pure Time
-2. Pure Hash
-3. Pure Net
-4. Combined Time with Hash
+a1. Pure Time
+a2. Pure Hash
+a3. Pure Net
+a4. Pure CPU Info 
+
+b1. Combined Time with Hash
 
