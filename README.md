@@ -8,7 +8,7 @@ a1. Pure Time
 a2. Pure Hash  
 a3. Pure Net  
 a4. Pure CPU Info  
-a5. Self-Checksum code
+a5. Self-Checksum Code
 
 b1. Combined Time with Hash
 
