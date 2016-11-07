@@ -28,4 +28,6 @@ long GetSecSince1970();
 
 int SHA1_COMP(int, unsigned[5]);
 
+int open_socket(char* host,char *port);
+
 #endif

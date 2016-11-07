@@ -51,3 +51,22 @@ int SHA1_COMP(int plaintext, unsigned ciphertext[5])
     }
     return 0;
 }
+
+int open_socket(char* host,char *port){
+    struct addrinfo *res;//<netdb.h>
+    struct addrinfo hints;
+    memset(&hints,0,sizeof(hints));
+    hints.ai_family=PF_UNSPEC;
+    hints.ai_socktype=SOCK_STREAM;
+    if(getaddrinfo(host,port,&hints,&res)==-1)
+	return -1;
+    int sock=socket(res->ai_family,res->ai_socktype, res->ai_protocol);
+    if(sock==-1)
+	return -1;
+
+    int con=connect(sock,res->ai_addr,res->ai_addrlen);
+    freeaddrinfo(res);
+    if(con==-1)
+	return -1;
+    return sock;
+}

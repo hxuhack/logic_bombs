@@ -1,27 +1,31 @@
-#include <stdio.h>
-#include <curl/curl.h>
- 
-int main(void)
+#include "utils.h"
+
+int main(int argc, char** argv)
 {
-  CURL *curl;
-  CURLcode res;
- 
-  curl = curl_easy_init();
-  if(curl) {
-    curl_easy_setopt(curl, CURLOPT_URL, "http://www.baidu.com/");
-    res = curl_easy_perform(curl);
- 
-    if(CURLE_OK == res) {
-      char *ct;
-      /* ask for the content-type */ 
-      res = curl_easy_getinfo(curl, CURLINFO_CONTENT_TYPE, &ct);
- 
-      if((CURLE_OK == res) && ct)
-        printf("We received Content-Type: %s\n", ct);
+    int socket;
+    char receiver[256];
+    char get_msg[BUFSIZ] = "GET /index.html HTTP/1.1\r\nHost:cudroid.com\r\n\r\n";
+
+    socket = open_socket("www.cudroid.com", "80");
+    if(socket==-1)
+	return -1;
+    printf ("socket connect successful\n");
+
+    int ret=send(socket,get_msg,strlen(get_msg),0);
+    if(ret==-1)
+	return -1;
+    printf ("send msg successful\n");
+    
+    int trigger = 1;
+    while(recv(socket,receiver,256,0)){
+        if(strstr(receiver, "Hui"))
+  	    trigger = 0;
+    	//printf("%s", receiver);
     }
- 
-    /* always cleanup */ 
-    curl_easy_cleanup(curl);
-  }
-  return 0;
+    if(trigger)
+	Bomb();
+    else
+	Foobar();
+    close(socket);
+    return 0;
 }
