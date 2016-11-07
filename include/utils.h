@@ -9,6 +9,14 @@ TOY:
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
+#include <errno.h>
+#include <unistd.h>
+#include <err.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <stdarg.h>
 
 void Bomb();
 

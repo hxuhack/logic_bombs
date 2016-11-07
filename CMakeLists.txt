@@ -9,23 +9,26 @@ INCLUDE_DIRECTORIES(include)
 
 file(MAKE_DIRECTORY build/bombs)
 
-set(CMAKE_EXE_LINKER_FLAGS "-lm")
 
 ADD_EXECUTABLE(bombs/pure_sha  
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
 		../src/pure_sha.c)
 
+TARGET_LINK_LIBRARIES(bombs/pure_sha m)
+
 ADD_EXECUTABLE(bombs/pure_time 
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
 		../src/pure_time.c)
+
+ADD_EXECUTABLE(bombs/pure_net 
+		../src/pure_net.c)
+TARGET_LINK_LIBRARIES(bombs/pure_net curl)
 
 ADD_EXECUTABLE(bombs/time_sha  
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
 		../src/time_sha.c)
 
-
-
-
+TARGET_LINK_LIBRARIES(bombs/time_sha m)
