@@ -18,6 +18,10 @@ TOY:
 #include <arpa/inet.h>
 #include <stdarg.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void Bomb();
 
 void Foobar();
@@ -30,4 +34,7 @@ int SHA1_COMP(int, unsigned[5]);
 
 int open_socket(char* host,char *port);
 
+#ifdef __cplusplus
+}
+#endif
 #endif
