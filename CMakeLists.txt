@@ -37,6 +37,11 @@ ADD_EXECUTABLE(bombs/sys
 		../src/utils/utils.c 
 		../src/sys.c)
 
+ADD_EXECUTABLE(bombs/vm 
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/vm.c)
+
 ADD_EXECUTABLE(bombs/jmp_indirect
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
