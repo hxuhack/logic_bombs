@@ -32,6 +32,11 @@ ADD_EXECUTABLE(bombs/pure_cpu
 		../src/utils/utils.c 
 		../src/pure_cpu.c)
 
+ADD_EXECUTABLE(bombs/sys 
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/sys.c)
+
 ADD_EXECUTABLE(bombs/jmp_indirect
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
@@ -46,6 +51,11 @@ ADD_EXECUTABLE(bombs/exception_handling
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
 		../src/exception_handling.cpp)
+
+ADD_EXECUTABLE(bombs/exception_lib
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/exception_lib.cpp)
 
 ADD_EXECUTABLE(bombs/time_sha  
 		../src/utils/sha1.c 
