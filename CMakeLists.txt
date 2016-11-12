@@ -10,10 +10,10 @@ INCLUDE_DIRECTORIES(include)
 file(MAKE_DIRECTORY build/bombs)
 
 
-ADD_EXECUTABLE(bombs/sha  
+ADD_EXECUTABLE(bombs/input_sha  
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
-		../src/sha.c)
+		../src/input_sha.c)
 
 TARGET_LINK_LIBRARIES(bombs/sha m)
 
