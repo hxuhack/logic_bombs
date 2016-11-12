@@ -10,27 +10,27 @@ INCLUDE_DIRECTORIES(include)
 file(MAKE_DIRECTORY build/bombs)
 
 
-ADD_EXECUTABLE(bombs/pure_sha  
+ADD_EXECUTABLE(bombs/sha  
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
-		../src/pure_sha.c)
+		../src/sha.c)
 
-TARGET_LINK_LIBRARIES(bombs/pure_sha m)
+TARGET_LINK_LIBRARIES(bombs/sha m)
 
-ADD_EXECUTABLE(bombs/pure_time 
+ADD_EXECUTABLE(bombs/time 
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
-		../src/pure_time.c)
+		../src/time.c)
 
-ADD_EXECUTABLE(bombs/pure_net 
+ADD_EXECUTABLE(bombs/website 
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
-		../src/pure_net.c)
+		../src/website.c)
 
-ADD_EXECUTABLE(bombs/pure_cpu 
+ADD_EXECUTABLE(bombs/cpu 
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
-		../src/pure_cpu.c)
+		../src/cpu.c)
 
 ADD_EXECUTABLE(bombs/sys 
 		../src/utils/sha1.c 
