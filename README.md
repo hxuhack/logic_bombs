@@ -2,7 +2,7 @@ A Set of Logic Bombs
 ====
 This repository simulates some logic bomb examples.
 
-Lists of enclosed trigger types
+Lists of enclosed bomb techniques 
 ----
 ###Trigger Types
 
