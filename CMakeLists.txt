@@ -52,15 +52,15 @@ ADD_EXECUTABLE(bombs/input_indijump_array
 		../src/utils/utils.c 
 		../src/input_indijump_array.c)
 
-ADD_EXECUTABLE(bombs/exception_handling
+ADD_EXECUTABLE(bombs/input_exception
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
-		../src/exception_handling.cpp)
+		../src/input_exception.cpp)
 
-ADD_EXECUTABLE(bombs/exception_lib
+ADD_EXECUTABLE(bombs/file_exception
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
-		../src/exception_lib.cpp)
+		../src/file_exception.cpp)
 
 ADD_EXECUTABLE(bombs/time_sha  
 		../src/utils/sha1.c 
