@@ -6,11 +6,12 @@ Lists of enclosed bomb techniques
 ----
 ###Trigger Types
 
-a.1. Time  
-a.2. Website  
-a.3. CPU Info  
-a.4. System Call  
-a.5. Virtual Machine   
+a.1. Input  
+a.2. Time  
+a.3. Website  
+a.4. CPU Info  
+a.5. System Call  
+a.6. Virtual Machine   
 
 ###Camouflage Types
 b.1. Hash  
