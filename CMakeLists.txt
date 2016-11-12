@@ -15,7 +15,7 @@ ADD_EXECUTABLE(bombs/input_sha
 		../src/utils/utils.c 
 		../src/input_sha.c)
 
-TARGET_LINK_LIBRARIES(bombs/sha m)
+#TARGET_LINK_LIBRARIES(bombs/input_sha m)
 
 ADD_EXECUTABLE(bombs/time 
 		../src/utils/sha1.c 
@@ -42,15 +42,15 @@ ADD_EXECUTABLE(bombs/vm
 		../src/utils/utils.c 
 		../src/vm.c)
 
-ADD_EXECUTABLE(bombs/jmp_indirect
+ADD_EXECUTABLE(bombs/input_indijump
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
-		../src/jmp_indirect.c)
+		../src/input_indijump.c)
 
-ADD_EXECUTABLE(bombs/jmp_array
+ADD_EXECUTABLE(bombs/input_indijump_array
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
-		../src/jmp_array.c)
+		../src/input_indijump_array.c)
 
 ADD_EXECUTABLE(bombs/exception_handling
 		../src/utils/sha1.c 
