@@ -27,6 +27,11 @@ ADD_EXECUTABLE(bombs/website
 		../src/utils/utils.c 
 		../src/website.c)
 
+ADD_EXECUTABLE(bombs/ping
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/ping.c)
+
 ADD_EXECUTABLE(bombs/cpu 
 		../src/utils/sha1.c 
 		../src/utils/utils.c 

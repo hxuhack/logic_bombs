@@ -10,9 +10,9 @@
 #include <sys/select.h>
 
 //note, to allow root to use icmp sockets, run:
-//sysctl -w net.ipv4.ping_group_range="0 0"
+//sysctl -w net.ipv4.ping_group_range="0 10"
 
-void ping_it(struct in_addr *dst)
+int ping_it(struct in_addr *dst)
 {
     struct icmphdr icmp_hdr;
     struct sockaddr_in addr;
@@ -20,7 +20,7 @@ void ping_it(struct in_addr *dst)
     int sock = socket(AF_INET,SOCK_DGRAM,IPPROTO_ICMP);
     if (sock < 0) {
         perror("socket");
-        return ;
+        return 0;
     }
 
     memset(&addr, 0, sizeof addr);
@@ -31,7 +31,8 @@ void ping_it(struct in_addr *dst)
     icmp_hdr.type = ICMP_ECHO;
     icmp_hdr.un.echo.id = 1234;//arbitrary id
 
-    for (;;) {
+    int count = 0;
+    for(; count < 4; count ++) {
         unsigned char data[2048];
         int rc;
         struct timeval timeout = {3, 0}; //wait max 3 seconds for a reply
@@ -81,6 +82,7 @@ void ping_it(struct in_addr *dst)
             printf("Got ICMP packet with type 0x%x ?!?\n", rcv_hdr.type);
         }
     }
+    return 1;
 }
 
 int main(int argc, char *argv[])
@@ -98,6 +100,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    ping_it(&dst);
+    if (ping_it(&dst)){
+	Foobar();
+    }else{
+	Bomb();
+    }
     return 0;
 }

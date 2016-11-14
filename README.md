@@ -9,14 +9,16 @@ Lists of enclosed bomb techniques
 a.1. Input  
 a.2. Time  
 a.3. Website  
-a.4. CPU Info  
-a.5. System Call  
-a.6. Virtual Machine   
-a.7. File
+a.4. Ping  
+a.5. CPU Info  
+a.6. System Call  
+a.8. Virtual Machine   
+a.8. File
 
 ###Camouflage Types
 b.1. Hash  
 b.2. Indirect Jump 
+b.3. Exception Handling
 
 Tips
 ----
