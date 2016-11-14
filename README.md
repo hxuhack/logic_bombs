@@ -18,3 +18,7 @@ a.7. File
 b.1. Hash  
 b.2. Indirect Jump 
 
+Tips
+----
+Enable ping: sudo sysctl -w net.ipv4.ping_group_range='0 10'  
+
