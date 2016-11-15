@@ -13,11 +13,11 @@ a.4. Ping
 a.5. CPU Info  
 a.6. System Call  
 a.8. Virtual Machine   
-a.8. File
+a.9. File  
 
 ###Camouflage Types
 b.1. Hash  
-b.2. Indirect Jump 
+b.2. Indirect Jump  
 b.3. Exception Handling
 
 Tips
