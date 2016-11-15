@@ -9,6 +9,10 @@ INCLUDE_DIRECTORIES(include)
 
 file(MAKE_DIRECTORY build/bombs)
 
+ADD_EXECUTABLE(bombs/input_strcmp  
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/input_strcmp.c)
 
 ADD_EXECUTABLE(bombs/input_sha  
 		../src/utils/sha1.c 

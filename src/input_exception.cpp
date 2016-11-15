@@ -3,26 +3,24 @@
 
 using namespace std;
 
-double division(int a, int b) {
-   if( b == 0 ) {
+double division(int numerator, int denominator) {
+   if( denominator == 0 ) {
       throw "Division by zero condition!";
    }
-   return (a/b);
+   return (numerator/denominator);
 }
 
 int main (int argc, char** argv) {
-   if (argc != 3)
+   if (argc != 2)
 	return -1;
 
-   int x = atoi(argv[1]);
-   int y = atoi(argv[2]);
+   int num = 10;
+   int denom = atoi(argv[1]);
 
-   double z = 0;
  
    try {
-      z = division(x, y);
+      division(num, denom);
       Foobar();
-      cout << z << endl;
    }catch (const char* msg) {
       cerr << msg << endl;
       Bomb();
