@@ -14,6 +14,16 @@ ADD_EXECUTABLE(bombs/input_strcmp
 		../src/utils/utils.c 
 		../src/input_strcmp.c)
 
+ADD_EXECUTABLE(bombs/input_float  
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/input_float.c)
+
+ADD_EXECUTABLE(bombs/input_float2  
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/input_float2.c)
+
 ADD_EXECUTABLE(bombs/input_sha  
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
