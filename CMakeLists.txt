@@ -9,6 +9,36 @@ INCLUDE_DIRECTORIES(include)
 
 file(MAKE_DIRECTORY build/bombs)
 
+ADD_EXECUTABLE(bombs/symvar_time 
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/symvar_time.c)
+
+ADD_EXECUTABLE(bombs/symvar_web 
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/symvar_web.c)
+
+ADD_EXECUTABLE(bombs/symvar_ping
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/symvar_ping.c)
+
+ADD_EXECUTABLE(bombs/symvar_cpu 
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/symvar_cpu.c)
+
+ADD_EXECUTABLE(bombs/symvar_syscall 
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/symvar_syscall.c)
+
+ADD_EXECUTABLE(bombs/symvar_vm 
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/symvar_vm.c)
+
 ADD_EXECUTABLE(bombs/input_strcmp  
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
@@ -30,36 +60,6 @@ ADD_EXECUTABLE(bombs/input_sha
 		../src/input_sha.c)
 
 #TARGET_LINK_LIBRARIES(bombs/input_sha m)
-
-ADD_EXECUTABLE(bombs/time 
-		../src/utils/sha1.c 
-		../src/utils/utils.c 
-		../src/time.c)
-
-ADD_EXECUTABLE(bombs/website 
-		../src/utils/sha1.c 
-		../src/utils/utils.c 
-		../src/website.c)
-
-ADD_EXECUTABLE(bombs/ping
-		../src/utils/sha1.c 
-		../src/utils/utils.c 
-		../src/ping.c)
-
-ADD_EXECUTABLE(bombs/cpu 
-		../src/utils/sha1.c 
-		../src/utils/utils.c 
-		../src/cpu.c)
-
-ADD_EXECUTABLE(bombs/sys 
-		../src/utils/sha1.c 
-		../src/utils/utils.c 
-		../src/sys.c)
-
-ADD_EXECUTABLE(bombs/vm 
-		../src/utils/sha1.c 
-		../src/utils/utils.c 
-		../src/vm.c)
 
 ADD_EXECUTABLE(bombs/input_indijump
 		../src/utils/sha1.c 
