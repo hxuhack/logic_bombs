@@ -39,6 +39,11 @@ ADD_EXECUTABLE(bombs/symvar_vm
 		../src/utils/utils.c 
 		../src/symvar_vm.c)
 
+ADD_EXECUTABLE(bombs/covert_propagation  
+		../src/utils/sha1.c 
+		../src/utils/utils.c 
+		../src/covert_propagation.c)
+
 ADD_EXECUTABLE(bombs/input_strcmp  
 		../src/utils/sha1.c 
 		../src/utils/utils.c 
