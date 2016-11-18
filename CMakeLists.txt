@@ -34,11 +34,8 @@ ADD_EXECUTABLE(bombs/symvar_vm
 		../src/utils/utils.c 
 		../src/symvar_vm.c)
 
-ADD_EXECUTABLE(bombs/symarray
-		../src/utils/utils.c 
-		../src/symarray.c)
-
 #####Covert Symbolic Propagations########
+
 ADD_EXECUTABLE(bombs/covpro_stack  
 		../src/utils/utils.c 
 		../src/covpro_stack.c)
@@ -50,7 +47,9 @@ ADD_EXECUTABLE(bombs/covpro_file
 ADD_EXECUTABLE(bombs/covpro_syscall  
 		../src/utils/utils.c 
 		../src/covpro_syscall.c)
+
 #####Parallel Programs########
+
 ADD_EXECUTABLE(bombs/paraprog_fork
 		../src/utils/utils.c 
 		../src/paraprog_fork.c)
@@ -59,8 +58,18 @@ ADD_EXECUTABLE(bombs/paraprog_pthread
 		../src/utils/utils.c 
 		../src/paraprog_pthread.c)
 TARGET_LINK_LIBRARIES(bombs/paraprog_pthread pthread)
+
 #####Symbolic Array########
+
+ADD_EXECUTABLE(bombs/symarray_l1
+		../src/utils/utils.c 
+		../src/symarray_l1.c)
+
+ADD_EXECUTABLE(bombs/symarray_l2
+		../src/utils/utils.c 
+		../src/symarray_l2.c)
 #####Symbolic Jump########
+
 ADD_EXECUTABLE(bombs/input_indijump
 		../src/utils/utils.c 
 		../src/input_indijump.c)

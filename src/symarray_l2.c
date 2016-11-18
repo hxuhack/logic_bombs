@@ -1,13 +1,15 @@
 /*
-*solution: argv[1] = 0.00001
+*solution: 
 */
 #include<stdio.h>
 #include"utils.h"
 
 int main(int argc, char** argv){
-    int ary[] ={1,2,3,4,5}; 
+    int l1_ary[] ={1,2,3,4,5}; 
+    int l2_ary[] ={6,7,8,9,10}; 
+
     int x = atoi(argv[1]);
-    if(ary[x] == 5){
+    if(l2_ary[l1_ary[x]] == 9){
        	Bomb();
      }
     else
