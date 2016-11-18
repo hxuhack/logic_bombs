@@ -81,15 +81,13 @@ ADD_EXECUTABLE(bombs/symjmp_array
 
 #####Floating-point Numbers########
 
-ADD_EXECUTABLE(bombs/input_float  
-		../src/utils/sha1.c 
+ADD_EXECUTABLE(bombs/floatpoint_1  
 		../src/utils/utils.c 
-		../src/input_float.c)
+		../src/floatpoint_1.c)
 
-ADD_EXECUTABLE(bombs/input_float2  
-		../src/utils/sha1.c 
+ADD_EXECUTABLE(bombs/floatpoint_2  
 		../src/utils/utils.c 
-		../src/input_float2.c)
+		../src/floatpoint_2.c)
 
 #####External Function Calls########
 ADD_EXECUTABLE(bombs/input_strcmp  
@@ -97,11 +95,11 @@ ADD_EXECUTABLE(bombs/input_strcmp
 		../src/input_strcmp.c)
 
 #####Crypto Functions########
-ADD_EXECUTABLE(bombs/input_sha  
+ADD_EXECUTABLE(bombs/crypto_sha  
 		../src/utils/sha1.c 
 		../src/utils/crypto_utils.c 
 		../src/utils/utils.c 
-		../src/input_sha.c)
+		../src/crypto_sha.c)
 
 
 #####Exceptions########
