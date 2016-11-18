@@ -51,7 +51,14 @@ ADD_EXECUTABLE(bombs/covpro_syscall
 		../src/utils/utils.c 
 		../src/covpro_syscall.c)
 #####Parallel Programs########
+ADD_EXECUTABLE(bombs/paraprog_fork
+		../src/utils/utils.c 
+		../src/paraprog_fork.c)
 
+ADD_EXECUTABLE(bombs/paraprog_pthread 
+		../src/utils/utils.c 
+		../src/paraprog_pthread.c)
+TARGET_LINK_LIBRARIES(bombs/paraprog_pthread pthread)
 #####Symbolic Array########
 #####Symbolic Jump########
 ADD_EXECUTABLE(bombs/input_indijump
@@ -96,4 +103,3 @@ ADD_EXECUTABLE(bombs/file_exception
 		../src/utils/utils.c 
 		../src/file_exception.cpp)
 
-#TARGET_LINK_LIBRARIES(bombs/time_sha m)
