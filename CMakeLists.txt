@@ -68,15 +68,16 @@ ADD_EXECUTABLE(bombs/symarray_l1
 ADD_EXECUTABLE(bombs/symarray_l2
 		../src/utils/utils.c 
 		../src/symarray_l2.c)
+
 #####Symbolic Jump########
 
-ADD_EXECUTABLE(bombs/input_indijump
+ADD_EXECUTABLE(bombs/symjmp
 		../src/utils/utils.c 
-		../src/input_indijump.c)
+		../src/symjmp.c)
 
-ADD_EXECUTABLE(bombs/input_indijump_array
+ADD_EXECUTABLE(bombs/symjmp_array
 		../src/utils/utils.c 
-		../src/input_indijump_array.c)
+		../src/symjmp_array.c)
 
 #####Floating-point Numbers########
 
