@@ -47,6 +47,9 @@ ADD_EXECUTABLE(bombs/covpro_file
 		../src/utils/utils.c 
 		../src/covpro_file.c)
 
+ADD_EXECUTABLE(bombs/covpro_syscall  
+		../src/utils/utils.c 
+		../src/covpro_syscall.c)
 #####Parallel Programs########
 
 #####Symbolic Array########
