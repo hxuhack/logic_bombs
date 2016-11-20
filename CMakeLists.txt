@@ -115,12 +115,12 @@ ADD_EXECUTABLE(bombs/crypto_aes
 		../src/utils/aes.c 
 		../src/utils/utils.c 
 		../src/crypto_aes.c)
+
 #####Exceptions########
-ADD_EXECUTABLE(bombs/input_exception
+ADD_EXECUTABLE(bombs/excp_file  
 		../src/utils/utils.c 
-		../src/input_exception.cpp)
+		../src/excp_file.cpp)
 
-ADD_EXECUTABLE(bombs/file_exception
+ADD_EXECUTABLE(bombs/excp_div0  
 		../src/utils/utils.c 
-		../src/file_exception.cpp)
-
+		../src/excp_div0.cpp)
