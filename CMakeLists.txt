@@ -99,6 +99,10 @@ ADD_EXECUTABLE(bombs/extfun_rand
 		../src/utils/utils.c 
 		../src/extfun_rand.c)
 
+ADD_EXECUTABLE(bombs/extfun_sin
+		../src/utils/utils.c 
+		../src/extfun_sin.c)
+TARGET_LINK_LIBRARIES(bombs/extfun_sin m)
 
 #####Crypto Functions########
 ADD_EXECUTABLE(bombs/crypto_sha  
