@@ -90,9 +90,15 @@ ADD_EXECUTABLE(bombs/floatpoint_2
 		../src/floatpoint_2.c)
 
 #####External Function Calls########
-ADD_EXECUTABLE(bombs/input_strcmp  
+ADD_EXECUTABLE(bombs/extfun_pow
 		../src/utils/utils.c 
-		../src/input_strcmp.c)
+		../src/extfun_pow.c)
+TARGET_LINK_LIBRARIES(bombs/extfun_pow m)
+
+ADD_EXECUTABLE(bombs/extfun_rand
+		../src/utils/utils.c 
+		../src/extfun_rand.c)
+
 
 #####Crypto Functions########
 ADD_EXECUTABLE(bombs/crypto_sha  
