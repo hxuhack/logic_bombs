@@ -1,3 +1,10 @@
+/*
+*Read CPU info as symbolic variables, if the CPU is not Intel,the bomb would be triggered.
+*Evaluation:
+--Triton: fail
+--Angr:
+--BAP:
+*/
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>

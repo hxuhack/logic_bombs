@@ -1,3 +1,10 @@
+/*
+*Read ping result as symbolic variables, if the address is not reachable,the bomb would be triggered.
+*Evaluation:
+--Triton: fail
+--Angr:
+--BAP:
+*/
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>

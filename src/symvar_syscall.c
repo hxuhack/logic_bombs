@@ -1,7 +1,9 @@
 /*
-* Bomb type: system call
-* Info: This bomb checks if a program has been uninstalled.
-* If the command cannot be executed, the bomb will be triggered.
+* The bomb uses the result of syscall as symbolic variables. This bomb checks if a program has been uninstalled.  If the command cannot be executed, the bomb will be triggered.
+*Evaluation:
+--Triton: fail
+--Angr:
+--BAP:
 */
 #define _GNU_SOURCE
 #include <stdio.h>

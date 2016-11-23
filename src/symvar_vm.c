@@ -2,6 +2,11 @@
 *VM Bomb
 *If the code is runming on an virtual machine, the bomb will be triggered.
 *code reference https://github.com/JakenHerman
+* VM status is used as symbolic variables.
+*Evaluation:
+--Triton: fail
+--Angr:
+--BAP:
 */
 
 #include "utils.h"

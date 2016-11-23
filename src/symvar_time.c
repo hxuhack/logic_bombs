@@ -1,3 +1,11 @@
+/*
+* The program uses time info as symbolic variables.  It checks if a time condition can be met, and triggers the bomb.
+*Evaluation:
+--Triton: fail
+--Angr:
+--BAP:
+*/
+
 #include "utils.h"
 
 int main(){

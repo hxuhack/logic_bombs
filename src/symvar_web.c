@@ -1,3 +1,10 @@
+/*
+* The program uses website content as symbolic variables.  It checks if a text exists, and triggers the bomb.
+*Evaluation:
+--Triton: fail
+--Angr:
+--BAP:
+*/
 #include "utils.h"
 
 int main(int argc, char** argv)
