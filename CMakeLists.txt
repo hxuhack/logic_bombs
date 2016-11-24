@@ -76,6 +76,9 @@ ADD_EXECUTABLE(bombs/symval_file
 		../src/utils/utils.c 
 		../src/symval_file.c)
 
+ADD_EXECUTABLE(bombs/symval_syscall
+		../src/utils/utils.c 
+		../src/symval_syscall.c)
 #####Symbolic Jump########
 
 ADD_EXECUTABLE(bombs/symjmp
