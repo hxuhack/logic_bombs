@@ -1,5 +1,8 @@
 /*
 TOY:
+Result:
+Triton: Pin is out of memory: MmapChecked
+
 */
 #include <string.h> 
 #include "utils.h"

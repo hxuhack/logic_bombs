@@ -6,6 +6,7 @@ cmake_minimum_required(VERSION 2.8)
 PROJECT(logic_bombs)
 
 INCLUDE_DIRECTORIES(include)
+#set (CMAKE_CXX_FLAGS "-m32")
 
 file(MAKE_DIRECTORY build/bombs)
 
@@ -68,6 +69,12 @@ ADD_EXECUTABLE(bombs/symarray_l1
 ADD_EXECUTABLE(bombs/symarray_l2
 		../src/utils/utils.c 
 		../src/symarray_l2.c)
+
+#####Contextual Symbolic Value########
+
+ADD_EXECUTABLE(bombs/symval_file
+		../src/utils/utils.c 
+		../src/symval_file.c)
 
 #####Symbolic Jump########
 
