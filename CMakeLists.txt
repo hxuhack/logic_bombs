@@ -60,6 +60,9 @@ ADD_EXECUTABLE(bombs/paraprog_pthread
 		../src/paraprog_pthread.c)
 TARGET_LINK_LIBRARIES(bombs/paraprog_pthread pthread)
 
+ADD_EXECUTABLE(bombs/paraprog_socket 
+		../src/utils/utils.c 
+		../src/paraprog_socket.c)
 #####Symbolic Array########
 
 ADD_EXECUTABLE(bombs/symarray_l1
