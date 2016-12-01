@@ -6,7 +6,7 @@ TOY:
 
 int main(int argc, char** argv){
     int i = atoi(argv[1]);
-    if(pow(i, 0.5) == 7){
+    if(pow(i, 2) == -1){
         Bomb();
     }else{
         Foobar();

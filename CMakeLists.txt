@@ -15,6 +15,10 @@ ADD_EXECUTABLE(bombs/symvar_time
 		../src/utils/utils.c 
 		../src/symvar_time.c)
 
+ADD_EXECUTABLE(bombs/symvar_argv
+		../src/utils/utils.c 
+		../src/symvar_argv.c)
+
 ADD_EXECUTABLE(bombs/symvar_web 
 		../src/utils/utils.c 
 		../src/symvar_web.c)
