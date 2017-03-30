@@ -18,10 +18,10 @@ External Function Call </br>
 Crypto Function
 
 ## Installation
-#git clone https://github.com/hxuhack/logic_bombs.git </br>
-#mkdir build </br>
-#cd build </br>
-#cmake ..
+#:git clone https://github.com/hxuhack/logic_bombs.git </br>
+#:mkdir build </br>
+#:cd build </br>
+#:cmake ..
 
 ## More Tips
 Enable ping: sudo sysctl -w net.ipv4.ping_group_range='0 10' </br>  
