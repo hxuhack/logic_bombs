@@ -1,5 +1,5 @@
 # A Set of Logic Bombs
-This repository contains a set of artificial logic bombs following our DSN paper, Concolic Execution on Small-Size Binaries: Challanges and Empirical Study.
+This repository contains a set of artificial logic bombs following our DSN paper, <a href = "dsn2017.github.io">Concolic Execution on Small-Size Binaries: Challanges and Empirical Study</a>.
 
 ## Lists of enclosed bomb techniques 
 ### Accuracy Challanges
