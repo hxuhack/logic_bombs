@@ -1,7 +1,23 @@
 # Python:
-*.py[cod]
+*.pyc
+
+# Log
+*.log
+*.tmp
+
+# Binary
+core
+*.exe
+*.out
 *.so
 *.o
-pin.log
-build
-gitupdate.sh
+*.a
+
+# Assembly
+*.s
+*.asm
+
+# History
+history/
+tmp/
+bin/

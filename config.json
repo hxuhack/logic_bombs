@@ -1,0 +1,61 @@
+{
+    "general": {
+        "CC": "gcc",
+        "optimization": null,
+        "PIPE": true,
+        "clear": false
+    },
+
+    "crypto_lib": {
+        "mkdir": [
+            "tmp",
+            "bin"
+        ],
+        "cmd": [
+            "{CC} -I{INCLUDE} -c -Wall -Werror -fpic -o tmp/{&FILENAME}.o {!FILENAME} #SINGLE",
+            "{CC} -shared -o bin/lib{OUTPUT}.so {!INPUTS} #BATCH"
+        ],
+        "dependencies": {
+            "FILENAME": ["lib/sha1.c", "lib/aes.c", "lib/crypto_utils.c"],
+            "INPUTS": ["tmp/.*\\.o"],
+            "INCLUDE": "include",
+            "OUTPUT": "crypto"
+        },
+        "exceptions": {
+
+        },
+        "rm": [
+            "tmp"
+        ]
+    },
+
+    "utils_lib": {
+        "mkdir": [
+            "tmp",
+            "bin"
+        ],
+        "cmd": [
+            "{CC} -I{INCLUDE} -c -Wall -Werror -fpic -o tmp/{&OUTPUT}.o {!FILENAME} #SINGLE",
+            "{CC} -shared -o bin/lib{OUTPUT}.so {!INPUTS} #BATCH"
+        ],
+        "dependencies": {
+            "FILENAME": ["lib/utils.c"],
+            "INPUTS": ["tmp/.*\\.o"],
+            "INCLUDE": "include",
+            "OUTPUT": "utils"
+        },
+        "exceptions": {
+
+        },
+        "rm": [
+            "tmp"
+        ]
+    },
+
+    "klee": {
+        "cmd": "",
+        "exceptions": {
+
+        }
+    }
+}
