@@ -17,7 +17,7 @@ class TemplateParser:
                 vars[key] = [var_raw, ]
             else:
                 vars[key].append(var_raw)
-        print(stm, vars)
+        # print(stm, vars)
         for var, var_raw in vars.items():
             value = params[var]
             for _ in var_raw:

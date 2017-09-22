@@ -53,9 +53,62 @@
     },
 
     "klee": {
-        "cmd": "",
+        "mkdir": [
+            "klee"
+        ],
+        "cmd": [
+            "clang -I{INCLUDE} -emit-llvm -o klee/{&FILENAME}.bc -c -g {FILENAME}",
+            "klee klee/{&FILENAME}.bc",
+            "python3 script/klee_run {FILENAME} klee"
+        ],
+        "dependencies": {
+            "PATH": "src/",
+            "INCLUDE": "include",
+            "FILENAME": "FILENAME"
+        },
         "exceptions": {
 
-        }
+        },
+        "rm": [
+
+        ],
+        "templates": "templates/klee.c",
+        "PIPE": false
+    },
+
+    "angr": {
+        "mkdir": [
+            "angr"
+        ],
+        "cmd": [
+            "{CC} -I{INCLUDE} -L{LIBP} -o angr/{&FILENAME}.out -xc - -l{LIB} #PIPE",
+            "python script/angr_run.py -r -l{LENGTH} angr/{&FILENAME}.out #TEST"
+        ],
+        "dependencies": {
+            "PATH": "src/",
+            "FILENAME": "FILENAME",
+            "INCLUDE": "include",
+            "LENGTH": "4",
+            "LIBP": "bin",
+            "LIB": "utils"
+        },
+        "templates": "templates/angr.c"
+    },
+
+    "triton": {
+        "mkdir": [
+            "triton"
+        ],
+        "cmd": [
+            "{CC} -I{INCLUDE} -L{LIBP} -o angr/{&FILENAME}.out -xc - -l{LIB} #PIPE",
+            "python script/triton_run.py -i{INIT_STRING} triton/{&FILENAME}.out #TEST"
+        ],
+        "dependencies": {
+            "PATH": "src/",
+            "FILENAME": "FILENAME",
+            "INCLUDE": "include"
+        },
+        "templates": "templates/triton.c",
+        "PIPE": true
     }
 }
