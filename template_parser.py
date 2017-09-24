@@ -6,18 +6,20 @@ import logging
 class TemplateParser:
     statement_pattern = re.compile(r'[ \t\r]*\{\%(\%+[^}]|[^%])+\%\}')
 
-    condition_str = r'((not +)?\{\<[\w][\w\d]*\>\} *(\>|\<|\>\=|\<\=|\=\=|and|or|is) *)*((not +)?\{\<[\w][\w\d]*\>\} *)'
-    condition_token = r'((not +)?\{\<[\w][\w\d]*\>\})'
+    condition_str = r'((not +)?\{\<[\w(][\w\d()]*\>\} *(\>|\<|\>\=|\<\=|\=\=|and|or|is) *)*((not +)?\{\<[\w(][\w\d()]*\>\} *)'
+    condition_token = r'((not +)?\{\<[\w(][\w\d()]*\>\})'
 
-    for_pattern = re.compile(r'for +(\{\<([\w][\w\d]*)\>\} *,? *)* +in +\{\<([\w][\w\d]*)\>\}:')
+    for_pattern = re.compile(r'for +(\{\<([\w(][\w\d()]*)\>\} *,? *)* +in +\{\<([\w(][\w\d()]*)\>\}:')
     if_pattern = re.compile(r'if +%s:' % condition_str)
     elif_pattern = re.compile(r'elif +%s:' % condition_str)
     else_pattern = re.compile(r'else *:')
-    while_pattern = re.compile('while +%s:' % condition_str)
+    while_pattern = re.compile(r'while +%s:' % condition_str)
 
-    func_call_pattern = re.compile('')
+    func_pattern = re.compile(r'[\w][\w\d]*\(')
+    param_list_pattern = re.compile(r'([\w][\w\d]*\(.*\)|[\w][\w\d]*)')
     var_pattern = re.compile(r'\{\<(\>+[^}]|[^>])+\>\}')
     valid_pattern = re.compile(r'[\w][\w\d]*')
+    condition_tk_pt = re.compile(condition_token)
 
     ALLOWED_FUNCS = ['enumerate', 'len', 'str', 'range']
     IF = 1
@@ -29,6 +31,7 @@ class TemplateParser:
     INT = 32
     DOUBLE = 64
     STR = 128
+    UNV = 256
 
     def __init__(self, path: str, indent=4):
         """
@@ -49,24 +52,30 @@ class TemplateParser:
 
     def __double_bracket_replace__(self, stm: str, params: dict):
         vars_raw = [i.group() for i in self.var_pattern.finditer(stm)]
-        vars = {}
+        vars_dict = {}
         for var_raw in vars_raw:
             key = var_raw[2:-2].strip()
             if self.valid_pattern.match(key) is None:
                 raise SyntaxError(var_raw)
-            if not key in vars:
-                vars[key] = [var_raw, ]
+            if not key in vars_dict:
+                vars_dict[key] = [var_raw, ]
             else:
-                vars[key].append(var_raw)
+                vars_dict[key].append(var_raw)
 
-        for var, var_raw in vars.items():
+        for var, var_raw in vars_dict.items():
             value = params[var]
             for _ in var_raw:
                 stm = stm.replace(_, value)
         return stm
 
     def __statement_parser__(self, stm: str):
-        pass
+        check_priorities = [
+            self.for_pattern,
+            self.while_pattern,
+            self.if_pattern,
+            self.elif_pattern,
+            self.else_pattern
+        ]
 
     def __statements_pre_process__(self, stms: list):
         """
@@ -90,8 +99,52 @@ class TemplateParser:
         return [(_, get_indent(_)) for _ in stms]
 
     # Sub-statement
-    def __condition__parser__(self, stm: str):
-        pass
+    def __token_parser__(self, token: str):
+        def call_stack_analysis(calls):
+            core = calls
+            for func in self.func_pattern.finditer(calls):
+                if core[-1] != ')':
+                    raise SyntaxError(token)
+                else:
+                    func = func.group()
+                    core = core.replace(func, '')
+                    core = core[:-1].strip()
+                    func = func[:-1]
+                    stack = [func, ]
+                    sub_tokens = [_.group() for _ in self.param_list_pattern.finditer(core)]
+                    stack.extend([call_stack_analysis(_) for _ in sub_tokens])
+                    for st in sub_tokens:
+                        core = core.replace(st, '')
+                    core = core.replace(',', '')
+                    if len(core.strip()) != 0:
+                        raise SyntaxError(calls)
+                    return stack
+            return [None, calls]
+
+        not_cnt = 0
+        token = token.strip()
+        while token.startswith('not'):
+            not_cnt += 1
+            token = token[3:]
+
+        calls = [_.group() for _ in self.var_pattern.finditer(token)]
+        if len(calls) != 1:
+            raise SyntaxError(token)
+        calls = calls[0][2:-2].strip()
+        try:
+            call_stack = call_stack_analysis(calls)
+        except SyntaxError as e:
+            print(e)
+            raise SyntaxError(calls)
+        print(call_stack)
+        return TPToken(['not' if not_cnt % 2 else None, call_stack])
+
+    def __condition_parser__(self, stm: str):
+        vars_table = {}
+        for token, index in enumerate(condition_tk_pt.finditer(stm)):
+            var_name = 'TMP%d' % index
+            stm = stm.replace(token.group(), '{%s}' % var_name)
+            vars_table[var_name] = TPVariable(self.UNV, var_name, token)
 
     def __for_parser__(self, stm: str):
         pass
@@ -183,6 +236,28 @@ class TemplateParser:
         append = iter_generator(0, stm_list, params, base_indent)
         return append
 
+    def test(self):
+        self.__token_parser__('not not  not {<enumerate(len(x, 2))>}')
+
+class TPStatement:
+    def __init__(self, s_type, stm):
+        self.s_type = s_type
+        self.stm = stm
+
+
+class TPVariable:
+    def __init__(self, v_type, name, gonna_run, value=None):
+        self.v_type = v_type
+        self.name = name
+        self.gonna_run = gonna_run
+        self.value = value
+
+
+class TPToken:
+    def __init__(self, call_stack):
+        self.call_stack = call_stack
+
+
 if __name__ == '__main__':
     params = dict(
         vars=['a', 'b', 'c'],
@@ -190,4 +265,5 @@ if __name__ == '__main__':
         defs='int a = 0;'
     )
     tp = TemplateParser('templates/klee.c')
-    print(tp.appender_parser(params))
+    # print(tp.appender_parser(params))
+    tp.test()
