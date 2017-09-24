@@ -4,42 +4,124 @@ import logging
 
 
 class TemplateParser:
-    for_pattern = re.compile(r'for +\{\<([a-zA-Z_][a-zA-Z0-9_]*)\>\} +in +\{\<([a-zA-Z_][a-zA-Z0-9_]*)\>\}:')
+    statement_pattern = re.compile(r'[ \t\r]*\{\%(\%+[^}]|[^%])+\%\}')
 
-    @staticmethod
-    def doule_bracket_replace(stm: str, params: dict):
-        pattern = re.compile(r'\{\<(\>+[^}]|[^>])+\>\}')
-        vars_raw = [i.group() for i in pattern.finditer(stm)]
+    condition_str = r'((not +)?\{\<[\w][\w\d]*\>\} *(\>|\<|\>\=|\<\=|\=\=|and|or|is) *)*((not +)?\{\<[\w][\w\d]*\>\} *)'
+    condition_token = r'((not +)?\{\<[\w][\w\d]*\>\})'
+
+    for_pattern = re.compile(r'for +(\{\<([\w][\w\d]*)\>\} *,? *)* +in +\{\<([\w][\w\d]*)\>\}:')
+    if_pattern = re.compile(r'if +%s:' % condition_str)
+    elif_pattern = re.compile(r'elif +%s:' % condition_str)
+    else_pattern = re.compile(r'else *:')
+    while_pattern = re.compile('while +%s:' % condition_str)
+
+    func_call_pattern = re.compile('')
+    var_pattern = re.compile(r'\{\<(\>+[^}]|[^>])+\>\}')
+    valid_pattern = re.compile(r'[\w][\w\d]*')
+
+    ALLOWED_FUNCS = ['enumerate', 'len', 'str', 'range']
+    IF = 1
+    ELIF = 2
+    ELSE = 4
+    FOR = 8
+    WHILE = 16
+
+    INT = 32
+    DOUBLE = 64
+    STR = 128
+
+    def __init__(self, path: str, indent=4):
+        """
+        :param path: path to template
+        :param indent: the indent you are using, must in [2, 4, 8]
+        """
+        assert indent in [2, 4, 8]
+
+        self.path = path
+        self.indent = indent
+        self.contents = ''
+        with open(self.path) as f:
+            for l in f:
+                self.contents += l
+
+        if self.indent != 4:
+            logging.info('You are using indent at %d.' % self.indent)
+
+    def __double_bracket_replace__(self, stm: str, params: dict):
+        vars_raw = [i.group() for i in self.var_pattern.finditer(stm)]
         vars = {}
         for var_raw in vars_raw:
             key = var_raw[2:-2].strip()
+            if self.valid_pattern.match(key) is None:
+                raise SyntaxError(var_raw)
             if not key in vars:
                 vars[key] = [var_raw, ]
             else:
                 vars[key].append(var_raw)
-        # print(stm, vars)
+
         for var, var_raw in vars.items():
             value = params[var]
             for _ in var_raw:
                 stm = stm.replace(_, value)
         return stm
 
-    @staticmethod
-    def appender_parser(tp_path: str, params: dict):
-        with open(tp_path) as f:
-            tp = f.read()
+    def __statement_parser__(self, stm: str):
+        pass
 
-        pattern = re.compile(r'[ \t\r]*\{\%(\%+[^}]|[^%])+\%\}')
-        tp_replace = [_.group() for _ in re.finditer(pattern, tp)]
+    def __statements_pre_process__(self, stms: list):
+        """
+        :param stms: A list of statements to be processed
+        :return: A list filled with tuple, (statement, indent)
+        """
+        def trim(stm: str):
+            stm = stm.replace('\t', ' ' * self.indent)
+            stm = stm.replace('{%', '   ')
+            stm = stm.replace('%}', '   ')
+            return stm
+
+        def get_indent(stm: str):
+            spaces = len(stm) - len(stm.lstrip())
+            if spaces % self.indent != 0:
+                raise IndentationError(stm + ', Indent Error!')
+            else:
+                return spaces // self.indent
+
+        stms = list(filter(lambda x: len(x.strip) != 0, map(trim, stms)))
+        return [(_, get_indent(_)) for _ in stms]
+
+    # Sub-statement
+    def __condition__parser__(self, stm: str):
+        pass
+
+    def __for_parser__(self, stm: str):
+        pass
+
+    def __while_parser__(self, stm: str):
+        pass
+
+    def __if_parser__(self, stm: str):
+        pass
+
+    def __elif_parser__(self, stm: str):
+        pass
+
+    def __else_parser__(self, stm: str):
+        pass
+
+    def __call_func__(self, stm):
+        pass
+
+    def appender_parser(self, params: dict):
+        pattern = self.statement_pattern
+        tp_replace = [_.group() for _ in re.finditer(pattern, self.contents)]
         for replace in tp_replace:
-            tmp = TemplateParser.statement_parser(replace, params, 2)
-            tp = tp.replace(replace, tmp)
+            tmp = self.statement_parser(replace, params, 2)
+            self.contents = self.contents.replace(replace, tmp)
 
-        tp = TemplateParser.doule_bracket_replace(tp, params)
-        return tp
+        self.contents = self.__double_bracket_replace__(self.contents, params)
+        return self.contents
 
-    @staticmethod
-    def statement_parser(stm: str,  params: dict, base_indent:int):
+    def statement_parser(self, stm: str,  params: dict, base_indent:int):
         def pre_process(stm_list):
             def trim(st: str):
                 st = st.replace('\t', '    ')
@@ -61,7 +143,7 @@ class TemplateParser:
 
         def iter_generator(index, stm_list, params, base_indent):
             cur_stm = stm_list[index]
-            for_params = re.findall(TemplateParser.for_pattern, cur_stm[0])
+            for_params = re.findall(self.for_pattern, cur_stm[0])
 
             res = []
             if len(for_params) > 1:
@@ -88,7 +170,7 @@ class TemplateParser:
             else:
                 stm = cur_stm[0].strip()
                 indent = cur_stm[1] - base_indent
-                stm = TemplateParser.doule_bracket_replace(stm, params)
+                stm = self.__double_bracket_replace__(stm, params)
                 stm = ' ' * indent * 4 + stm
                 if index != len(stm_list) - 1 and stm_list[index + 1][1] == cur_stm[1]:
                     next_stm = iter_generator(index + 1, stm_list, params, base_indent)
@@ -104,6 +186,8 @@ class TemplateParser:
 if __name__ == '__main__':
     params = dict(
         vars=['a', 'b', 'c'],
-        params='a, b, c'
+        params='a, b, c',
+        defs='int a = 0;'
     )
-    TemplateParser.appender_parser('templates/klee.c', params)
+    tp = TemplateParser('templates/klee.c')
+    print(tp.appender_parser(params))

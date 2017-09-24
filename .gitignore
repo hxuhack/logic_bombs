@@ -24,3 +24,6 @@ bin/
 angr/
 klee/
 triton/
+
+.vscode/
+.idea/
