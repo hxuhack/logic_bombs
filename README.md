@@ -62,7 +62,7 @@ int sym_checker(int i) {
 }
 ```
 
-Here is another example require divide one file to two files:
+Here is another example require divide one file into two files:
 
 ```c
 // Original file
