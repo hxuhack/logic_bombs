@@ -14,7 +14,7 @@ This core of this tool is the **config.py**, you can define a lot of rules for c
 
 As I mentioned above, to use this tool you may need do some changes to your codes. There are several principles to follow:
 
-- One file one test function.
+- Each file contains only one **test** function.
 - Test function only have two return value with signed integer type.
 - Return value should use pre-defined value in header file **a_tester.h**
 
