@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
 
 ```c
 // File 1
-	#include "a_tester.h"
+#include "a_tester.h"
 
 int sym_checker(int a) {
     if (3 * a < 0 && a > 0)
@@ -98,7 +98,7 @@ int sym_checker(int a) {
 
 ```c
 // File 2
-	#include "a_tester.h"
+#include "a_tester.h"
 
 int sym_checker(int a) {
     int b = 2147483640;
