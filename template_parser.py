@@ -59,6 +59,11 @@ class TemplateParser:
         if self.indent != 4:
             logging.info('You are using indent at %d.' % self.indent)
 
+    def parse(self):
+        stm_list = self.contents.split('\n')
+        stms = self.__statements_pre_process__(stm_list)
+        return [(self.__statement_parser__(s[0]), s[1]) for s in stms]
+
     def __double_bracket_replace__(self, stm: str, params: dict):
         vars_raw = [i.group() for i in self.var_pattern.finditer(stm)]
         vars_dict = {}
@@ -78,13 +83,27 @@ class TemplateParser:
         return stm
 
     def __statement_parser__(self, stm: str):
-        check_priorities = [
-            self.for_pattern,
-            self.while_pattern,
-            self.if_pattern,
-            self.elif_pattern,
-            self.else_pattern
-        ]
+        check_priorities = {
+            self.__exp_parser__: 'exp',
+            self.__for_parser__: 'for',
+            self.__while_parser__: 'while',
+            self.__if_parser__: 'while',
+            self.__elif_parser__: 'elif',
+            self.__else_parser__: 'else',
+
+        }
+        stm_type = 'str'
+        res = stm
+        for parser in check_priorities:
+            res = parser(stm)
+            if not res:
+                stm_type = check_priorities[parser]
+            else:
+                continue
+        if stm_type == 'str':
+            res = stm
+
+        return TPStatement(stm_type, stm, res)
 
     def __statements_pre_process__(self, stms: list):
         """
@@ -104,7 +123,7 @@ class TemplateParser:
             else:
                 return spaces // self.indent
 
-        stms = list(filter(lambda x: len(x.strip) != 0, map(trim, stms)))
+        stms = list(filter(lambda x: len(x.strip()) != 0, map(trim, stms)))
         return [(_, get_indent(_)) for _ in stms]
 
     # Sub-statement
@@ -308,10 +327,12 @@ class TemplateParser:
         print(res3)
         print(res4)
 
+
 class TPStatement:
-    def __init__(self, s_type, stm):
+    def __init__(self, s_type, stm, parsed):
         self.s_type = s_type
         self.stm = stm
+        self.parsed = parsed
 
 
 class TPVariable:
@@ -341,4 +362,5 @@ if __name__ == '__main__':
     )
     tp = TemplateParser('templates/klee.c')
     # print(tp.appender_parser(params))
-    tp.test()
+    # tp.test()
+    print(tp.parse())
