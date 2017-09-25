@@ -6,20 +6,27 @@ import logging
 class TemplateParser:
     statement_pattern = re.compile(r'[ \t\r]*\{\%(\%+[^}]|[^%])+\%\}')
 
-    condition_str = r'((not +)?\{\<[\w(][\w\d()]*\>\} *(\>|\<|\>\=|\<\=|\=\=|and|or|is) *)*((not +)?\{\<[\w(][\w\d()]*\>\} *)'
-    condition_token = r'((not +)?\{\<[\w(][\w\d()]*\>\})'
+    condition_str = r'((not +)*\{\<[\w][\w\d(), ]*\>\} *(\>|\<|\>\=|\<\=|\=\=|\+|\-|\*|\/|and|or|is) *)*((not +)?\{\<[\w][\w\d(), ]*\>\} *)'
+    condition_token = r'((not +)*\{\<[\w][\w\d(), ]*\>\})'
 
-    for_pattern = re.compile(r'for +(\{\<([\w(][\w\d()]*)\>\} *,? *)* +in +\{\<([\w(][\w\d()]*)\>\}:')
-    if_pattern = re.compile(r'if +%s:' % condition_str)
-    elif_pattern = re.compile(r'elif +%s:' % condition_str)
-    else_pattern = re.compile(r'else *:')
-    while_pattern = re.compile(r'while +%s:' % condition_str)
+    for_pattern = re.compile(r'for +(\{\<([\w][\w\d(), ]*)\>\} *,? *)* +in +\{\<([\w][\w\d(), ]*)\>\}:$')
+    if_pattern = re.compile(r'if +(%s):$' % condition_str)
+    elif_pattern = re.compile(r'elif +(%s):$' % condition_str)
+    else_pattern = re.compile(r'else *:$')
+    while_pattern = re.compile(r'while +(%s):$' % condition_str)
+    exp_pattern = re.compile(r'\{\<[\w][\w\d]*\>\} +\= +%s' % condition_str)
 
     func_pattern = re.compile(r'[\w][\w\d]*\(')
     param_list_pattern = re.compile(r'([\w][\w\d]*\(.*\)|[\w][\w\d]*)')
     var_pattern = re.compile(r'\{\<(\>+[^}]|[^>])+\>\}')
     valid_pattern = re.compile(r'[\w][\w\d]*')
+
+    int_pattern = re.compile(r'((\+|\-)?[\d]+)d$')
+    float_pattern = re.compile(r'(\+|\-)?([\d]+(\.[\d]*)?|\.[\d]+)([Ee](\+|\-)[\d]+)?f$')
+    str_pattern = re.compile(r'(\'[^\']*\'|\"[^\"]*\")')
+
     condition_tk_pt = re.compile(condition_token)
+    condition_pt = re.compile(condition_str)
 
     ALLOWED_FUNCS = ['enumerate', 'len', 'str', 'range']
     IF = 1
@@ -101,6 +108,7 @@ class TemplateParser:
     # Sub-statement
     def __token_parser__(self, token: str):
         def call_stack_analysis(calls):
+            calls = calls.strip()
             core = calls
             for func in self.func_pattern.finditer(calls):
                 if core[-1] != ')':
@@ -119,13 +127,23 @@ class TemplateParser:
                     if len(core.strip()) != 0:
                         raise SyntaxError(calls)
                     return stack
+            # Single variable or constant
+            if self.int_pattern.search(calls):
+                calls = int(self.int_pattern.search(calls).group()[:-1])
+            elif self.float_pattern.search(calls):
+                calls = float(self.float_pattern.search(calls).group()[:-1])
+            elif self.str_pattern.search(calls):
+                calls = calls
+            elif not calls.isidentifier():
+                raise SyntaxError(calls)
+
             return [None, calls]
 
         not_cnt = 0
         token = token.strip()
         while token.startswith('not'):
             not_cnt += 1
-            token = token[3:]
+            token = token[3:].strip()
 
         calls = [_.group() for _ in self.var_pattern.finditer(token)]
         if len(calls) != 1:
@@ -136,30 +154,50 @@ class TemplateParser:
         except SyntaxError as e:
             print(e)
             raise SyntaxError(calls)
-        print(call_stack)
+
         return TPToken(['not' if not_cnt % 2 else None, call_stack])
 
     def __condition_parser__(self, stm: str):
         vars_table = {}
-        for token, index in enumerate(condition_tk_pt.finditer(stm)):
+        for index, token in enumerate(self.condition_tk_pt.finditer(stm)):
             var_name = 'TMP%d' % index
-            stm = stm.replace(token.group(), '{%s}' % var_name)
-            vars_table[var_name] = TPVariable(self.UNV, var_name, token)
+            token = token.group()
+            stm = stm.replace(token, '{%s}' % var_name)
+            tpk = self.__token_parser__(token)
+            vars_table[var_name] = TPVariable(self.UNV, var_name, tpk)
+            print(TPVariable(self.UNV, var_name, tpk))
+        print(stm)
 
     def __for_parser__(self, stm: str):
         pass
 
     def __while_parser__(self, stm: str):
-        pass
+        res = self.while_pattern.search(stm)
+        if not res:
+            return None
+        else:
+            return self.condition_pt.search(stm).group().strip()
 
     def __if_parser__(self, stm: str):
-        pass
+        res = self.if_pattern.search(stm)
+        if not res:
+            return None
+        else:
+            return self.condition_pt.search(stm).group().strip()
 
     def __elif_parser__(self, stm: str):
-        pass
+        res = self.elif_pattern.search(stm)
+        if not res:
+            return None
+        else:
+            return self.condition_pt.search(stm).group().strip()
 
     def __else_parser__(self, stm: str):
-        pass
+        res = self.else_pattern.search(stm)
+        if not res:
+            return None
+        else:
+            return True
 
     def __call_func__(self, stm):
         pass
@@ -237,7 +275,8 @@ class TemplateParser:
         return append
 
     def test(self):
-        self.__token_parser__('not not  not {<enumerate(len(x, 2))>}')
+        # self.__token_parser__('not not  not {<enumerate(len(x, 2))>}')
+        self.__condition_parser__('not not {<A>} >= {<enumerate(B, 2d, len(C))>} is {<D>}')
 
 class TPStatement:
     def __init__(self, s_type, stm):
@@ -246,16 +285,22 @@ class TPStatement:
 
 
 class TPVariable:
-    def __init__(self, v_type, name, gonna_run, value=None):
+    def __init__(self, v_type, name, token, value=None):
         self.v_type = v_type
         self.name = name
-        self.gonna_run = gonna_run
+        self.token = token
         self.value = value
+
+    def __str__(self):
+        return ' '.join([str(self.v_type), self.name, str(self.token), str(self.value)])
 
 
 class TPToken:
     def __init__(self, call_stack):
         self.call_stack = call_stack
+
+    def __str__(self):
+        return str(self.call_stack)
 
 
 if __name__ == '__main__':
