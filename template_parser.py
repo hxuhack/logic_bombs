@@ -6,19 +6,20 @@ import logging
 class TemplateParser:
     statement_pattern = re.compile(r'[ \t\r]*\{\%(\%+[^}]|[^%])+\%\}')
 
-    condition_str = r'((not +)*\{\<[\w][\w\d(), ]*\>\} *(\>|\<|\>\=|\<\=|\=\=|\+|\-|\*|\/|and|or|is) *)*((not +)?\{\<[\w][\w\d(), ]*\>\} *)'
-    condition_token = r'((not +)*\{\<[\w][\w\d(), ]*\>\})'
+    condition_str = r'((not +)*\{\<(\>+[^}]|[^>])+\>\} *(\>|\<|\>\=|\<\=|\=\=|\+|\-|\*|\/|and|or|is) *)*((not +)?\{\<(\>+[^}]|[^>])+\>\} *)'
+    condition_token = r'((not +)*\{\<(\>+[^}]|[^>])+\>\})'
 
-    for_pattern = re.compile(r'for +(\{\<([\w][\w\d(), ]*)\>\} *,? *)* +in +\{\<([\w][\w\d(), ]*)\>\}:$')
+    for_pattern = re.compile(r'for +((\{\<([\w][\w\d]*)\>\} *,? *)*) +in +\{\<(\>+[^}]|[^>])+\>\}:$')
     if_pattern = re.compile(r'if +(%s):$' % condition_str)
     elif_pattern = re.compile(r'elif +(%s):$' % condition_str)
     else_pattern = re.compile(r'else *:$')
     while_pattern = re.compile(r'while +(%s):$' % condition_str)
-    exp_pattern = re.compile(r'\{\<[\w][\w\d]*\>\} +\= +%s' % condition_str)
+    exp_pattern = re.compile(r'\{\<([\w][\w\d]*)\>\} +\= +(%s)' % condition_str)
 
     func_pattern = re.compile(r'[\w][\w\d]*\(')
-    param_list_pattern = re.compile(r'([\w][\w\d]*\(.*\)|[\w][\w\d]*)')
-    var_pattern = re.compile(r'\{\<(\>+[^}]|[^>])+\>\}')
+    param_list_pattern = re.compile(r'([\w][\w\d]*\(.*\)|[^(, ]+)')
+    var_pattern = re.compile(r'\{\<([\w][\w\d]*)\>\}')
+    in_bracket_pattern = re.compile(r'\{\<(\>+[^}]|[^>])+\>\}')
     valid_pattern = re.compile(r'[\w][\w\d]*')
 
     int_pattern = re.compile(r'((\+|\-)?[\d]+)d$')
@@ -27,6 +28,7 @@ class TemplateParser:
 
     condition_tk_pt = re.compile(condition_token)
     condition_pt = re.compile(condition_str)
+    left_v_pt = re.compile(r'^[ \t]*\{\<([\w][\w\d]*)\>\} *\=')
 
     ALLOWED_FUNCS = ['enumerate', 'len', 'str', 'range']
     IF = 1
@@ -145,7 +147,7 @@ class TemplateParser:
             not_cnt += 1
             token = token[3:].strip()
 
-        calls = [_.group() for _ in self.var_pattern.finditer(token)]
+        calls = [_.group() for _ in self.in_bracket_pattern.finditer(token)]
         if len(calls) != 1:
             raise SyntaxError(token)
         calls = calls[0][2:-2].strip()
@@ -165,14 +167,36 @@ class TemplateParser:
             stm = stm.replace(token, '{%s}' % var_name)
             tpk = self.__token_parser__(token)
             vars_table[var_name] = TPVariable(self.UNV, var_name, tpk)
-            print(TPVariable(self.UNV, var_name, tpk))
-        print(stm)
+
+        return vars_table
+
+    def __exp_parser__(self, stm: str):
+        res = self.exp_pattern.search(stm)
+        if not res:
+            return None
+        else:
+            left_v = self.left_v_pt.findall(stm)[0]
+            remained = '='.join(stm.split('=')[1:])
+            return left_v, self.condition_pt.search(remained).group().strip()
 
     def __for_parser__(self, stm: str):
-        pass
+        res = self.for_pattern.match(stm)
+        if not res:
+            return None
+        else:
+            res = self.for_pattern.findall(stm)[0]
+            unpacked = res[0]
+            iter_on = res[-1]
+            unpacked_vars = []
+            for i in self.in_bracket_pattern.finditer(unpacked):
+                if not i[2:-2].strip().isidentifier():
+                    raise SyntaxError(stm)
+                else:
+                    unpacked_vars.append(i[2:-2].strip())
+            return unpacked_vars, iter_on[2:-2].strip()
 
     def __while_parser__(self, stm: str):
-        res = self.while_pattern.search(stm)
+        res = self.while_pattern.match(stm)
         if not res:
             return None
         else:
@@ -275,8 +299,14 @@ class TemplateParser:
         return append
 
     def test(self):
-        # self.__token_parser__('not not  not {<enumerate(len(x, 2))>}')
-        self.__condition_parser__('not not {<A>} >= {<enumerate(B, 2d, len(C))>} is {<D>}')
+        res1 = self.__condition_parser__('not not {<A>} >= {<enumerate(B, 2d, len(C), 2.3f, "test")>} is {<D>}')
+        res2 = self.__exp_parser__('{<test>} = {<enumerate(adgfd, 2d, 4.2E3f, "haha", len(C))>} / {<dfd>}')
+        res3 = self.__while_parser__('while {<dsfdsa>} and {<dsaf>} < {<len(dfd, 2.3f)>}:')
+        res4 = self.__if_parser__('if {<dsfdsa>} and {<dsaf>} < {<len(dfd, 2.3f)>}:')
+        print(res1)
+        print(res2)
+        print(res3)
+        print(res4)
 
 class TPStatement:
     def __init__(self, s_type, stm):
