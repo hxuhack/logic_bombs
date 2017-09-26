@@ -60,9 +60,13 @@ class TemplateParser:
             logging.info('You are using indent at %d.' % self.indent)
 
     def parse(self):
-        stm_list = self.contents.split('\n')
-        stms = self.__statements_pre_process__(stm_list)
-        return [(self.__statement_parser__(s[0]), s[1]) for s in stms]
+        res = []
+        for s in self.statement_pattern.finditer(self.contents):
+            stm_list = s.group().replace('{%', '  ').replace('%}', '  ').split('\n')
+            print(stm_list)
+            stms = self.__statements_pre_process__(stm_list)
+            res.append([(self.__statement_parser__(s[0].strip()), s[1]) for s in stms])
+        return res
 
     def __double_bracket_replace__(self, stm: str, params: dict):
         vars_raw = [i.group() for i in self.var_pattern.finditer(stm)]
@@ -96,8 +100,10 @@ class TemplateParser:
         res = stm
         for parser in check_priorities:
             res = parser(stm)
-            if not res:
+            # print(stm, check_priorities[parser], res)
+            if res:
                 stm_type = check_priorities[parser]
+                break
             else:
                 continue
         if stm_type == 'str':
@@ -203,16 +209,18 @@ class TemplateParser:
         if not res:
             return None
         else:
-            res = self.for_pattern.findall(stm)[0]
-            unpacked = res[0]
-            iter_on = res[-1]
+            # res = self.for_pattern.findall(stm)[0]
+            # unpacked = res[0]
+            # iter_on = res[-1]
             unpacked_vars = []
-            for i in self.in_bracket_pattern.finditer(unpacked):
+            tokens = [_.group() for _ in self.in_bracket_pattern.finditer(stm)]
+            for i in tokens[:-1]:
                 if not i[2:-2].strip().isidentifier():
                     raise SyntaxError(stm)
                 else:
                     unpacked_vars.append(i[2:-2].strip())
-            return unpacked_vars, iter_on[2:-2].strip()
+            print(stm, unpacked_vars, tokens[-1][2:-2].strip())
+            return unpacked_vars, tokens[-1][2:-2].strip()
 
     def __while_parser__(self, stm: str):
         res = self.while_pattern.match(stm)
@@ -334,6 +342,9 @@ class TPStatement:
         self.stm = stm
         self.parsed = parsed
 
+    def __str__(self):
+        return '\t'.join([str(self.s_type), str(self.stm), str(self.parsed)])
+
 
 class TPVariable:
     def __init__(self, v_type, name, token, value=None):
@@ -343,7 +354,7 @@ class TPVariable:
         self.value = value
 
     def __str__(self):
-        return ' '.join([str(self.v_type), self.name, str(self.token), str(self.value)])
+        return '; '.join([str(self.v_type), self.name, str(self.token), str(self.value)])
 
 
 class TPToken:
@@ -363,4 +374,5 @@ if __name__ == '__main__':
     tp = TemplateParser('templates/klee.c')
     # print(tp.appender_parser(params))
     # tp.test()
-    print(tp.parse())
+    for stm, indent in tp.parse()[0]:
+        print(stm, indent)
