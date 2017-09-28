@@ -6,7 +6,7 @@ import logging
 class TemplateParser:
     statement_pattern = re.compile(r'[ \t\r]*\{\%(\%+[^}]|[^%])+\%\}')
 
-    condition_str = r'((not +)*\{\<(\>+[^}]|[^>])+\>\} *(\>|\<|\>\=|\<\=|\=\=|\+|\-|\*|\/|and|or|is) *)*((not +)?\{\<(\>+[^}]|[^>])+\>\} *)'
+    condition_str = r'((not +)*\{\<(\>+[^}]|[^>])+\>\} +(\>|\<|\>\=|\<\=|\=\=|\+|\-|\*|\/|and|or|is) +)*((not +)?\{\<(\>+[^}]|[^>])+\>\} *)'
     condition_token = r'((not +)*\{\<(\>+[^}]|[^>])+\>\})'
 
     for_pattern = re.compile(r'for +((\{\<([\w][\w\d]*)\>\} *,? *)*) +in +\{\<(\>+[^}]|[^>])+\>\}:$')
@@ -63,7 +63,6 @@ class TemplateParser:
         res = []
         for s in self.statement_pattern.finditer(self.contents):
             stm_list = s.group().replace('{%', '  ').replace('%}', '  ').split('\n')
-            print(stm_list)
             stms = self.__statements_pre_process__(stm_list)
             res.append([(self.__statement_parser__(s[0].strip()), s[1]) for s in stms])
         return res
@@ -91,16 +90,16 @@ class TemplateParser:
             self.__exp_parser__: 'exp',
             self.__for_parser__: 'for',
             self.__while_parser__: 'while',
-            self.__if_parser__: 'while',
+            self.__if_parser__: 'if',
             self.__elif_parser__: 'elif',
             self.__else_parser__: 'else',
 
         }
         stm_type = 'str'
         res = stm
+
         for parser in check_priorities:
             res = parser(stm)
-            # print(stm, check_priorities[parser], res)
             if res:
                 stm_type = check_priorities[parser]
                 break
@@ -193,7 +192,7 @@ class TemplateParser:
             tpk = self.__token_parser__(token)
             vars_table[var_name] = TPVariable(self.UNV, var_name, tpk)
 
-        return vars_table
+        return stm, vars_table
 
     def __exp_parser__(self, stm: str):
         res = self.exp_pattern.search(stm)
@@ -202,16 +201,15 @@ class TemplateParser:
         else:
             left_v = self.left_v_pt.findall(stm)[0]
             remained = '='.join(stm.split('=')[1:])
-            return left_v, self.condition_pt.search(remained).group().strip()
+            cd_str = self.condition_pt.search(remained).group().strip()
+            cd_res = self.__condition_parser__(cd_str)
+            return stm.replace(cd_str, cd_res[0]), left_v, cd_res[1]
 
     def __for_parser__(self, stm: str):
         res = self.for_pattern.match(stm)
         if not res:
             return None
         else:
-            # res = self.for_pattern.findall(stm)[0]
-            # unpacked = res[0]
-            # iter_on = res[-1]
             unpacked_vars = []
             tokens = [_.group() for _ in self.in_bracket_pattern.finditer(stm)]
             for i in tokens[:-1]:
@@ -219,32 +217,39 @@ class TemplateParser:
                     raise SyntaxError(stm)
                 else:
                     unpacked_vars.append(i[2:-2].strip())
-            print(stm, unpacked_vars, tokens[-1][2:-2].strip())
-            return unpacked_vars, tokens[-1][2:-2].strip()
+            
+            cd_res = self.__condition_parser__(tokens[-1].strip())
+            return stm.replace(tokens[-1], cd_res[0]), unpacked_vars, cd_res[1]
 
     def __while_parser__(self, stm: str):
         res = self.while_pattern.match(stm)
         if not res:
             return None
         else:
-            return self.condition_pt.search(stm).group().strip()
+            cd_str = self.condition_pt.search(stm).group().strip()
+            cd_res = self.__condition_parser__(cd_str)
+            return stm.replace(cd_str, cd_res[0]), cd_res[1]
 
     def __if_parser__(self, stm: str):
-        res = self.if_pattern.search(stm)
+        res = self.if_pattern.match(stm)
         if not res:
             return None
         else:
-            return self.condition_pt.search(stm).group().strip()
+            cd_str = self.condition_pt.search(stm).group().strip()
+            cd_res = self.__condition_parser__(cd_str)
+            return stm.replace(cd_str, cd_res[0]), cd_res[1]
 
     def __elif_parser__(self, stm: str):
-        res = self.elif_pattern.search(stm)
+        res = self.elif_pattern.match(stm)
         if not res:
             return None
         else:
-            return self.condition_pt.search(stm).group().strip()
+            cd_str = self.condition_pt.search(stm).group().strip()
+            cd_res = self.__condition_parser__(cd_str)
+            return stm.replace(cd_str, cd_res[0]), cd_res[1]
 
     def __else_parser__(self, stm: str):
-        res = self.else_pattern.search(stm)
+        res = self.else_pattern.match(stm)
         if not res:
             return None
         else:
@@ -327,13 +332,8 @@ class TemplateParser:
 
     def test(self):
         res1 = self.__condition_parser__('not not {<A>} >= {<enumerate(B, 2d, len(C), 2.3f, "test")>} is {<D>}')
-        res2 = self.__exp_parser__('{<test>} = {<enumerate(adgfd, 2d, 4.2E3f, "haha", len(C))>} / {<dfd>}')
-        res3 = self.__while_parser__('while {<dsfdsa>} and {<dsaf>} < {<len(dfd, 2.3f)>}:')
-        res4 = self.__if_parser__('if {<dsfdsa>} and {<dsaf>} < {<len(dfd, 2.3f)>}:')
-        print(res1)
+        res2 = self.__while_parser__('elif {<index>} == {<3d>} and {<var>} == {<"test">}:')
         print(res2)
-        print(res3)
-        print(res4)
 
 
 class TPStatement:
@@ -371,8 +371,7 @@ if __name__ == '__main__':
         params='a, b, c',
         defs='int a = 0;'
     )
-    tp = TemplateParser('templates/klee.c')
-    # print(tp.appender_parser(params))
-    # tp.test()
+    tp = TemplateParser('templates/test.c')
+    tp.test()
     for stm, indent in tp.parse()[0]:
         print(stm, indent)

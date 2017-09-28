@@ -6,6 +6,7 @@ int main() {
 
         for {<exp>} in {<exceptions>}:
             klee_assume({<exp>});
+
     %}
     sym_checker({<params>});
 }
