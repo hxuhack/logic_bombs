@@ -22,9 +22,9 @@ class TemplateParser:
     in_bracket_pattern = re.compile(r'\{\<(\>+[^}]|[^>])+\>\}')
     valid_pattern = re.compile(r'[\w][\w\d]*')
 
-    int_pattern = re.compile(r'((\+|\-)?[\d]+)d$')
-    float_pattern = re.compile(r'(\+|\-)?([\d]+(\.[\d]*)?|\.[\d]+)([Ee](\+|\-)[\d]+)?f$')
-    str_pattern = re.compile(r'(\'[^\']*\'|\"[^\"]*\")')
+    int_pattern = re.compile(r'^((\+|\-)?[\d]+)d$')
+    float_pattern = re.compile(r'^(\+|\-)?([\d]+(\.[\d]*)?|\.[\d]+)([Ee](\+|\-)[\d]+)?f$')
+    str_pattern = re.compile(r'^(\'[^\']*\'|\"[^\"]*\")$')
 
     condition_tk_pt = re.compile(condition_token)
     condition_pt = re.compile(condition_str)
@@ -154,11 +154,11 @@ class TemplateParser:
                         raise SyntaxError(calls)
                     return stack
             # Single variable or constant
-            if self.int_pattern.search(calls):
+            if self.int_pattern.match(calls):
                 calls = int(self.int_pattern.search(calls).group()[:-1])
-            elif self.float_pattern.search(calls):
+            elif self.float_pattern.match(calls):
                 calls = float(self.float_pattern.search(calls).group()[:-1])
-            elif self.str_pattern.search(calls):
+            elif self.str_pattern.match(calls):
                 calls = calls
             elif not calls.isidentifier():
                 raise SyntaxError(calls)
@@ -217,7 +217,7 @@ class TemplateParser:
                     raise SyntaxError(stm)
                 else:
                     unpacked_vars.append(i[2:-2].strip())
-            
+
             cd_res = self.__condition_parser__(tokens[-1].strip())
             return stm.replace(tokens[-1], cd_res[0]), unpacked_vars, cd_res[1]
 
@@ -333,7 +333,8 @@ class TemplateParser:
     def test(self):
         res1 = self.__condition_parser__('not not {<A>} >= {<enumerate(B, 2d, len(C), 2.3f, "test")>} is {<D>}')
         res2 = self.__while_parser__('elif {<index>} == {<3d>} and {<var>} == {<"test">}:')
-        print(res2)
+        for i, var in res1[1].items():
+            print(i, var)
 
 
 class TPStatement:
