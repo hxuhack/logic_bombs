@@ -31,8 +31,8 @@ class ScriptRunner:
         for key in token_tables:
             res = self.evaluate(token_tables[key])
             token_tables[key] = res
-
-        return stm.format(token_tables)
+        print(token_tables)
+        return stm.format(**token_tables)
 
     def run(self, stms: list, index=0, scope=None, expected_indent=None):
         if scope:
@@ -87,7 +87,7 @@ class ScriptRunner:
 
 if __name__ == '__main__':
     tp = tpp.TemplateParser('templates/test.c')
-    sr = ScriptRunner(dict(vars=[1,2,3,4]))
+    sr = ScriptRunner(dict(vars=[1,2,3,4], index='play'))
     for stm, indent in tp.parse()[0]:
         stm = stm.parsed
         print(stm)
