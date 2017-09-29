@@ -108,7 +108,16 @@ class TemplateParser:
             else:
                 continue
         if stm_type == 'str':
-            res = stm
+            vars_table = {}
+            bak = stm
+            for index, token in enumerate(self.func_call_pattern.finditer(stm)):
+                var_name = 'TMP%d' % index
+                token = token.group()
+                bak = bak.replace(token, '{%s}' % var_name)
+                tpk = self.__token_parser__(token)
+                vars_table[var_name] = TPVariable(self.UNV, var_name, tpk)
+
+            res = (bak, vars_table)
 
         return TPStatement(stm_type, stm, res)
 
@@ -369,6 +378,11 @@ class TPToken:
 
 
 if __name__ == '__main__':
+    params = dict(
+        vars=['a', 'b', 'c'],
+        params='a, b, c',
+        defs='int a = 0;'
+    )
     tp = TemplateParser('templates/test.c')
     tp.test()
     for stm, indent in tp.parse()[0]:
