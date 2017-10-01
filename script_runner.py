@@ -14,7 +14,7 @@ class ScriptRunner:
         self.inits = init_values
         self.variables = [self.inits, ]
 
-    def __get_var__(self, key):
+    def __get_var__(self, key: str):
         flag = False
         res = None
         for v_table in reversed(self.variables):
@@ -28,13 +28,20 @@ class ScriptRunner:
         else:
             return res
 
-    def __parser__(self, stm, token_tables):
+    def __parser__(self, stm: str, token_tables: dict):
         cp_table = copy(token_tables)
         for key in cp_table:
-            print("TKT", str([(key, str(cp_table[key])) for key in token_tables]))
+            # print("TKT", str([(key, str(cp_table[key])) for key in token_tables]))
             res = self.evaluate(cp_table[key])
             cp_table[key] = res
         return stm.format(**cp_table)
+
+    def __step_out__(self, stms, i, base_indent):
+        while i < len(stms):
+            if stms[i][1] <= base_indent:
+                break
+            i += 1
+        return i
 
     def run(self, stms: list, index=0, expected_indent=None, ignore=False):
         """
@@ -51,8 +58,9 @@ class ScriptRunner:
         used_to_be_true = False
 
         results = []
-        base_indent = stms[index][1] if not expected_indent else expected_indent
+        base_indent = stms[index][1] if expected_indent is None else expected_indent
         if ignore:
+            i = 0
             for i in range(index, len(stms)):
                 if stms[i][1] >= base_indent:
                     continue
@@ -60,12 +68,12 @@ class ScriptRunner:
 
         i = index
         while i < len(stms):
-            print()
+            # print(i)
             stm, indent = stms[i]
-            print(stm, self.variables)
+            # print(stm.stm, indent)
 
             if indent > base_indent:
-                raise RuntimeError(stm, indent)
+                raise RuntimeError(stm.stm, 'with indent %d, but expect indent %d' % (indent, base_indent))
             elif indent < base_indent:
                 break
 
@@ -75,54 +83,65 @@ class ScriptRunner:
             if stm.s_type == 'str':
                 print(self.__parser__(*stm.parsed))
                 results.append(self.__parser__(*stm.parsed))
+                i += 1
             elif stm.s_type == 'for':
+                in_index = i
+                if i == len(stms) - 1:
+                    raise SyntaxError(stm.stm)
                 tmp_iter = self.evaluate(stm.parsed[-1])
                 for tmp in tmp_iter:
                     print('tmp', tmp)
                     self.variables.append({key: tmp[index] for index, key in enumerate(stm.parsed[1])})
-                    results.extend(self.run(stms, index + 1, base_indent + 1)[1])
+                    results.extend(self.run(stms, i + 1, base_indent + 1)[1])
                     self.variables.pop(-1)
+                i = self.__step_out__(stms, in_index + 1, base_indent)
             elif stm.s_type == 'while':
+                in_index = i
                 while self.evaluate(stm.parsed[-1]):
                     self.variables.append({})
-                    results.extend(self.run(stms, index + 1, base_indent + 1)[1])
+                    results.extend(self.run(stms, i + 1, base_indent + 1)[1])
                     self.variables.pop(-1)
+                i = self.__step_out__(stms, in_index + 1, base_indent)
             elif stm.s_type == 'exp':
-                self.variables[-1][stm.parsed[1]] = self.evaluate(stm.parsed[-1])
+                self.variables[-1][stm.parsed[1]] = eval(self.__parser__('='.join(stm.parsed[0].split('=')[1:]), stm.parsed[-1]))
+                i += 1
             elif stm.s_type == 'if':
+                in_index = i
                 is_branch = True
-                used_to_be_true, branch_true = [self.evaluate(stm.parsed[-1]), ] * 2
-                end, res = self.run(stms, index + 1, base_indent + 1, not branch_true)
-                i = end
-                results.extend(res)
-                continue
+                b_res = eval(self.__parser__(stm.parsed[0], stm.parsed[-1]))
+                used_to_be_true, branch_true = [b_res, ] * 2
+                if branch_true:
+                    end, res = self.run(stms, i + 1, base_indent + 1, not branch_true)
+                    results.extend(res)
+                i = self.__step_out__(stms, in_index + 1, base_indent)
+                print(i)
             elif stm.s_type == 'elif':
+                in_index = i
                 if not is_branch:
                     raise SyntaxError(stm)
                 is_branch = True
-                branch_true = False if used_to_be_true else self.evaluate(stm.parsed[-1])
+                branch_true = False if used_to_be_true else eval(self.__parser__(stm.parsed[0], stm.parsed[-1]))
                 used_to_be_true = True if used_to_be_true else  branch_true
-                end, res = self.run(stms, index + 1, base_indent + 1, not branch_true)
-                i = end
-                results.extend(res)
-                continue
+                if branch_true:
+                    end, res = self.run(stms, i + 1, base_indent + 1, not branch_true)
+                    results.extend(res)
+                i = self.__step_out__(stms, in_index + 1, base_indent)
             elif stm.s_type == 'else':
+                in_index = i
                 if not is_branch:
                     raise SyntaxError(stm)
-                end, res = self.run(stms, index + 1, base_indent + 1, used_to_be_true)
-                i = end
-                results.extend(res)
-                continue
+                if not used_to_be_true:
+                    end, res = self.run(stms, i + 1, base_indent + 1, used_to_be_true)
+                    results.extend(res)
+                i = self.__step_out__(stms, in_index + 1, base_indent)
+                print(i)
             else:
                 raise RuntimeError('Unknow type ' + str(stm))
-            i += 1
         return i, results
 
     def evaluate(self, tpv: tpp.TPVariable, token=None):
-        print('eval', tpv)
         if token is None:
             token = tpv.token.call_stack
-            # print(token)
         func = token[0]
         values = token[1:]
         if func is None and type(values[0]) != list:
@@ -157,7 +176,8 @@ if __name__ == '__main__':
     sr = ScriptRunner(dict(vars=[1,2,3,5]))
     # print(tp.parse()[0])
     res = sr.run(tp.parse()[0], 0)
-    print('\n'.join(res))
+    print('\n==================================\n')
+    print('\n'.join(res[1]))
     # for stm, indent in tp.parse()[0]:
     #     stm = stm.parsed
     #     print(stm)

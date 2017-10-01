@@ -110,14 +110,13 @@ class TemplateParser:
         if stm_type == 'str':
             vars_table = {}
             bak = stm
-            for index, token in enumerate(self.func_call_pattern.finditer(stm)):
-                var_name = 'TMP%d' % index
-                token = token.group()
-                bak = bak.replace(token, '{%s}' % var_name)
-                tpk = self.__token_parser__(token)
-                vars_table[var_name] = TPVariable(self.UNV, var_name, tpk)
-
-            res = (bak, vars_table)
+            res = self.__variable_replacer__(bak)
+            # for index, token in enumerate(self.func_call_pattern.finditer(stm)):
+            #     var_name = 'TMP%d' % index
+            #     token = token.group()
+            #     bak = bak.replace(token, '{%s}' % var_name)
+            #     tpk = self.__token_parser__(token)
+            #     vars_table[var_name] = TPVariable(self.UNV, var_name, tpk)
 
         return TPStatement(stm_type, stm, res)
 
@@ -205,6 +204,17 @@ class TemplateParser:
 
         return stm, vars_table
 
+    def __variable_replacer__(self, stm: str, vars_table: dict=None):
+        if not vars_table:
+            vars_table = {}
+        for index, var in enumerate(self.func_call_pattern.finditer(stm)):
+            var_name = 'VAR%d' % index
+            var = var.group()
+            stm = stm.replace(var, '{%s}' % var_name)
+            tpk = self.__token_parser__(var)
+            vars_table[var_name] = TPVariable(self.UNV, var_name, tpk)
+        return stm, vars_table
+
     def __exp_parser__(self, stm: str):
         res = self.exp_pattern.search(stm)
         if not res:
@@ -249,7 +259,7 @@ class TemplateParser:
         else:
             cd_str = self.condition_pt.search(stm).group().strip()
             cd_res = self.__condition_parser__(cd_str)
-            return stm.replace(cd_str, cd_res[0]), cd_res[1]
+            return stm.replace(cd_str, cd_res[0]).replace('if', '').replace(':', '').strip(), cd_res[1]
 
     def __elif_parser__(self, stm: str):
         res = self.elif_pattern.match(stm)
@@ -258,7 +268,7 @@ class TemplateParser:
         else:
             cd_str = self.condition_pt.search(stm).group().strip()
             cd_res = self.__condition_parser__(cd_str)
-            return stm.replace(cd_str, cd_res[0]), cd_res[1]
+            return stm.replace(cd_str, cd_res[0]).replace('elif', '').replace(':', '').strip(), cd_res[1]
 
     def __else_parser__(self, stm: str):
         res = self.else_pattern.match(stm)
@@ -369,6 +379,9 @@ class TPVariable:
     def __str__(self):
         return '; '.join([str(self.v_type), self.name, str(self.token), str(self.value)])
 
+    def __repr__(self):
+        return self.__str__()
+
 
 class TPToken:
     def __init__(self, call_stack):
@@ -380,6 +393,5 @@ class TPToken:
 
 if __name__ == '__main__':
     tp = TemplateParser('templates/test.c')
-    tp.test()
     for stm, indent in tp.parse()[0]:
-        print(stm, indent)
+        print(stm.stm, stm.parsed, indent)

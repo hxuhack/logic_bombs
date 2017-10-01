@@ -1,17 +1,22 @@
 int main() {
-for {<index>}, {<var>} in {<enumerate(vars)>}:
     {%
+        for {<index>}, {<var>} in {<enumerate(vars)>}:
+            if {<index>} >= {<2d>}:
+                printf("%d", {<index>});
+            elif {<index>} == {<1d>}:
+                scanf("%d", &test{<var>});
+            else:
+                {<index>} = {<5d>}
+                NULL; // {<index>}
+    %}
+}
 
-            printf("%d", {<index>});
-            if {<index>} >= {<4d>}:
+
+
+for {<index>}, {<var>} in {<enumerate(vars)>}:
+            if {<index>} >= {<2d>}:
                 hhh {<var>}
             elif {<index>} == {<3d>} and {<var>} == {<"test">}:
                 ttt {<var>}
             else:
                 ppp {<var>}
-        
-        {<index>} = {<3d>}
-        while {<len(vars)>} > {<index>}:
-            www {<index>}
-    %}
-}
