@@ -6,7 +6,7 @@ import logging
 class TemplateParser:
     statement_pattern = re.compile(r'[ \t\r]*\{\%(\%+[^}]|[^%])+\%\}')
 
-    condition_str = r'((not +)*\{\<(\>+[^}]|[^>])+\>\} +(\>|\<|\>\=|\<\=|\=\=|\+|\-|\*|\/|and|or|is) +)*((not +)?\{\<(\>+[^}]|[^>])+\>\} *)'
+    condition_str = r'((not +)*\{\<(\>+[^}]|[^>])+\>\} +(\>|\<|\>\=|\<\=|\=\=|\+|\-|\*|\/|and|or|is|in|not)+ +)*((not +)?\{\<(\>+[^}]|[^>])+\>\} *)'
     condition_token = r'((not +)*\{\<(\>+[^}]|[^>])+\>\})'
     func_call_token = r'\{\<(\>+[^}]|[^>])+\>\}'
 
@@ -230,7 +230,8 @@ class TemplateParser:
                     unpacked_vars.append(i[2:-2].strip())
 
             cd_res = self.__condition_parser__(tokens[-1].strip())
-            return stm.replace(tokens[-1], cd_res[0]), unpacked_vars, cd_res[1]
+            key = next(iter(cd_res[1]))
+            return stm.replace(tokens[-1], cd_res[0]), unpacked_vars, cd_res[1][key]
 
     def __while_parser__(self, stm: str):
         res = self.while_pattern.match(stm)
