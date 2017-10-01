@@ -81,7 +81,7 @@ class ScriptRunner:
                 is_branch = False
 
             if stm.s_type == 'str':
-                print(self.__parser__(*stm.parsed))
+                # print(self.__parser__(*stm.parsed))
                 results.append(self.__parser__(*stm.parsed))
                 i += 1
             elif stm.s_type == 'for':
@@ -90,7 +90,7 @@ class ScriptRunner:
                     raise SyntaxError(stm.stm)
                 tmp_iter = self.evaluate(stm.parsed[-1])
                 for tmp in tmp_iter:
-                    print('tmp', tmp)
+                    # print('tmp', tmp)
                     self.variables.append({key: tmp[index] for index, key in enumerate(stm.parsed[1])})
                     results.extend(self.run(stms, i + 1, base_indent + 1)[1])
                     self.variables.pop(-1)
@@ -114,7 +114,7 @@ class ScriptRunner:
                     end, res = self.run(stms, i + 1, base_indent + 1, not branch_true)
                     results.extend(res)
                 i = self.__step_out__(stms, in_index + 1, base_indent)
-                print(i)
+                # print(i)
             elif stm.s_type == 'elif':
                 in_index = i
                 if not is_branch:
@@ -134,7 +134,6 @@ class ScriptRunner:
                     end, res = self.run(stms, i + 1, base_indent + 1, used_to_be_true)
                     results.extend(res)
                 i = self.__step_out__(stms, in_index + 1, base_indent)
-                print(i)
             else:
                 raise RuntimeError('Unknow type ' + str(stm))
         return i, results

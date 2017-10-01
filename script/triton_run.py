@@ -4,6 +4,8 @@ from collections import OrderedDict
 from copy import deepcopy
 from termcolor import colored
 
+import sys
+
 
 class ElfAddrs:
     def __init__(self, filename):
@@ -237,11 +239,14 @@ class TritonExecution:
 
         print colored('Before run program', 'yellow')
         print runProgram()
+        print colored('Finished running', 'yellow')
 
 
 if __name__ == '__main__':
     # Set architecture
     setArchitecture(ARCH.X86_64)
-
-    elfAddrs = ElfAddrs("programs/o.out")
-    TritonExecution.run('000000000000', elfAddrs, ["main", "check"])
+    # print(sys.argv)
+    # pg_path = sys.argv[1]
+    elfAddrs = ElfAddrs('../ConcTriton/programs/o.out')
+    init_input = '0' * 5
+    TritonExecution.run(init_input, elfAddrs, ['sym_checker', 'check', 'main'])

@@ -43,10 +43,12 @@ def run_symexe(path, argv_size=2, show_bytes=True, show_model=False):
         else:
             print colored('[+] New Input: ' + res, 'green')
 
+    errored = False
     for err in pg.errored:
         print colored('[-] Error: ' + repr(err), 'red')
+        errored = True
 
-    return results
+    return results, errored
 
 
 if __name__ == '__main__':
@@ -57,6 +59,7 @@ if __name__ == '__main__':
     parser.add_argument("-l", "--length", type=int, help="Stdin size")
     parser.add_argument("-r", "--run_program", help="Run program after analysis", action="store_true")
     parser.add_argument("-s", "--summary", type=int, help="Display summary information")
+    parser.add_argument("-e", "--expected", type=int, help="Expected amount of results")
     parser.add_argument("file_path", type=str, help="Binary path")
     args = parser.parse_args()
 
@@ -77,9 +80,9 @@ if __name__ == '__main__':
 
     print colored('[*] Analysing...', 'cyan')
     if args.length is None:
-        results = run_symexe(bin_path, 10, show_model=args.constraints)
+        results, errored = run_symexe(bin_path, 10, show_model=args.constraints)
     else:
-        results = run_symexe(bin_path, args.length, show_model=args.constraints)
+        results, errored = run_symexe(bin_path, args.length, show_model=args.constraints)
     print colored('[*] Analysis completed\n', 'green')
 
     tests = []
@@ -110,4 +113,20 @@ if __name__ == '__main__':
                 color = 'yellow'
             else:
                 color = 'red'
-            print colored('Coverage: ' + '%.2f%%\n' % coverage, color)
+        if errored:
+            exit(-1)
+        else:
+            tests = set(tests)
+            if args.expected is None:
+                standard = {0, 1}
+            elif args.expected == 2:
+                standard = {0, 1}
+            elif args.expected == 1:
+                standard = {0, }
+            else:
+                exit(-1)
+
+            for i in tests:
+                if i in standard:
+                    standard.remove(i)
+            exit(2 - len(standard))
