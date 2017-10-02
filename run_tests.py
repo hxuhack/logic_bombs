@@ -3,6 +3,7 @@ import re
 import subprocess
 import template_parser as tpp
 import script_runner as sr
+import shutil
 
 
 def ATKrun(cmds_tp, tp_path, prefix, func_name='sym_checker', default_stdin_len=10):
@@ -55,6 +56,7 @@ def ATKrun(cmds_tp, tp_path, prefix, func_name='sym_checker', default_stdin_len=
             sruner = sr.ScriptRunner(init_vars)
             res = sruner.run(tp.parse()[0])
             res = '\n'.join(res[1])
+            print(res)
             res = tp.replace([res, ])
             res = '\n'.join([content, res])
             outname = file if len(file.split('.')) == 1 else file.split('.')[0]
@@ -76,6 +78,8 @@ def ATKrun(cmds_tp, tp_path, prefix, func_name='sym_checker', default_stdin_len=
                 rt_vale = p.wait()
                 test_results[fp] = rt_vale
             elif prefix == 'klee':
+                if not os.path.exists('klee'):
+                    os.mkdir('klee')
                 with open('klee/a.c', 'w') as f:
                     f.write(res)
 
@@ -92,7 +96,6 @@ def ATKrun(cmds_tp, tp_path, prefix, func_name='sym_checker', default_stdin_len=
 
                 p = subprocess.Popen(cmds[1].split(' '))
                 rt_vale = p.wait()
-
                 p = subprocess.Popen(cmds[2].split(' '))
                 rt_vale = p.wait()
                 test_results[fp] = rt_vale
@@ -104,11 +107,11 @@ if __name__ == '__main__':
                "python script/angr_run.py -r -l%d angr/%s.out"]
 
     cmds_tp_klee = [
-        "clang -Iinclude -emit-llvm -o klee/%s.bc -c -g klee/a.c",
+        "clang -Iinclude -Lbin -emit-llvm -o klee/%s.bc -c -g klee/a.c -lpthread -lutils -lcrypto",
         "klee klee/%s.bc",
-        "python3 script/klee_run -e%d"
+        "python3 script/klee_run.py -e%d"
     ]
 
-    tp_path = 'templates/angr.c'
+    tp_path = 'templates/klee.c'
 
-    print(ATKrun(cmds_tp, tp_path))
+    print(ATKrun(cmds_tp_klee, tp_path, 'klee'))

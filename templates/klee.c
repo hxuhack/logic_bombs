@@ -1,12 +1,11 @@
 int main() {
-    {<defs>}
     {%
+        for {<type>}, {<var>} in {<vp>}:
+            {<type>} {<var>};
+
         for {<var>} in {<vars>}:
             klee_make_symbolic(&{<var>}, sizeof({<var>}), "{<var>}");
 
-        for {<exp>} in {<exceptions>}:
-            klee_assume({<exp>});
-
+        return sym_checker({<params>});
     %}
-    sym_checker({<params>});
 }

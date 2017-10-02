@@ -1,6 +1,6 @@
 {
-    "global": {
-        "CC": "gcc",
+    "general": {
+        "CC": "gcc"
     },
 
     "crypto_lib": {

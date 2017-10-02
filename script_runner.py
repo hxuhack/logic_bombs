@@ -2,7 +2,7 @@ import os
 import re
 import template_parser as tpp
 from copy import copy
-from IPython import embed
+
 
 allowed_funcs = ['len', 'enumerate', 'range', 'not']
 
