@@ -1,6 +1,6 @@
 # Forrest Runner
 ## **NOTE**
-Huge modification!
+Now we support a **Pythonic** grammar for template generation!!!
 
 ## Motivation
 
@@ -11,6 +11,40 @@ Huge modification!
 ## How to use
 
 This core of this tool is the **config.py**, you can define a lot of rules for compiling, running and dependencies. This tool is intended for C program unit symbolic test, all test files should NOT contain main function. The main function should be generated from the templates.
+
+## PTL (Pythonic Template Language)
+
+### At a glance
+
+PTL is a python-like script language to generate a readable file from template. Here is an simple example:
+
+```c
+// Template we used
+int main() {
+    {%
+        for {<index>}, {<var>} in {<enumerate(vars)>}:
+            if {<index>} >= {<2d>}:
+                printf("%d", {<index>});
+            elif {<index>} == {<1d>}:
+                scanf("%d", &test{<var>});
+            else:
+                {<index>} = {<5d>}
+                NULL; // {<index>}
+    %}
+}
+```
+
+```c
+// After running
+int main() {
+NULL; // 5
+scanf("%d", &test2);
+printf("%d", 2);
+printf("%d", 3);
+}
+```
+
+
 
 ## How to convert my program
 

@@ -174,10 +174,11 @@ class ScriptRunner:
 if __name__ == '__main__':
     tp = tpp.TemplateParser('templates/test.c')
     sr = ScriptRunner(dict(vars=[1,2,3,5]))
-    # print(tp.parse()[0])
+
     res = sr.run(tp.parse()[0], 0)
     print('\n==================================\n')
-    print('\n'.join(res[1]))
+    res = '\n'.join(res[1])
+    print(tp.replace([res, ]))
     # for stm, indent in tp.parse()[0]:
     #     stm = stm.parsed
     #     print(stm)

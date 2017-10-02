@@ -69,6 +69,12 @@ class TemplateParser:
             res.append([(self.__statement_parser__(s[0].strip()), s[1]) for s in stms])
         return res
 
+    def replace(self, replace_texts: list):
+        res = self.contents
+        for index, s in enumerate(self.statement_pattern.finditer(self.contents)):
+            res = res.replace(s.group(), replace_texts[index])
+        return res
+
     def __double_bracket_replace__(self, stm: str, params: dict):
         vars_raw = [i.group() for i in self.var_pattern.finditer(stm)]
         vars_dict = {}
