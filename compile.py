@@ -7,8 +7,11 @@ import shutil
 from template_parser import TemplateParser
 from termcolor import colored
 
+
+
+
 class Compile:
-    sign_pattern = re.compile(r'#([a-zA-Z0-9_ ]+)$')
+    sign_pattern = re.compile(r'#([\w\d ]+(\{[\w\d ]+\})?$')
 
     @staticmethod
     def parse_dependencies(cmd: str, dependencies: dict, root='.', iters_on=None, ands_on=None):

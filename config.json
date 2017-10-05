@@ -1,9 +1,6 @@
 {
-    "general": {
+    "global": {
         "CC": "gcc",
-        "optimization": null,
-        "PIPE": true,
-        "clear": false
     },
 
     "crypto_lib": {
@@ -12,8 +9,8 @@
             "bin"
         ],
         "cmd": [
-            "{CC} -I{INCLUDE} -c -Wall -Werror -fpic -o tmp/{&FILENAME}.o {!FILENAME} #SINGLE",
-            "{CC} -shared -o bin/lib{OUTPUT}.so {!INPUTS} #BATCH"
+            "{CC} -I{INCLUDE} -c -Wall -Werror -fpic -o tmp/{&FILENAME}.o {!FILENAME}",
+            "{CC} -shared -o bin/lib{OUTPUT}.so {!INPUTS}"
         ],
         "dependencies": {
             "FILENAME": ["lib/sha1.c", "lib/aes.c", "lib/crypto_utils.c"],
