@@ -5,6 +5,8 @@ int main() {
                 printf("%d", {<index>});
             elif {<index>} == {<1d>}:
                 scanf("%d", &test{<var>});
+                {<index>} = {<index>} + {<1d>}
+                {<var>} \= {<index>};
             else:
                 {<index>} = {<5d>}
                 NULL; // {<index>}

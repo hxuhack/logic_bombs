@@ -16,6 +16,7 @@ class TemplateParser:
     else_pattern = re.compile(r'else *:$')
     while_pattern = re.compile(r'while +(%s):$' % condition_str)
     exp_pattern = re.compile(r'\{\<([\w][\w\d]*)\>\} +\= +(%s)' % condition_str)
+    escape_equal_pt = re.compile(r'\{\<([\w][\w\d]*)\>\} +\\\= +(%s)' % condition_str)
 
     func_pattern = re.compile(r'[\w][\w\d]*\(')
     param_list_pattern = re.compile(r'([\w][\w\d]*\(.*\)|[^(, ]+)')
@@ -73,6 +74,7 @@ class TemplateParser:
         res = self.contents
         for index, s in enumerate(self.statement_pattern.finditer(self.contents)):
             res = res.replace(s.group(), replace_texts[index])
+        res = res.replace(r'\=', '=')
         return res
 
     def __double_bracket_replace__(self, stm: str, params: dict):
@@ -222,7 +224,10 @@ class TemplateParser:
         return stm, vars_table
 
     def __exp_parser__(self, stm: str):
-        res = self.exp_pattern.search(stm)
+        res = self.escape_equal_pt.match(stm)
+        if res:
+            return None
+        res = self.exp_pattern.match(stm)
         if not res:
             return None
         else:
@@ -400,4 +405,4 @@ class TPToken:
 if __name__ == '__main__':
     tp = TemplateParser('templates/test.c')
     for stm, indent in tp.parse()[0]:
-        print(stm.stm, stm.parsed, indent)
+        print(stm.s_type, stm.stm, stm.parsed, indent)

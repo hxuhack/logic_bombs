@@ -1,8 +1,12 @@
 int main(int argc, char** argv) {
-    {<defs>}
     {%
-        for {<var>} in {<vars>}:
-            {<var>} = atoi(argv[1]);
+        for {<type>}, {<var>} in {<vp>}:
+            {<type>} {<var>};
+
+        for {<index>}, {<var>} in {<enumerate(vars)>}:
+            {<index>} = {<index>} + {<1d>}
+            {<var>} \= atoi(argv[{<index>}]);
+
+        return sym_checker({<params>});
     %}
-    sym_checker({<params>});
 }

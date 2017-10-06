@@ -8,8 +8,6 @@ from template_parser import TemplateParser
 from termcolor import colored
 
 
-
-
 class Compile:
     sign_pattern = re.compile(r'#([\w\d ]+(\{[\w\d ]+\})?$')
 

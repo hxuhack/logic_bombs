@@ -45,7 +45,7 @@ class ScriptRunner:
 
     def run(self, stms: list, index=0, expected_indent=None, ignore=False):
         """
-            stm: 
+            stm:
         """
         # Stop iteration
         if index == len(stms):
@@ -175,7 +175,7 @@ if __name__ == '__main__':
     tp = tpp.TemplateParser('templates/test.c')
     sr = ScriptRunner(dict(vars=[1,2,3,5]))
 
-    res = sr.run(tp.parse()[0], 0)
+    res = sr.run(tp.parse()[0])
     print('\n==================================\n')
     res = '\n'.join(res[1])
     print(tp.replace([res, ]))
