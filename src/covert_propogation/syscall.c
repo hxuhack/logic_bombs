@@ -4,9 +4,10 @@ TOY:
 #include <string.h> 
 #include "utils.h"
 
-int main(int argc, char** argv){
+#include "a_tester.h"
 
-    int j,i=atoi(argv[1]); 
+int sym_checker(int i) {
+    int j = i;
     char file[] = "tmp.covpro";
     char cmd[256];
     sprintf(cmd, "echo %d > %s\n", i, file); 
@@ -16,12 +17,11 @@ int main(int argc, char** argv){
     fp = fopen(file, "r");
     fscanf(fp,"%d",&j);
     fclose(fp);
+    remove(file);
 
     if(j == 7){
-        Bomb();
+        return BOMB_ENDING;
     } else{
-        Foobar();
+        return NORMAL_ENDING;
     }
-
-    remove(file);
 }

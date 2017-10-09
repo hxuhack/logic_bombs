@@ -8,10 +8,9 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
-#include "utils.h"
+#include "a_tester.h"
 
-int main(int argc, char **argv)
-{
+int sym_checker() {
    FILE *cpuinfo = fopen("/proc/cpuinfo", "rb");
    char *arg = 0;
    size_t size = 0;
@@ -28,8 +27,7 @@ int main(int argc, char **argv)
    fclose(cpuinfo);
 
    if(trigger)
-	Bomb();
+    return BOMB_ENDING;
    else
-	Foobar();
-   return 0;
+    return NORMAL_ENDING;
 }

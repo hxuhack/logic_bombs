@@ -4,13 +4,14 @@ Solution: 7
 */
 #include <string.h> 
 #include "utils.h"
+#include "a_tester.h"
 
-int main(int argc, char** argv){
-    srand(atoi(argv[1]));
+int sym_checker(int i) {
+    srand(i);
     int r = rand()%100;
     if(r == 77){
-        Bomb();
+        return BOMB_ENDING;
     }else{
-        Foobar();
+        return NORMAL_ENDING;
     }
 }

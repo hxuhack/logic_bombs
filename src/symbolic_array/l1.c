@@ -1,12 +1,12 @@
 #include<stdio.h>
 #include"utils.h"
+#include "a_tester.h"
 
-int main(int argc, char** argv){
+int sym_checker(int i) {
     int ary[] ={1,2,3,4,5};
-    int x = atoi(argv[1]);
-    if(ary[x] == 5){
-       	Bomb();
+    if(ary[i] == 5){
+        return BOMB_ENDING;
      }
     else
-	Foobar();
+	    return NORMAL_ENDING;
 }

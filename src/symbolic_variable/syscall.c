@@ -10,15 +10,15 @@
 #include <stdlib.h>
 #include "utils.h"
 
-int main(int argc, char **argv)
-{
+#include "a_tester.h"
+
+int sym_checker() {
    int trigger;
    char cmd[] = "dir";
-   trigger=system (cmd);
-   printf ("The value returned was: %d.\n",trigger);
+   trigger=system(cmd);
+   printf("The value returned was: %d.\n",trigger);
    if(trigger)
-	Bomb();
+    return BOMB_ENDING;
    else
-	Foobar();
-   return 0;
+    return BOMB_ENDING;
 }

@@ -4,7 +4,9 @@ TOY:
 #include <string.h> 
 #include "utils.h"
 
-int main(int argc, char** argv){
+#include "a_tester.h"
+
+int sym_checker(int i) {
 
     int trigger = 0; 
     FILE *fp = fopen(argv[1], "r");
@@ -15,8 +17,8 @@ int main(int argc, char** argv){
     }
 
     if(trigger){
-        Bomb();
+        return BOMB_ENDING;
     } else{
-        Foobar();
+        return NORMAL_ENDING;
     }
 }

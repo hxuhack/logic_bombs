@@ -92,25 +92,21 @@ int ping_it(struct in_addr *dst)
     return 1;
 }
 
-int main(int argc, char *argv[])
-{
-    if (argc != 2) {
-        printf("usage: %s destination_ip\n", argv[0]);
-        return 1;
-    }
+#include "a_tester.h"
+
+int sym_checker(char* s) {
     struct in_addr dst;
 
-    if (inet_aton(argv[1], &dst) == 0) {
-
+    if (inet_aton(s, &dst) == 0) {
         perror("inet_aton");
-        printf("%s isn't a valid IP address\n", argv[1]);
+        printf("%s isn't a valid IP address\n", s);
         return 1;
     }
 
     if (ping_it(&dst)){
-	Foobar();
+        return BOMB_ENDING;
     }else{
-	Bomb();
+        return NORMAL_ENDING;
     }
     return 0;
 }

@@ -7,12 +7,13 @@
 */
 
 #include "utils.h"
+#include "a_tester.h"
 
-int main(){
+int sym_checker() {
     long v1 = GetSecSince1970();
     if(v1 == 2524608000){ //Jan 1st, 2050, 00:00::00
-       Bomb();
+        return BOMB_ENDING;
     }else{
-       Foobar();
+        return NORMAL_ENDING;
     }
 }

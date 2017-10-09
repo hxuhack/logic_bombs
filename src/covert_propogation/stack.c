@@ -3,19 +3,18 @@ TOY:
 */
 #include <string.h> 
 #include "utils.h"
+#include "a_tester.h"
 
 #define push(v) asm volatile ("push %0"::"m"(v))
 #define pop(v) asm volatile ("pop %0" :: "m"(v))
 
-int main(int argc, char** argv){
-
-    int j,i=atoi(argv[1]); 
+int sym_checker(int i) {
+    int j = i;
     push(i); 
-    //push(1); 
     pop (j);
     if(j == 7){
-        Bomb();
+        return BOMB_ENDING;
     } else{
-        Foobar();
+        return NORMAL_ENDING;
     }
 }

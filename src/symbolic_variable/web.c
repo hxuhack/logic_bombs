@@ -7,8 +7,9 @@
 */
 #include "utils.h"
 
-int main(int argc, char** argv)
-{
+#include "a_tester.h"
+
+int sym_checker() {
     int socket;
     char receiver[256];
     char get_msg[BUFSIZ] = "GET /index.html HTTP/1.1\r\nHost:cudroid.com\r\n\r\n";
@@ -27,12 +28,11 @@ int main(int argc, char** argv)
     while(recv(socket,receiver,256,0)){
         if(strstr(receiver, "Hui"))
   	    trigger = 0;
-    	//printf("%s", receiver);
     }
     if(trigger)
-	Bomb();
+	    return BOMB_ENDING;
     else
-	Foobar();
+	    return NORMAL_ENDING;
     close(socket);
     return 0;
 }

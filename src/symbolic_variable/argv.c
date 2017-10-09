@@ -6,10 +6,12 @@
 
 #include "utils.h"
 
-int main(int argc, char** argv){
+#include "a_tester.h"
+
+int sym_checker(char** argv) {
     if(strlen(argv[1])==10){
-       Bomb();
+        return BOMB_ENDING;
     }else{
-       Foobar();
+        return NORMAL_ENDING;
     }
 }

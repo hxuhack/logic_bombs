@@ -2,13 +2,14 @@
 TOY:
 */
 #include <string.h> 
+#include <math.h>
 #include "utils.h"
+#include "a_tester.h"
 
-int main(int argc, char** argv){
-    int i = atoi(argv[1]);
+int sym_checker(int i) {
     if(pow(i, 2) == -1){
-        Bomb();
+        return BOMB_ENDING;
     }else{
-        Foobar();
+        return NORMAL_ENDING;
     }
 }

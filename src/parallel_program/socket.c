@@ -3,6 +3,7 @@ TOY:
 */
 #include "utils.h"
 #include <unistd.h> 
+#include "a_tester.h"
 
 int server(){
     int server_sockfd,client_sockfd;  
@@ -83,7 +84,7 @@ int client_send(char char_send){
     return atoi(char_recv);
 }
 
-int main(int argc, char** argv){
+int sym_checker(char* s) {
     int pid1,pid2,i=0;
     if((pid1=fork())==-1)
 	return -1;
@@ -94,12 +95,12 @@ int main(int argc, char** argv){
 	    return -1;
         if(pid2 == 0){
             sleep(1);
-            i=client_send(argv[1][0]); 
+            i=client_send(s[0]); 
             printf("i=%d\n",i);
     	    if(i==7){
-       		Bomb();
+                return BOMB_ENDING;
     	    }else{
-        	Foobar();
+                return NORMAL_ENDING;
     	    }
         }
     }

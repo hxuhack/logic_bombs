@@ -34,7 +34,7 @@ def ATKrun(cmds_tp, tp_path, prefix, func_name='sym_checker', default_stdin_len=
 
     func_pattern = re.compile(r'int[ \t\n]+%s\(([^)]*)\);*' % func_name)
 
-    for root, dirs, files in os.walk('src'):
+    for root, dirs, files in os.walk('src/external_functions'):
         for file in files:
             cmds = []
             fp = os.path.join(root, file)
@@ -103,15 +103,15 @@ def ATKrun(cmds_tp, tp_path, prefix, func_name='sym_checker', default_stdin_len=
     return test_results
 
 if __name__ == '__main__':
-    cmds_tp_angr = ["gcc -Iinclude -Lbin -o angr/%s.out -xc - -lutils -lpthread -lcrypto",
+    cmds_tp_angr = ["gcc -Iinclude -Lbin -o angr/%s.out -xc - -lutils -lpthread -lcrypto -lm",
                "python script/angr_run.py -r -l%d angr/%s.out"]
 
     cmds_tp_klee = [
-        "clang -Iinclude -Lbin -emit-llvm -o klee/%s.bc -c -g klee/a.c -lpthread -lutils -lcrypto",
+        "clang -Iinclude -Lbin -emit-llvm -o klee/%s.bc -c -g klee/a.c -lpthread -lutils -lcrypto -lm",
         "klee klee/%s.bc",
         "python3 script/klee_run.py -e%d"
     ]
 
-    tp_path = 'templates/klee.c'
+    tp_path = 'templates/angr.c'
 
-    print(ATKrun(cmds_tp_klee, tp_path, 'klee'))
+    print(ATKrun(cmds_tp_angr, tp_path, 'angr'))
