@@ -44,7 +44,9 @@ void run_command(char *cmd, char *detphrase, int dp_length){
     }
 }
 
-int main(int argc, const char * argv[]) {
+#include "a_tester.h"
+
+int sym_checker() {
     number_of_cores();
     //run the dmesg command and pipe to find hypervisor, 34 is how long string should be.
     run_command("dmesg |grep -i hypervisor", "[   0.000000 Hypervisor detected]", 34);
@@ -53,10 +55,11 @@ int main(int argc, const char * argv[]) {
     /*If vm_score is less than 3, we are likely running on physical hardware*/
     if(vm_score < 3){
         printf("No virtual machine detected\n");
-        Foobar();
+        return NORMAL_ENDING;
     }
     else{
         printf("Virtual Machine detected\n");
+        return BOMB_ENDING;
     }
     return 0;
 }

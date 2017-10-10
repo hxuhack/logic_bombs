@@ -14,11 +14,11 @@ int sym_checker(int i) {
     flag_1:
         return NORMAL_ENDING;
     flag_2:
-        Foobar();
+        return NORMAL_ENDING;
     flag_3:
-        Foobar();
+        return NORMAL_ENDING;
     flag_4:
-        Foobar();
+        return NORMAL_ENDING;
     flag_5:
-    	return 0;
+        return NORMAL_ENDING;
 }

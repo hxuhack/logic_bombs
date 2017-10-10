@@ -4,14 +4,16 @@
 #include <unistd.h>
 #include "utils.h"
 
-int main(int argc, char**argv){
+#include "a_tester.h"
+
+int sym_checker(char* s) {
     int pid, fd[2];
     pipe(fd);
     if ((pid = fork()) == -1)
         return -1;
     if (pid == 0) {
         close(fd[0]);
-        write(fd[1], argv[1], sizeof(argv[1]));
+        write(fd[1], s, sizeof(s));
         wait(NULL);
     }
     else {

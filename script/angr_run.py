@@ -24,6 +24,8 @@ def run_symexe(path, argv_size=2, show_bytes=True, show_model=False):
     pg = p.factory.path_group(state)
 
     while len(pg.active) > 0:
+        if len(pg.errored) > 0:
+            break
         pg.step()
 
     print colored('[*] Paths found: ' + str(len(pg.deadended)), 'white')

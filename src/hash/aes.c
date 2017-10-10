@@ -6,23 +6,24 @@ TOY:
 #include "aes.h"
 #include "utils.h"
 
-void aes_print(uint8_t* str)
-{
+void aes_print(uint8_t* str) {
     unsigned char i;
     for(i = 0; i < 16; ++i)
         printf("%.2x", str[i]);
     printf("\n");
 }
 
-int main(int argc, char** argv){
-    if(strlen(argv[1]) != 32){
+#include "a_tester.h"
+
+int sym_checker(char* s) {
+    if(strlen(s) != 32){
         printf("please input the 128-bit keys\n");
 	return -1;
     }
 
     uint8_t key[16];
 
-    sscanf(argv[1],
+    sscanf(s,
         "%2" SCNx8 "%2" SCNx8
         "%2" SCNx8 "%2" SCNx8
         "%2" SCNx8 "%2" SCNx8

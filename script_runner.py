@@ -47,6 +47,9 @@ class ScriptRunner:
         """
             stm:
         """
+        for stm, index in stms:
+            # pass
+            print(stm, index)
         # Stop iteration
         if index == len(stms):
             return ''
@@ -171,8 +174,8 @@ class ScriptRunner:
 
 
 if __name__ == '__main__':
-    tp = tpp.TemplateParser('templates/test.c')
-    sr = ScriptRunner(dict(vars=[1,2,3,5]))
+    tp = tpp.TemplateParser('templates/angr.c')
+    sr = ScriptRunner(dict(vp=[('int', 'a'), ('char*', 'b'), ('char**', 'c'), ('float', 'd')], params=', '.join(['a', 'b', 'c', 'd'])))
 
     res = sr.run(tp.parse()[0])
     print('\n==================================\n')

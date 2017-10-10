@@ -4,8 +4,10 @@ TOY:
 #include "sha1.h"
 #include "utils.h"
 
-int main(int argc, char** argv){
-    int plaintext = atoi(argv[1]);
+#include "a_tester.h"
+
+int sym_checker(int i) {
+    int plaintext = i;
     unsigned cipher[5];
     cipher[0] = 0X77de68da;
     cipher[1] = 0Xecd823ba;
@@ -14,8 +16,8 @@ int main(int argc, char** argv){
     cipher[4] = 0X106e83bb;
 
     if(SHA1_COMP(plaintext,cipher)==0){
-        Bomb();
+        return BOMB_ENDING;
     }else{
-        Foobar();
+        return NORMAL_ENDING;
     }
 }

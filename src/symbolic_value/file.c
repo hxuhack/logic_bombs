@@ -6,19 +6,18 @@ TOY:
 
 #include "a_tester.h"
 
-int sym_checker(int i) {
+int sym_checker(char* s) {
 
-    int trigger = 0; 
-    FILE *fp = fopen(argv[1], "r");
-    if(fp != NULL)
-    {
+    int trigger = 0;
+    FILE *fp = fopen(s, "r");
+    if(fp != NULL) {
 	trigger = 1;
         fclose(fp);
     }
 
-    if(trigger){
+    if(trigger) {
         return BOMB_ENDING;
-    } else{
+    } else {
         return NORMAL_ENDING;
     }
 }
