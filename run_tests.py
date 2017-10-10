@@ -68,7 +68,8 @@ def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='sym_checker', default_
                 print(res)
                 res = '\n'.join([content, res])
                 outname = file if len(file.split('.')) == 1 else file.split('.')[0]
-
+                with open('tmp/' + file, 'w') as f:
+                        f.write(res)
                 if prefix == 'angr':
                     cmds.append(cmds_tp[0] % outname)
                     cmds.append(cmds_tp[1] % (default_stdin_len, outname))
@@ -141,7 +142,7 @@ if __name__ == '__main__':
         'src/parallel_program',
         'src/symbolic_array',
         'src/symbolic_jump',
-        'src/symbolic_value',
+        # 'src/symbolic_value',
         # 'symbolic_variable',
     ]
 
