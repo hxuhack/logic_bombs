@@ -1,8 +1,8 @@
 int main(int argc, char** argv) {
     {%
         for {<type>}, {<var>} in {<vp>}:
-            // if {<str(type)>} != {<"char**">}:
-            {<type>} {<var>};
+            if {<str(type)>} != {<"char**">}:
+                {<type>} {<var>};
 
         {<index>} = {<0d>}
         for {<type>}, {<var>} in {<vp>}:

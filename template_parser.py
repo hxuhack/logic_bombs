@@ -6,7 +6,7 @@ import logging
 class TemplateParser:
     statement_pattern = re.compile(r'[ \t\r]*\{\%(\%+[^}]|[^%])+\%\}')
 
-    condition_str = r'((not +)*\{\<(\>+[^}]|[^>])+\>\} +(\>|\<|\>\=|\<\=|\=\=|\+|\-|\*|\/|and|or|is|in|not)+ +)*((not +)?\{\<(\>+[^}]|[^>])+\>\} *)'
+    condition_str = r'((not +)*\{\<(\>+[^}]|[^>])+\>\} +(\>|\<|\>\=|\<\=|\=\=|!=|\+|\-|\*|\/|and|or|is|in|not)+ +)*((not +)?\{\<(\>+[^}]|[^>])+\>\} *)'
     condition_token = r'((not +)*\{\<(\>+[^}]|[^>])+\>\})'
     func_call_token = r'\{\<(\>+[^}]|[^>])+\>\}'
 

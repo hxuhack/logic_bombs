@@ -14,19 +14,24 @@ class ScriptRunner:
         self.inits = init_values
         self.variables = [self.inits, ]
 
-    def __get_var__(self, key: str):
+    def __get_var__(self, key: str, ret_table=False):
         flag = False
         res = None
+        v_table = {}
         for v_table in reversed(self.variables):
             try:
                 res = v_table[key]
                 flag = True
+                break
             except KeyError:
                 continue
         if not flag:
             raise KeyError(key, self.variables)
         else:
-            return res
+            if ret_table:
+                return res, v_table
+            else:
+                return res
 
     def __parser__(self, stm: str, token_tables: dict, quotes: bool=True):
         cp_table = copy(token_tables)
@@ -102,7 +107,12 @@ class ScriptRunner:
                     self.variables.pop(-1)
                 i = self.__step_out__(stms, in_index + 1, base_indent)
             elif stm.s_type == 'exp':
-                self.variables[-1][stm.parsed[1]] = eval(self.__parser__('='.join(stm.parsed[0].split('=')[1:]), stm.parsed[-1]))
+                res = eval(self.__parser__('='.join(stm.parsed[0].split('=')[1:]), stm.parsed[-1]))
+                try:
+                    val, table = self.__get_var__(stm.parsed[1], ret_table=True)
+                    table[stm.parsed[1]] = res
+                except KeyError:
+                    self.variables[-1][stm.parsed[1]] = res
                 i += 1
             elif stm.s_type == 'if':
                 in_index = i
