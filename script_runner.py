@@ -4,7 +4,7 @@ import template_parser as tpp
 from copy import copy
 
 
-allowed_funcs = ['len', 'enumerate', 'range', 'not']
+allowed_funcs = ['len', 'enumerate', 'range', 'not', 'str']
 
 
 class ScriptRunner:
@@ -28,11 +28,13 @@ class ScriptRunner:
         else:
             return res
 
-    def __parser__(self, stm: str, token_tables: dict):
+    def __parser__(self, stm: str, token_tables: dict, quotes: bool=True):
         cp_table = copy(token_tables)
         for key in cp_table:
             # print("TKT", str([(key, str(cp_table[key])) for key in token_tables]))
             res = self.evaluate(cp_table[key])
+            if type(res) is str and quotes:
+                res = '"%s"' % res
             cp_table[key] = res
         return stm.format(**cp_table)
 
@@ -43,13 +45,13 @@ class ScriptRunner:
             i += 1
         return i
 
-    def run(self, stms: list, index=0, expected_indent=None, ignore=False):
+    def run(self, stms: list, index=0, expected_indent=None):
         """
             stm:
         """
-        for stm, index in stms:
+        # for stm, index in stms:
             # pass
-            print(stm, index)
+            # print(stm, index)
         # Stop iteration
         if index == len(stms):
             return ''
@@ -62,12 +64,6 @@ class ScriptRunner:
 
         results = []
         base_indent = stms[index][1] if expected_indent is None else expected_indent
-        if ignore:
-            i = 0
-            for i in range(index, len(stms)):
-                if stms[i][1] >= base_indent:
-                    continue
-            return i, []
 
         i = index
         while i < len(stms):
@@ -85,7 +81,7 @@ class ScriptRunner:
 
             if stm.s_type == 'str':
                 # print(self.__parser__(*stm.parsed))
-                results.append(self.__parser__(*stm.parsed))
+                results.append(self.__parser__(*stm.parsed, quotes=False))
                 i += 1
             elif stm.s_type == 'for':
                 in_index = i
@@ -111,10 +107,11 @@ class ScriptRunner:
             elif stm.s_type == 'if':
                 in_index = i
                 is_branch = True
-                b_res = eval(self.__parser__(stm.parsed[0], stm.parsed[-1]))
+                b_res = self.__parser__(stm.parsed[0], stm.parsed[-1])
+                b_res = eval(b_res)
                 used_to_be_true, branch_true = [b_res, ] * 2
                 if branch_true:
-                    end, res = self.run(stms, i + 1, base_indent + 1, not branch_true)
+                    end, res = self.run(stms, i + 1, base_indent + 1)
                     results.extend(res)
                 i = self.__step_out__(stms, in_index + 1, base_indent)
                 # print(i)
@@ -126,7 +123,7 @@ class ScriptRunner:
                 branch_true = False if used_to_be_true else eval(self.__parser__(stm.parsed[0], stm.parsed[-1]))
                 used_to_be_true = True if used_to_be_true else  branch_true
                 if branch_true:
-                    end, res = self.run(stms, i + 1, base_indent + 1, not branch_true)
+                    end, res = self.run(stms, i + 1, base_indent + 1)
                     results.extend(res)
                 i = self.__step_out__(stms, in_index + 1, base_indent)
             elif stm.s_type == 'else':
@@ -134,7 +131,7 @@ class ScriptRunner:
                 if not is_branch:
                     raise SyntaxError(stm)
                 if not used_to_be_true:
-                    end, res = self.run(stms, i + 1, base_indent + 1, used_to_be_true)
+                    end, res = self.run(stms, i + 1, base_indent + 1)
                     results.extend(res)
                 i = self.__step_out__(stms, in_index + 1, base_indent)
             else:
@@ -167,6 +164,8 @@ class ScriptRunner:
                 return range(*param_list)
             elif func == 'enumerate':
                 return enumerate(*param_list)
+            elif func == 'str':
+                return str(*param_list)
             else:
                 raise RuntimeError(str(func), str(param_list))
         else:

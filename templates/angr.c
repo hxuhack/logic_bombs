@@ -11,6 +11,8 @@ int main(int argc, char** argv) {
             elif {<str(type)>} == {<"char*">}:
                 {<var>} = argv[{<index>}];
             elif {<str(type)>} == {<"float">}:
+                {<var>} \= atof(argv[{<index>}]);
+            elif {<str(type)>} == {<"int">}:
                 {<var>} \= atoi(argv[{<index>}]);
 
         return sym_checker({<params>});
