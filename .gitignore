@@ -12,6 +12,9 @@ core
 *.so
 *.o
 *.a
+*.txt
+*.json
+*.csv
 
 # Assembly
 *.s

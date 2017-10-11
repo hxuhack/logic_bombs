@@ -49,7 +49,7 @@ def run_symexe(path, argv_size=2, show_bytes=True, show_model=False):
     for err in pg.errored:
         print colored('[-] Error: ' + repr(err), 'red')
         with open('errors.txt', 'a') as f:
-            f.write(path + repr(err))
+            f.write(path + repr(err) + '\n')
         errored = True
 
     return results, errored

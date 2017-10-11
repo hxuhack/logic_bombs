@@ -137,13 +137,13 @@ if __name__ == '__main__':
         # 'src/exception_handling',
         'src/external_functions',
         'src/floatpoint',
-        # 'src/hash',
+        'src/hash',
         'src/overflow',
         'src/parallel_program',
         'src/symbolic_array',
         'src/symbolic_jump',
         # 'src/symbolic_value',
-        # 'symbolic_variable',
+        # 'src/symbolic_variable',
     ]
 
     res = ATKrun(cmds_tp_angr, tp_path, src_dirs, 'angr')
@@ -151,3 +151,20 @@ if __name__ == '__main__':
     import json
     with open('res.json', 'w') as f:
         json.dump(res, f)
+
+    results = {}
+    for key, item in res.items():
+        parent = os.path.split(key)[0].split('/')[-1]
+        name = os.path.split(key)[-1].split('.')[0]
+        if parent not in results:
+            results[parent] = {name: item,}
+        else:
+            results[parent][name] = item
+
+    print(results)
+    import csv
+    with open('results.csv', 'w', newline='', encoding='utf-8-sig') as csvfile:
+        writer = csv.writer(csvfile)
+        for parent in results:
+            for name in results[parent]:
+                writer.writerow([parent, name, results[parent][name]])
