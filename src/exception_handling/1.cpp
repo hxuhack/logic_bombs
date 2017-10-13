@@ -12,19 +12,15 @@ double toy(int num) {
 
 
 
-int main (int argc, char** argv) {
-   if (argc != 2)
-	return -1;
+#include "a_tester.h"
 
-   int i = atoi(argv[1]);
- 
+
+int sym_checker(int i) {
    try {
       toy(i);
-      Foobar();
+      return NORMAL_ENDING;
    }catch (const char* msg) {
       cerr << msg << endl;
-      Bomb();
+      return BOMB_ENDING;
    }
-
-   return 0;
 }

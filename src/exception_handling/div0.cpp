@@ -10,21 +10,17 @@ double division(int numerator, int denominator) {
    return (numerator/denominator);
 }
 
-int main (int argc, char** argv) {
-   if (argc != 2)
-	return -1;
+#include "a_tester.h"
 
+
+int sym_checker(int i) {
    int num = 10;
-   int denom = atoi(argv[1]);
 
- 
    try {
-      division(num, denom);
-      Foobar();
+      division(num, i);
+      return NORMAL_ENDING;
    }catch (const char* msg) {
       cerr << msg << endl;
-      Bomb();
+      return BOMB_ENDING;
    }
-
-   return 0;
 }

@@ -4,6 +4,7 @@ import subprocess
 import template_parser as tpp
 import script_runner as sr
 import shutil
+import json
 
 
 def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='sym_checker', default_stdin_len=10):
@@ -23,7 +24,7 @@ def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='sym_checker', default_
                 var_type = ' '.join(tmp[:-1])
                 var_type = re.sub(r'[ \t\n]*\*', '*', var_type)
                 res.append((var_type, var_name))
-            print(res)
+            # print(res)
             return res
 
     CORRECT = 0
@@ -58,8 +59,16 @@ def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='sym_checker', default_
                     params_list = params_list_parser(params)
                     vars_list = [_[1] for _ in params_list]
                     params = ', '.join(vars_list)
+                    params_list_with_length = []
+                    comments_pattern = re.compile(r'//(.*)\n[ \t]*' + r'int[ \t\n]+%s\(([^)]*)\);*' % func_name)
+                    cmts = comments_pattern.findall(content)
+                    cmt = cmts[0] if len(cmts) > 0 else ('{}', )
+                    cmt_dict = json.loads(cmt[0])
+                    for var_type, var_name in params_list:
+                        length = cmt_dict.get(var_name, {}).get('length', 0)
+                        params_list_with_length.append((var_type, var_name, length))
 
-                init_vars = dict(vp=params_list, params=params)
+                init_vars = dict(vp=params_list_with_length, params=params)
                 tp = tpp.TemplateParser(tp_path)
                 sruner = sr.ScriptRunner(init_vars)
                 res = sruner.run(tp.parse()[0])
@@ -100,7 +109,7 @@ def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='sym_checker', default_
                     cmds.append(cmds_tp[0] % outname)
                     cmds.append(cmds_tp[1] % outname)
                     cmds.append(cmds_tp[2] % 2)
-                    p = subprocess.Popen(cmds[0].split(' '), stdin=subprocess.PIPE)
+                    p = subprocess.Popen(cmds[0].split(' '), stdout=subprocess.PIPE)
                     p.communicate(res.encode('utf8'))
                     cp_value = p.wait()
                     if cp_value:
@@ -108,8 +117,17 @@ def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='sym_checker', default_
                         print('========= Compile Error! ==========')
                         continue
 
-                    p = subprocess.Popen(cmds[1].split(' '))
+                    p = subprocess.Popen(cmds[1].split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    errored = False
+                    out, err = p.communicate()
+                    if 'KLEE: ERROR:' in err.decode('utf8', 'ignore'):
+                        test_results[fp] = 255
+                        errored = True
+
                     rt_vale = p.wait()
+                    if errored:
+                        continue
+
                     p = subprocess.Popen(cmds[2].split(' '))
                     try:
                         rt_vale = p.wait()
@@ -130,11 +148,13 @@ if __name__ == '__main__':
         "python3 script/klee_run.py -e%d"
     ]
 
-    tp_path = 'templates/angr.c'
+    tp_path = 'templates/klee.c'
 
     src_dirs = [
         'src/covert_propogation',
+
         # 'src/exception_handling',
+
         'src/external_functions',
         'src/floatpoint',
         'src/hash',
@@ -142,11 +162,12 @@ if __name__ == '__main__':
         'src/parallel_program',
         'src/symbolic_array',
         'src/symbolic_jump',
-        # 'src/symbolic_value',
+        'src/symbolic_value',
+
         # 'src/symbolic_variable',
     ]
 
-    res = ATKrun(cmds_tp_angr, tp_path, src_dirs, 'angr')
+    res = ATKrun(cmds_tp_klee, tp_path, src_dirs, 'klee')
     print(res)
     import json
     with open('res.json', 'w') as f:

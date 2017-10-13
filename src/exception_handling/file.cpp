@@ -5,23 +5,21 @@
 
 using namespace std;
 
-int main (int argc, char** argv) 
-{
-    if(argc < 2){
-	return -1;
-    }
+#include "a_tester.h"
+
+
+int sym_checker(int i) {
     ifstream file;
     file.exceptions ( ifstream::failbit | ifstream::badbit );
     try {
         file.open (argv[1]);
-        Foobar(); 
         file.close();
+        return NORMAL_ENDING;
     }
     catch (const ifstream::failure& e) {
         cout << "Exception opening/reading file:" <<e.what()<<"\n";
 	if (strstr(e.what(), "basic_ios::clear"))
-	    Bomb();	
+        return BOMB_ENDING;
     }
-
-    return 0;
+    return NORMAL_ENDING;
 }

@@ -84,6 +84,7 @@ int client_send(char char_send){
     return atoi(char_recv);
 }
 
+// {"s":{"length": 16}}
 int sym_checker(char* s) {
     int pid1,pid2,i=0;
     if((pid1=fork())==-1)

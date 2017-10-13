@@ -15,6 +15,7 @@ void aes_print(uint8_t* str) {
 
 #include "a_tester.h"
 
+// {"s":{"length": 32}}
 int sym_checker(char* s) {
     if(strlen(s) != 32){
         printf("please input the 128-bit keys\n");
@@ -51,8 +52,8 @@ int sym_checker(char* s) {
 
     aes_print(decodetext);
     if(0 == memcmp((char*) plaintext, (char*) decodetext, 16)){
-        Bomb();
+        return BOMB_ENDING;
     }else{
-        Foobar();
+        return NORMAL_ENDING;
     }
 }

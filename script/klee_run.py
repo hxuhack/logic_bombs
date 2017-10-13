@@ -13,8 +13,13 @@ parser.add_argument("-e", "--expected", type=int, help="Expected amount of resul
 args = parser.parse_args()
 print(colored('[+] Compiling ...', 'green'))
 
-os.system('sh /home/klee/ConcTrignr/klee/run_program.sh')
-os.system('gcc -Iinclude -L ' + lib_path + ' -o klee/a.out klee/a.c -lkleeRuntest -lpthread')
+# os.system('sh /home/klee/ConcTrignr/klee/run_program.sh')
+cmd = 'gcc -Iinclude -L ' + lib_path + ' -Lbin -o klee/a.out klee/a.c -lkleeRuntest -lpthread -lutils -lcrypto -lm'
+p = Popen(cmd.split(' '))
+# os.system('gcc -Iinclude -L ' + lib_path + ' -Lbin -o klee/a.out klee/a.c -lkleeRuntest -lpthread -lutils -lcrypto -lm')
+rt_value = p.wait()
+if rt_value != 0:
+    exit(3)
 
 running_res = set()
 for file in os.listdir(os.path.join('klee', 'klee-last')):

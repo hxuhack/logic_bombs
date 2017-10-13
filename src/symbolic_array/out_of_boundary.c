@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "a_tester.h"
 
+
 int sym_checker(int i) {
     int a[] = {1, 2, 3, 4, 5, 6};
 

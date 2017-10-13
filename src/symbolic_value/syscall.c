@@ -6,10 +6,10 @@ TOY:
 
 #include "a_tester.h"
 
-int sym_checker(char* str) {
-
+// {"s":{"length": 16}}
+int sym_checker(char* s) {
     int trigger = 0;
-    trigger = system(str);
+    trigger = system(s);
 
     printf ("%d\n", trigger);
     if(trigger == 0) {
