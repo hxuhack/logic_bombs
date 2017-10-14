@@ -139,7 +139,7 @@ def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='sym_checker', default_
     return test_results
 
 if __name__ == '__main__':
-    cmds_tp_angr = ["gcc -Iinclude -Lbin -o angr/%s.out -xc - -lutils -lpthread -lcrypto -lm",
+    cmds_tp_angr = ["g++ -Iinclude -Lbin -o angr/%s.out -xc++ - -lutils -lpthread -lcrypto -lm",
                "python script/angr_run.py -r -l%d angr/%s.out"]
 
     cmds_tp_klee = [
@@ -148,26 +148,26 @@ if __name__ == '__main__':
         "python3 script/klee_run.py -e%d"
     ]
 
-    tp_path = 'templates/klee.c'
+    tp_path = 'templates/angr.c'
 
     src_dirs = [
-        'src/covert_propogation',
+        # 'src/covert_propogation',
 
         # 'src/exception_handling',
 
-        'src/external_functions',
-        'src/floatpoint',
-        'src/hash',
-        'src/overflow',
-        'src/parallel_program',
-        'src/symbolic_array',
-        'src/symbolic_jump',
+        # 'src/external_functions',
+        # 'src/floatpoint',
+        # 'src/hash',
+        # 'src/overflow',
+        # 'src/parallel_program',
+        # 'src/symbolic_array',
+        # 'src/symbolic_jump',
         'src/symbolic_value',
 
         # 'src/symbolic_variable',
     ]
 
-    res = ATKrun(cmds_tp_klee, tp_path, src_dirs, 'klee')
+    res = ATKrun(cmds_tp_angr, tp_path, src_dirs, 'angr')
     print(res)
     import json
     with open('res.json', 'w') as f:
