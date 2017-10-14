@@ -403,6 +403,6 @@ class TPToken:
 
 
 if __name__ == '__main__':
-    tp = TemplateParser('templates/test.c')
+    tp = TemplateParser('templates/angr.c')
     for stm, indent in tp.parse()[0]:
         print(stm.s_type, stm.stm, stm.parsed, indent)

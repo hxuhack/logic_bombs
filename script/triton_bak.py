@@ -4,6 +4,8 @@ from collections import OrderedDict
 from copy import deepcopy
 from termcolor import colored
 
+import sys
+
 
 class ElfAddrs:
     def __init__(self, filename):
@@ -20,8 +22,6 @@ class ElfAddrs:
                     addrSymEnd = addrSymStart + sym.getSize() - 1
                 else:
                     addrSymEnd = addrSymStart + sym.getSize()
-                # print 'symbol %s_has been founded, addr: %x - %x' %(symName,
-                # addrSymStart, addrSymEnd)
                 break
         if flag:
             return addrSymEnd
@@ -117,7 +117,7 @@ class TritonExecution:
         if instruction.getAddress() == TritonExecution.exitPoint:
             print colored('[+] Exit point', 'magenta')
             print colored(str(TritonExecution.myPC), 'cyan')
-            print 'Symbolic variables:', getSymbolicVariables()
+            # print 'Symbolic variables:', getSymbolicVariables()
 
             # SAGE algorithm
             # http://research.microsoft.com/en-us/um/people/pg/public_psfiles/ndss2008.pdf
@@ -142,7 +142,7 @@ class TritonExecution:
 
                 expr = ast.compound(expr)
                 model = getModel(expr)
-                print colored("model: " + repr(model), 'green')
+                # print colored("model: " + repr(model), 'green')
 
                 if len(model) > 0:
                     newInput = deepcopy(TritonExecution.input)
@@ -187,22 +187,22 @@ class TritonExecution:
         argv1_addr = getCurrentMemoryValue(
             rsi + CPUSIZE.REG, CPUSIZE.REG)                 # argv[1] pointer
 
-        print colored('[+] In main() we set :', 'magenta')
+        print colored('[+] In main() we set:', 'magenta')
         od = OrderedDict(sorted(TritonExecution.input.dataAddr.items()))
 
         for k, v in od.iteritems():
-            print colored('OD items: \t[0x%x] = %d %c' % (k, v, v), 'cyan')
             setCurrentMemoryValue(MemoryAccess(k, CPUSIZE.BYTE), v)
             convertMemoryToSymbolicVariable(
-                MemoryAccess(k, CPUSIZE.BYTE), 'addr_%d' % k)
+                MemoryAccess(k, CPUSIZE.BYTE), 'addr_' + str(k))
 
         for idx, byte in enumerate(TritonExecution.input.data):
             if argv1_addr + idx not in TritonExecution.input.dataAddr:  # Not overwrite the previous setting
-                print colored('Input data \t[0x%x] = %d %c' % (argv1_addr + idx, ord(byte), ord(byte)), 'green')
                 setCurrentMemoryValue(MemoryAccess(
                     argv1_addr + idx, CPUSIZE.BYTE), ord(byte))
                 convertMemoryToSymbolicVariable(MemoryAccess(
-                    argv1_addr + idx, CPUSIZE.BYTE), 'addr_%d' % idx)
+                    argv1_addr + idx, CPUSIZE.BYTE), 'addr_' + str(idx))
+
+        print ''
 
     @staticmethod
     def run(inputSeed, elfAddrs, whitelist=[]):
@@ -226,13 +226,13 @@ class TritonExecution:
 
         print colored('Before run program', 'yellow')
         print runProgram()
+        print colored('Finished running', 'yellow')
 
 
 if __name__ == '__main__':
     # Set architecture
     setArchitecture(ARCH.X86_64)
 
-    elfAddrs = ElfAddrs("{path}")
-    init_input = '0' * {length}
-    TritonExecution.run(init_input, elfAddrs, ["main", "sym_checker"])
-
+    elfAddrs = ElfAddrs("%s")
+    init_input = '0' * %d
+    TritonExecution.run(init_input, elfAddrs, ['sym_checker', 'check', 'main'])

@@ -1,18 +1,18 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
-#include "utils.h" 
+#include "utils.h"
 
 using namespace std;
 
 #include "a_tester.h"
 
-
-int sym_checker(int i) {
+// {"s":{"length": 32}}
+int sym_checker(char* s) {
     ifstream file;
-    file.exceptions ( ifstream::failbit | ifstream::badbit );
+    file.exceptions ( ifstream::failbit | ifstream::badbit);
     try {
-        file.open (argv[1]);
+        file.open(s);
         file.close();
         return NORMAL_ENDING;
     }
