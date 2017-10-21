@@ -138,7 +138,7 @@ def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='sym_checker', default_
                     shutil.rmtree('klee')
                 elif prefix == 'triton':
                     cmds.append(cmds_tp[0] % outname)
-                    cmds.append(cmds_tp[1] % (default_stdin_len, outname))
+                    cmds.append(cmds_tp[1] % (default_stdin_len, MAX_TIME, outname))
 
                     # Compile
                     p = subprocess.Popen(cmds[0].split(' '), stdin=subprocess.PIPE)
@@ -151,17 +151,14 @@ def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='sym_checker', default_
 
                     # Run test
                     p = subprocess.Popen(cmds[1].split(' '))
-                    try:
-                        rt_vale = p.wait(timeout=MAX_TIME)
-                        test_results[fp] = rt_vale
-                    except subprocess.TimeoutExpired:
-                        test_results[fp] = TLE
-                        p.kill()
+                    rt_vale = p.wait()
+                    # print('from timeout')
+                    test_results[fp] = rt_vale
 
     return test_results
 
 if __name__ == '__main__':
-    cmds_tp_angr = ["g++ -Iinclude -Lbin -o angr/%s.out -xc++ - -lutils -lpthread -lcrypto -lm",
+    cmds_tp_angr = ["gcc -Iinclude -Lbin -o angr/%s.out -xc - -lutils -lpthread -lcrypto -lm",
                "python script/angr_run.py -r -l%d angr/%s.out"]
 
     cmds_tp_klee = [
@@ -172,29 +169,29 @@ if __name__ == '__main__':
 
     cmds_tp_triton = [
         "gcc -Iinclude -Lbin -o triton/%s.out -xc - -lutils -lpthread -lcrypto -lm",
-        "python3 script/triton_caller.py -l%d -p triton/%s.out"
+        "python script/triton_caller.py -l%d -m%d -p triton/%s.out"
     ]
 
     tp_path = 'templates/angr.c'
 
     src_dirs = [
-        # 'src/covert_propogation',
+        'src/covert_propogation',
 
         # 'src/exception_handling',
 
         # 'src/external_functions',
         # 'src/floatpoint',
-        # 'src/hash',
-        'src/overflow',
-        'src/parallel_program',
+        'src/hash',
+        # 'src/overflow',
+        # 'src/parallel_program',
         # 'src/symbolic_array',
-        'src/symbolic_jump',
+        # 'src/symbolic_jump',
         # 'src/symbolic_value',
 
         # 'src/symbolic_variable',
     ]
 
-    res = ATKrun(cmds_tp_triton, tp_path, src_dirs, 'triton')
+    res = ATKrun(cmds_tp_angr, tp_path, src_dirs, 'angr')
 
     print(res)
     import json

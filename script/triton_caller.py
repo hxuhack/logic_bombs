@@ -3,11 +3,13 @@ import argparse
 import os
 import re
 import sys
+import time
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-e", "--expected", type=int, help="Expected amount of results")
 parser.add_argument("-p", "--program", type=str, help="Binary program")
 parser.add_argument("-l", "--length", type=int, help="STDIN length")
+parser.add_argument("-m", "--max_time", type=int, help="max time")
 args = parser.parse_args()
 
 prog = args.program
@@ -26,17 +28,31 @@ with open('triton/triton_run.py', 'w') as f:
 print(' '.join(['/home/neil/Triton/build/triton', 'triton/triton_run.py', prog]))
 
 p = subprocess.Popen(['/home/neil/Triton/build/triton', 'triton/triton_run.py', prog, '0' * args.length], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+start = time.time()
+while time.time() - start < args.max_time:
+    rt_value = p.poll()
+    if rt_value is not None:
+        print(rt_value)
+        break
+    time.sleep(0.1)
+print(time.time() - start)
+if time.time() - start > args.max_time:
+    p.kill()
+    print('timeout!!!!')
+    exit(4)
 
 out, err = p.communicate()
 out = out.decode('utf8', 'ignore')
 err = err.decode('utf8', 'ignore')
-p.wait()
-print(out, err)
+
+print(out)
+print(err)
 reses = ['0' * args.length, ]
 for testcase in pt.finditer(out):
     tmp = case_pt.findall(out)
-    tmp = ''.join(list(map(lambda x: '\\x' + '%02x' % x, map(int, tmp))))
-    print(tmp)
+    tmp = ''.join(list(map(chr, map(int, tmp))))
+    print(repr(list(tmp)))
+    tmp = tmp.replace('\x00', '')
     reses.append(tmp)
 
 print(reses)
@@ -44,7 +60,15 @@ print(reses)
 tests = set()
 for res in reses:
     p = subprocess.Popen([prog, res])
+    # start = time.time()
+    # while time.time() - start < args.max_time:
     rt_value = p.wait()
+        # if rt_value:
+            # break
+        # time.sleep(args.max_time)
+    # if time.time() - start > args.max_time:
+        # p.kill()
+        # exit(-4)
     tests.add(rt_value)
 
 if args.expected is None:

@@ -10,7 +10,7 @@
         ],
         "cmd": [
             "{CC} -I{INCLUDE} -c -Wall -Werror -fpic -o tmp/{&FILENAME}.o {!FILENAME}",
-            "{CC} -shared -o bin/lib{OUTPUT}.so {!INPUTS}"
+            "{CC} -shared -o bin/lib{OUTPUT}.so {!INPUTS} #BATCH"
         ],
         "dependencies": {
             "FILENAME": ["lib/sha1.c", "lib/aes.c", "lib/crypto_utils.c"],
