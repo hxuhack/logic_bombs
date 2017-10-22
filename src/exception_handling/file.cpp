@@ -8,7 +8,7 @@ using namespace std;
 #include "a_tester.h"
 
 // {"s":{"length": 32}}
-int sym_checker(char* s) {
+int logic_bomb(char* s) {
     ifstream file;
     file.exceptions ( ifstream::failbit | ifstream::badbit);
     try {

@@ -46,7 +46,7 @@ void run_command(char *cmd, char *detphrase, int dp_length){
 
 #include "a_tester.h"
 
-int sym_checker() {
+int logic_bomb() {
     number_of_cores();
     //run the dmesg command and pipe to find hypervisor, 34 is how long string should be.
     run_command("dmesg |grep -i hypervisor", "[   0.000000 Hypervisor detected]", 34);

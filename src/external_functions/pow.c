@@ -6,7 +6,7 @@ TOY:
 #include "utils.h"
 #include "a_tester.h"
 
-int sym_checker(int i) {
+int logic_bomb(int i) {
     if(pow(i, 2) == -1){
         return BOMB_ENDING;
     }else{

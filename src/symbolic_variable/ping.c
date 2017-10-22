@@ -94,7 +94,7 @@ int ping_it(struct in_addr *dst)
 
 #include "a_tester.h"
 
-int sym_checker(char* s) {
+int logic_bomb(char* s) {
     struct in_addr dst;
 
     if (inet_aton(s, &dst) == 0) {

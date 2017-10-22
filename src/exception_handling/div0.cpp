@@ -13,7 +13,7 @@ double division(int numerator, int denominator) {
 #include "a_tester.h"
 
 
-int sym_checker(int i) {
+int logic_bomb(int i) {
    int num = 10;
 
    try {

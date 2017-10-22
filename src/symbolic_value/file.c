@@ -7,7 +7,7 @@ TOY:
 #include "a_tester.h"
 
 // {"s":{"length": 16}}
-int sym_checker(char* s) {
+int logic_bomb(char* s) {
     int trigger = 0;
     FILE *fp = fopen(s, "r");
     if(fp != NULL) {

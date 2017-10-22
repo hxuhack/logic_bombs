@@ -5,7 +5,7 @@
 
 #include "a_tester.h"
 
-int sym_checker(char** argv) {
+int logic_bomb(char** argv) {
     int addr = argv[0][0] - 26;
     addr = addr - atoi(argv[1]); //expect 7
 

@@ -10,7 +10,7 @@ Solution: 30
 
 #include "a_tester.h"
 
-int sym_checker(int i) {
+int logic_bomb(int i) {
     float v = sin(i*PI/180);
     if(v == 0.5){
         return BOMB_ENDING;

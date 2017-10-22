@@ -85,7 +85,7 @@ int client_send(char char_send){
 }
 
 // {"s":{"length": 16}}
-int sym_checker(char* s) {
+int logic_bomb(char* s) {
     int pid1,pid2,i=0;
     if((pid1=fork())==-1)
 	return -1;

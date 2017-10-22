@@ -8,7 +8,7 @@ Triton: Pin is out of memory: MmapChecked
 #include "utils.h"
 #include "a_tester.h"
 
-int sym_checker(int i) {
+int logic_bomb(int i) {
     int j = i;
     char file[] = "tmp.covpro";
     FILE *fp = fopen(file, "ab+");

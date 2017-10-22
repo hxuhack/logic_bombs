@@ -6,7 +6,7 @@ TOY:
 
 #include "a_tester.h"
 
-int sym_checker(int i) {
+int logic_bomb(int i) {
     int plaintext = i;
     unsigned cipher[5];
     cipher[0] = 0X77de68da;

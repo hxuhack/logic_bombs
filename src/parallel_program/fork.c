@@ -7,7 +7,7 @@
 #include "a_tester.h"
 
 // {"s":{"length": 16}}
-int sym_checker(char* s) {
+int logic_bomb(char* s) {
     int pid, fd[2];
     pipe(fd);
     if ((pid = fork()) == -1)

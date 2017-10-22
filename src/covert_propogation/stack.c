@@ -8,7 +8,7 @@ TOY:
 #define push(v) asm volatile ("push %0"::"m"(v))
 #define pop(v) asm volatile ("pop %0" :: "m"(v))
 
-int sym_checker(int i) {
+int logic_bomb(int i) {
     int j = i;
     push(i); 
     pop (j);

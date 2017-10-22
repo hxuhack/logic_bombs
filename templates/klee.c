@@ -12,6 +12,6 @@ int main() {
             if {<type>} == {<"char*">}:
                 klee_assume({<var>}[{<size>}]=='\0');
 
-        return sym_checker({<params>});
+        return logic_bomb({<params>});
     %}
 }

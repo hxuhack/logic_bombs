@@ -6,7 +6,7 @@ TOY:
 
 #include "a_tester.h"
 
-int sym_checker(int i) {
+int logic_bomb(int i) {
     int j = i;
     char file[] = "tmp.covpro";
     char cmd[256];

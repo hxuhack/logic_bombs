@@ -4,7 +4,7 @@
 #include<stdio.h>
 #include "a_tester.h"
 
-int sym_checker(float x) {
+int logic_bomb(float x) {
     if(1024+x==1024 && x>0)
         return BOMB_ENDING;
     else

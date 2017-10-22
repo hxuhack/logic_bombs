@@ -9,7 +9,7 @@
 
 #include "a_tester.h"
 
-int sym_checker() {
+int logic_bomb() {
     int socket;
     char receiver[256];
     char get_msg[BUFSIZ] = "GET /index.html HTTP/1.1\r\nHost:cudroid.com\r\n\r\n";

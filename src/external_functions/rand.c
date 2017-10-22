@@ -6,7 +6,7 @@ Solution: 7
 #include "utils.h"
 #include "a_tester.h"
 
-int sym_checker(int i) {
+int logic_bomb(int i) {
     srand(i);
     int r = rand()%100;
     if(r == 77){

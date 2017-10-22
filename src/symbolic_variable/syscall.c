@@ -12,7 +12,7 @@
 
 #include "a_tester.h"
 
-int sym_checker() {
+int logic_bomb() {
    int trigger;
    char cmd[] = "dir";
    trigger=system(cmd);

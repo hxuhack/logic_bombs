@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include "a_tester.h"
 
-int sym_checker() {
+int logic_bomb() {
    FILE *cpuinfo = fopen("/proc/cpuinfo", "rb");
    char *arg = 0;
    size_t size = 0;

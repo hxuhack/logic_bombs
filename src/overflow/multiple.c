@@ -1,6 +1,6 @@
 #include "a_tester.h"
 
-int sym_checker(int a) {
+int logic_bomb(int a) {
     if (3 * a < 0 && a > 0)
         return BOMB_ENDING;
     else

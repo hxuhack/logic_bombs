@@ -8,7 +8,7 @@
 
 #include "a_tester.h"
 
-int sym_checker(char** argv) {
+int logic_bomb(char** argv) {
     if(strlen(argv[1])==10){
         return BOMB_ENDING;
     }else{

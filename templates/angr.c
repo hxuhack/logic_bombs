@@ -16,6 +16,6 @@ int main(int argc, char** argv) {
             elif {<str(type)>} == {<"int">}:
                 {<var>} \= atoi(argv[{<index>}]);
 
-        return sym_checker({<params>});
+        return logic_bomb({<params>});
     %}
 }

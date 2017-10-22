@@ -15,7 +15,7 @@ double toy(int num) {
 #include "a_tester.h"
 
 
-int sym_checker(int i) {
+int logic_bomb(int i) {
    try {
       toy(i);
       return NORMAL_ENDING;

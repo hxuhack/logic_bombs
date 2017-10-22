@@ -7,7 +7,7 @@ import shutil
 import json
 
 
-def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='sym_checker', default_stdin_len=10):
+def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='logic_bomb', default_stdin_len=10):
     def params_list_parser(params):
         if len(params.strip()) == 0:
             return []
