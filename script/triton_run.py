@@ -234,5 +234,5 @@ if __name__ == '__main__':
 
     elfAddrs = ElfAddrs("{path}")
     init_input = '0' * {length}
-    TritonExecution.run(init_input, elfAddrs, ["main", "sym_checker"])
+    TritonExecution.run(init_input, elfAddrs, ["main", '{func_name}'])
 

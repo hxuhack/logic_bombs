@@ -6,6 +6,8 @@ import script_runner as sr
 import shutil
 import json
 
+from config.test_settings import TRITON_INSTALLATION_PATH, FUNC_NAME
+
 
 def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
     def params_list_parser(params):
@@ -144,7 +146,8 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
                     shutil.rmtree('klee')
                 elif prefix == 'triton':
                     cmds.append(cmds_tp[0] % outname)
-                    cmds.append(cmds_tp[1] % (default_stdin_len, MAX_TIME, outname))
+                    cmds.append(cmds_tp[1] % (default_stdin_len, MAX_TIME, FUNC_NAME, 
+                            TRITON_INSTALLATION_PATH , outname))
 
                     # Compile
                     p = subprocess.Popen(cmds[0].split(' '), stdin=subprocess.PIPE)
@@ -158,54 +161,15 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
                     # Run test
                     p = subprocess.Popen(cmds[1].split(' '))
                     rt_vale = p.wait()
-                    # print('from timeout')
                     test_results[fp] = rt_vale
 
     return test_results
 
+
 if __name__ == '__main__':
-    cmds_tp_angr = ["gcc -Iinclude -Lbin -o angr/%s.out -xc - -lutils -lpthread -lcrypto -lm",
-               "python script/angr_run.py -r -l%d angr/%s.out"]
+    from config.test_settings import src_dirs, switches, FUNC_NAME
 
-    cmds_tp_klee = [
-        "clang -Iinclude -Lbin -emit-llvm -o klee/%s.bc -c -g klee/a.c -lpthread -lutils -lcrypto -lm",
-        "klee klee/%s.bc",
-        "python3 script/klee_run.py -e%d"
-    ]
-
-    cmds_tp_triton = [
-        "gcc -Iinclude -Lbin -o triton/%s.out -xc - -lutils -lpthread -lcrypto -lm",
-        "python script/triton_caller.py -l%d -m%d -p triton/%s.out"
-    ]
-
-    angr_tp_path = 'templates/angr.c'
-    triton_tp_path = 'templates/angr.c'
-    klee_tp_path = 'templates/klee.c'
-
-    switches = {
-        'angr': [cmds_tp_angr, angr_tp_path, 'angr'],
-        'triton': [cmds_tp_triton, triton_tp_path, 'triton'],
-        'klee': [cmds_tp_klee, klee_tp_path, 'klee']
-    }
-
-    src_dirs = [
-        'src/covert_propogation',
-
-        # 'src/exception_handling',
-
-        # 'src/external_functions',
-        # 'src/floatpoint',
-        'src/hash',
-        # 'src/overflow',
-        # 'src/parallel_program',
-        # 'src/symbolic_array',
-        # 'src/symbolic_jump',
-        # 'src/symbolic_value',
-
-        # 'src/symbolic_variable',
-    ]
-
-    res = ATKrun(switches['angr'], src_dirs)
+    res = ATKrun(switches['triton'], src_dirs, func_name=FUNC_NAME)
 
     results = {}
     for key, item in res.items():
@@ -217,7 +181,9 @@ if __name__ == '__main__':
             results[parent][name] = item
 
     print(results)
+
     import csv
+
     with open('results.csv', 'w', newline='', encoding='utf-8-sig') as csvfile:
         writer = csv.writer(csvfile)
         for parent in results:

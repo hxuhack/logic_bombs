@@ -235,6 +235,6 @@ class ConfigParser:
         return True
 
 if __name__ == '__main__':
-    c = ConfigParser('config.json')
+    c = ConfigParser('config/compile.json')
     c.normal_compiler('crypto_lib')
     c.normal_compiler('utils_lib')

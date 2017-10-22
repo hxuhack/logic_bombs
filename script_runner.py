@@ -51,13 +51,6 @@ class ScriptRunner:
         return i
 
     def run(self, stms: list, index=0, expected_indent=None):
-        """
-            stm:
-        """
-        # for stm, index in stms:
-            # pass
-            # print(stm, index)
-        # Stop iteration
         if index == len(stms):
             return ''
         elif index > len(stms):
@@ -72,9 +65,7 @@ class ScriptRunner:
 
         i = index
         while i < len(stms):
-            # print(i)
             stm, indent = stms[i]
-            # print(stm.stm, indent)
 
             if indent > base_indent:
                 raise RuntimeError(stm.stm, 'with indent %d, but expect indent %d' % (indent, base_indent))
@@ -85,7 +76,6 @@ class ScriptRunner:
                 is_branch = False
 
             if stm.s_type == 'str':
-                # print(self.__parser__(*stm.parsed))
                 results.append(self.__parser__(*stm.parsed, quotes=False))
                 i += 1
             elif stm.s_type == 'for':
@@ -94,7 +84,6 @@ class ScriptRunner:
                     raise SyntaxError(stm.stm)
                 tmp_iter = self.evaluate(stm.parsed[-1])
                 for tmp in tmp_iter:
-                    # print('tmp', tmp)
                     self.variables.append({key: tmp[index] for index, key in enumerate(stm.parsed[1])})
                     results.extend(self.run(stms, i + 1, base_indent + 1)[1])
                     self.variables.pop(-1)
