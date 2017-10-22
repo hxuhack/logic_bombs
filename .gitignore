@@ -13,7 +13,6 @@ core
 *.o
 *.a
 *.txt
-*.json
 *.csv
 
 # Assembly

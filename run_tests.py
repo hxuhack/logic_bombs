@@ -7,7 +7,7 @@ import shutil
 import json
 
 
-def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='logic_bomb', default_stdin_len=10):
+def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
     def params_list_parser(params):
         if len(params.strip()) == 0:
             return []
@@ -24,8 +24,14 @@ def ATKrun(cmds_tp, tp_path, src_dirs, prefix, func_name='logic_bomb', default_s
                 var_type = ' '.join(tmp[:-1])
                 var_type = re.sub(r'[ \t\n]*\*', '*', var_type)
                 res.append((var_type, var_name))
-            # print(res)
             return res
+
+    cmds_tp, tp_path, prefix = target
+    if not os.path.exists(prefix):
+        os.mkdir(prefix)
+
+    if not os.path.exists('tmp'):
+        os.mkdir('tmp')
 
     CORRECT = 0
     PARTIAL_CORRECT = 1
@@ -172,7 +178,15 @@ if __name__ == '__main__':
         "python script/triton_caller.py -l%d -m%d -p triton/%s.out"
     ]
 
-    tp_path = 'templates/angr.c'
+    angr_tp_path = 'templates/angr.c'
+    triton_tp_path = 'templates/angr.c'
+    klee_tp_path = 'templates/klee.c'
+
+    switches = {
+        'angr': [cmds_tp_angr, angr_tp_path, 'angr'],
+        'triton': [cmds_tp_triton, triton_tp_path, 'triton'],
+        'klee': [cmds_tp_klee, klee_tp_path, 'klee']
+    }
 
     src_dirs = [
         'src/covert_propogation',
@@ -191,12 +205,7 @@ if __name__ == '__main__':
         # 'src/symbolic_variable',
     ]
 
-    res = ATKrun(cmds_tp_angr, tp_path, src_dirs, 'angr')
-
-    print(res)
-    import json
-    with open('res.json', 'w') as f:
-        json.dump(res, f)
+    res = ATKrun(switches['angr'], src_dirs)
 
     results = {}
     for key, item in res.items():
