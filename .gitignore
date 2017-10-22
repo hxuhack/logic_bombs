@@ -1,5 +1,6 @@
 # Python:
 *.pyc
+__pycache__/
 
 # Log
 *.log
@@ -12,8 +13,14 @@ core
 *.so
 *.o
 *.a
+bin/
+
+# Outputs
 *.txt
 *.csv
+angr/
+klee/
+triton/
 
 # Assembly
 *.s
@@ -22,10 +29,7 @@ core
 # History
 history/
 tmp/
-bin/
-angr/
-klee/
-triton/
+
 
 .vscode/
 .idea/

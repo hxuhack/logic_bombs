@@ -236,6 +236,5 @@ class ConfigParser:
 
 if __name__ == '__main__':
     c = ConfigParser('config.json')
-    # c.run_tests('angr')
     c.normal_compiler('crypto_lib')
     c.normal_compiler('utils_lib')
