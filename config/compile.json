@@ -1,6 +1,7 @@
 {
     "general": {
-        "CC": "gcc"
+        "CC": "gcc",
+        "CPP": "g++"
     },
 
     "crypto_lib": {
@@ -41,71 +42,49 @@
             "INCLUDE": "include",
             "OUTPUT": "utils"
         },
-        "exceptions": {
-
-        },
+        "exceptions": [
+            "src/exception_handling"
+        ],
         "rm": [
             "tmp"
         ]
     },
 
-    "klee": {
+    "src": {
         "mkdir": [
-            "klee"
+            "bin/outputs/"
         ],
         "cmd": [
-            "clang -I{INCLUDE} -emit-llvm -o klee/{&FILENAME}.bc -c -g {FILENAME}",
-            "klee klee/{&FILENAME}.bc",
-            "python3 script/klee_run {FILENAME} klee"
+            "{CC} -I{INCLUDE} -Lbin -o bin/outputs/{&FILENAME}.out -xc - -lpthread -lm -lutils -lcrypto #PIPE"
         ],
         "dependencies": {
             "PATH": "src/",
             "INCLUDE": "include",
-            "FILENAME": "FILENAME"
+            "TEMPLATE": "templates/default.c"
         },
-        "exceptions": {
-
-        },
+        "exceptions": [
+            "src/exception_handling"
+        ],
         "rm": [
-
-        ],
-        "templates": "templates/klee.c",
-        "PIPE": false
+        ]
     },
 
-    "angr": {
+    "src_cpp": {
+        "CC": "g++",
         "mkdir": [
-            "angr"
+            "bin/outputs/"
         ],
         "cmd": [
-            "{CC} -I{INCLUDE} -L{LIBP} -o angr/{&FILENAME}.out -xc - -l{LIB} #PIPE",
-            "python script/angr_run.py -r -l{LENGTH} angr/{&FILENAME}.out #TEST"
+            "{CC} -I{INCLUDE} -Lbin -o bin/outputs/{&FILENAME}.out -xc++ - -lpthread -lm -lutils -lcrypto #PIPE"
         ],
         "dependencies": {
-            "PATH": "src/",
-            "FILENAME": "FILENAME",
+            "PATH": "src/exception_handling",
             "INCLUDE": "include",
-            "LENGTH": "4",
-            "LIBP": "bin",
-            "LIB": "utils"
+            "TEMPLATE": "templates/default.c"
         },
-        "templates": "templates/angr.c"
-    },
-
-    "triton": {
-        "mkdir": [
-            "triton"
+        "exceptions": [
         ],
-        "cmd": [
-            "{CC} -I{INCLUDE} -L{LIBP} -o angr/{&FILENAME}.out -xc - -l{LIB} #PIPE",
-            "python script/triton_run.py -i{INIT_STRING} triton/{&FILENAME}.out #TEST"
-        ],
-        "dependencies": {
-            "PATH": "src/",
-            "FILENAME": "FILENAME",
-            "INCLUDE": "include"
-        },
-        "templates": "templates/triton.c",
-        "PIPE": true
+        "rm": [
+        ]
     }
 }

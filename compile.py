@@ -3,6 +3,9 @@ import subprocess
 import json
 import re
 import shutil
+import template_parser as tpp
+import script_runner as sr
+import argparse
 
 from template_parser import TemplateParser
 from termcolor import colored
@@ -122,7 +125,7 @@ class ConfigParser:
     def __load_config__(self):
         pass
 
-    def combine(self, file_path: str, tp_path: str, func_name='sym_checker'):
+    def combine(self, file_path: str, tp_path: str, func_name='logic_bomb'):
         def params_list_parser(params):
             if len(params.strip()) == 0:
                 return []
@@ -179,7 +182,7 @@ class ConfigParser:
         mkdirs = config.get('mkdir', [])
         for mkdir in mkdirs:
             if not os.path.exists(mkdir):
-                os.mkdir(mkdir)
+                os.makedirs(mkdir)
 
         for cmd in cmds:
             dependencies['CC'] = self.general['CC']
@@ -192,7 +195,60 @@ class ConfigParser:
             shutil.rmtree(rm)
         return True
 
-    def run_tests(self, prefix: str):
+    def pipe_compile(self, prefix: str, func_name='logic_bomb'):
+        def params_list_parser(params):
+            if len(params.strip()) == 0:
+                return []
+            else:
+                params = params.split(',')
+                params = list(map(str.strip, params))
+                res = []
+                var_pattern = re.compile(r'([a-zA-Z_][a-zA-Z0-9_*]*|\*+)')
+                for param in params:
+                    tmp = var_pattern.findall(param)
+                    if len(tmp) < 2:
+                        raise SyntaxError(', '.join(params))
+                    var_name = tmp[-1]
+                    var_type = ' '.join(tmp[:-1])
+                    var_type = re.sub(r'[ \t\n]*\*', '*', var_type)
+                    res.append((var_type, var_name))
+                return res
+
+        def combine(path, tp_path):
+            func_pattern = re.compile(r'int[ \t\n]+%s\(([^)]*)\);*' % func_name)
+            fp = path
+            print('-----------------------------')
+            print(fp)
+            with open(fp) as f:
+                content = f.read()
+            finds = func_pattern.findall(content)
+            if len(finds) > 1:
+                raise SyntaxError(repr(finds) + '. Duplicated definition!')
+            elif len(finds) == 0:
+                return None
+            else:
+                params = finds[0].strip()
+                params_list = params_list_parser(params)
+                vars_list = [_[1] for _ in params_list]
+                params = ', '.join(vars_list)
+                params_list_with_length = []
+                comments_pattern = re.compile(r'//(.*)\n[ \t]*' + r'int[ \t\n]+%s\(([^)]*)\);*' % func_name)
+                cmts = comments_pattern.findall(content)
+                cmt = cmts[0] if len(cmts) > 0 else ('{}', )
+                cmt_dict = json.loads(cmt[0])
+                for var_type, var_name in params_list:
+                    length = cmt_dict.get(var_name, {}).get('length', 0)
+                    params_list_with_length.append((var_type, var_name, length))
+
+            init_vars = dict(vp=params_list_with_length, params=params)
+            tp = tpp.TemplateParser(tp_path)
+            sruner = sr.ScriptRunner(init_vars)
+            res = sruner.run(tp.parse()[0])
+            res = '\n'.join(res[1])
+            res = tp.replace([res, ])
+            res = '\n'.join([content, res])
+            return res
+
         config = self.config.get(prefix, None)
         if not config:
             return None
@@ -202,32 +258,40 @@ class ConfigParser:
         if not cmds or not dependencies:
             return None
 
-        TP = config.get('templates', None)
+        TP = dependencies.get('TEMPLATE', None)
+        FNAME = dependencies.get('FILENAME', 'FILENAME')
         PATH = dependencies.get('PATH', None)
-        FNAME = dependencies.get('FILENAME', None)
-        if not PATH or not TP or not FNAME:
+        if not TP or not PATH:
+            print('here', 3)
             return None
-
-        PIPE = config.get('PIPE', False)
 
         for mkdir in config.get('mkdir', []):
             if not os.path.exists(mkdir):
-                os.mkdir(mkdir)
+                os.makedirs(mkdir)
+
+        excepts = config.get('exceptions', [])
 
         for root, dirs, files in os.walk(PATH):
             for file in files:
+                path = os.path.join(root, file)
+                flag = False
+                for exct in excepts:
+                    if path.startswith(exct):
+                        flag = True
+                        break
+                if flag:
+                    continue
+
                 for cmd in cmds:
                     dependencies['CC'] = self.general['CC'] if not config.get('CC', False) else config.get('CC')
-                    dependencies[FNAME] = os.path.join(root, file)
+                    dependencies[FNAME] = path
                     cmd_list, signs = Compile.process_cmd(cmd, dependencies)
-                    combined = self.combine(os.path.join(root, file), TP)
+                    combined = combine(os.path.join(root, file), TP)
                     for gonna_run in cmd_list:
                         if combined is None:
                             continue
                         if 'pipe' in signs:
                             Compile.run_cmd(gonna_run, PIPE_IN=combined.encode('utf8'))
-                        elif 'test' in signs:
-                            print(colored(str(Compile.run_cmd(gonna_run)), 'green'))
 
         for rm in config.get('rm', []):
             shutil.rmtree(rm)
@@ -235,6 +299,22 @@ class ConfigParser:
         return True
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-a", "--all_code", help="compile all", action="store_true")
+    parser.add_argument("-l", "--lib", help="compile lib", action="store_true")
+    parser.add_argument("-s", "--src", help="compile src", action="store_true")
+    args = parser.parse_args()
+
+    all_code = args.all_code
+    lib = args.lib
+    src = args.src
+
     c = ConfigParser('config/compile.json')
-    c.normal_compiler('crypto_lib')
-    c.normal_compiler('utils_lib')
+
+    if lib or all_code:
+        c.normal_compiler('crypto_lib')
+        c.normal_compiler('utils_lib')
+
+    if src or all_code:
+        c.pipe_compile('src')
+        c.pipe_compile('src_cpp')

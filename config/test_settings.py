@@ -32,8 +32,8 @@ cmds_tp_triton = [
     "python script/triton_caller.py -l%d -m%d -f%s -i%s -p triton/%s.out"
 ]
 
-angr_tp_path = 'templates/angr.c'
-triton_tp_path = 'templates/angr.c'
+angr_tp_path = 'templates/default.c'
+triton_tp_path = 'templates/default.c'
 klee_tp_path = 'templates/klee.c'
 
 switches = {
