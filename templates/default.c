@@ -1,4 +1,5 @@
 int main(int argc, char** argv) {
+    int rt_value;
     {%
         for {<type>}, {<var>}, {<size>} in {<vp>}:
             if {<str(type)>} != {<"char**">}:
@@ -16,6 +17,12 @@ int main(int argc, char** argv) {
             elif {<str(type)>} == {<"int">}:
                 {<var>} \= atoi(argv[{<index>}]);
 
-        return logic_bomb({<params>});
+        rt_value = logic_bomb({<params>});
     %}
+
+    switch (rt_value) {
+        case 0: printf("Normal ending"); break;
+        case 1: printf("Bomb ending"); break;
+    }
+    return rt_value;
 }

@@ -195,7 +195,7 @@ class ConfigParser:
             shutil.rmtree(rm)
         return True
 
-    def pipe_compile(self, prefix: str, func_name='logic_bomb'):
+    def pipe_compile(self, prefix: str, func_name='logic_bomb', echo=False):
         def params_list_parser(params):
             if len(params.strip()) == 0:
                 return []
@@ -246,6 +246,8 @@ class ConfigParser:
             res = sruner.run(tp.parse()[0])
             res = '\n'.join(res[1])
             res = tp.replace([res, ])
+            if echo:
+                print(res)
             res = '\n'.join([content, res])
             return res
 
@@ -303,11 +305,13 @@ if __name__ == '__main__':
     parser.add_argument("-a", "--all_code", help="compile all", action="store_true")
     parser.add_argument("-l", "--lib", help="compile lib", action="store_true")
     parser.add_argument("-s", "--src", help="compile src", action="store_true")
+    parser.add_argument("-e", "--echo", help="echo main", action="store_true")
     args = parser.parse_args()
 
     all_code = args.all_code
     lib = args.lib
     src = args.src
+    echo = args.echo
 
     c = ConfigParser('config/compile.json')
 
@@ -316,5 +320,5 @@ if __name__ == '__main__':
         c.normal_compiler('utils_lib')
 
     if src or all_code:
-        c.pipe_compile('src')
-        c.pipe_compile('src_cpp')
+        c.pipe_compile('src', echo=echo)
+        c.pipe_compile('src_cpp', echo=echo)
