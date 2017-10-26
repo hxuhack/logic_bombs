@@ -13,9 +13,19 @@ Below we list these programs and the conditions to trigger each bomb.
 
 | Type | Case  | Trigger Condition | Info  |
 |---|---|---|---|
-|   |   |   |   |
-|   |   |   |   |
-|   |   |   |   |
+|Accuracy Challenges|
+| Symbolic Variable Declaration  |   |   |   |
+| Covert Propagation  |   |   |   |
+| Symbolic Memory  |   |   |   |
+| Contextual Symbolic Value  |   |   |   |
+| Parallel Program |   |   |   |
+| Floating-point Number  |   |   |   |
+| Symbolic Jump |   |   |   |
+| Data Overflow |   |   |   |
+|Scalability Challenges|
+| External Function Call  |   |   |   |
+| Crypto Function |   |   |   |
+| Loop |   |   |   |
 
 # Forrest Runner
 ## **NOTE**
