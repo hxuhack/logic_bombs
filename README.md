@@ -1,3 +1,16 @@
+# Project Overview
+This project consists of a set of small programs with logic bombs.  The logic bomb can be triggered when certain conditions are met.  
+
+
+##Usage
+The project is for linux platform. To compiler the logic bombs, you have to install python3.4.  
+```
+python3 compile.py -a
+```
+
+##Details of the bombs
+Below we list these programs and the conditions to trigger each bomb. 
+
 # Forrest Runner
 ## **NOTE**
 Now we support a **Pythonic** grammar for template generation!!!
