@@ -10,6 +10,11 @@ python3 compile.py -a
 
 ## Details of the bombs
 Below we list these programs and the conditions to trigger each bomb. 
+| Type | Case  | Trigger Condition | Info  |
+|---|---|---|---|
+|   |   |   |   |
+|   |   |   |   |
+|   |   |   |   |
 
 # Forrest Runner
 ## **NOTE**
