@@ -7,7 +7,9 @@ TOY:
 #include "a_tester.h"
 
 int logic_bomb(int i) {
-    if(pow(i, 2) == 49){
+    double d = log(i); 
+    //printf("%f", d);
+    if(1.94 < d && d < 1.95){
         return BOMB_ENDING;
     }else{
         return NORMAL_ENDING;
