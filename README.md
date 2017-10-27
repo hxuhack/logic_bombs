@@ -1,8 +1,9 @@
-# Project Overview
+# A Dataset of Logic Bombs
+## Project Overview
 This project consists of a set of small programs with logic bombs.  The logic bomb can be triggered when certain conditions are met.  
 
 ## Structure
-logic_bombs
+logic_bombs  
 |--src: the source codes of logic bombs with C  
 |--src_cpp: the source codes of logic bombs with C++  
 |--scripts: batch evaluation of symbolic execution tools on the logic bombs  
