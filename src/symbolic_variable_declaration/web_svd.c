@@ -26,7 +26,7 @@ int logic_bomb() {
     
     int trigger = 1;
     while(recv(socket,receiver,256,0)){
-        if(strstr(receiver, "Hui"))
+        if(strstr(receiver, "trigger the bomb"))
   	    trigger = 0;
     }
     if(trigger)
