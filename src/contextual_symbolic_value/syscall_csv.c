@@ -10,8 +10,6 @@ TOY:
 int logic_bomb(char* s) {
     int trigger = 0;
     trigger = system(s);
-
-    printf ("%d\n", trigger);
     if(trigger == 0) {
         return BOMB_ENDING;
     } else {

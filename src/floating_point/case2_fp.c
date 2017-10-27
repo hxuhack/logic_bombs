@@ -10,5 +10,5 @@ int logic_bomb(float x) {
     if(1 + x == 2 && x != 1)
         return BOMB_ENDING;
     else
-	    return NORMAL_ENDING;
+        return NORMAL_ENDING;
 }
