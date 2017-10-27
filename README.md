@@ -28,10 +28,10 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| toy_eh_cp_cp.cpp | data propagation via exception handling (expected stdin: 0) | 
 | 		  		| div0_eh_cp.cpp | raise an exceptions when divided by 0 (expected stdin: 0) | 
 | 		  		| file_eh_cp.cpp | raise an exception when a file doesn't exist| 
-| Symbolic Memory  		| stackarray_l1_sm.c | if stdin points to an array element (expected stdin: 7) |
-| 		  		| stackarray_l2_sm.c | two arrays (expected stdin: 7) |
-| 		  		| heapmalloc_sm.c | allocate memory with malloc (expected stdin: 7)|
-| 		  		| heaprealloc_sm.c | allocate memory with realloc (expected stdin: 7)|
+| Symbolic Memory  		| l1array_sm.c | if stdin points to an array element (expected stdin: 7) |
+| 		  		| l2array_sm.c | two arrays (expected stdin: 7) |
+| 		  		| malloc_sm.c | allocate memory with malloc (expected stdin: 7)|
+| 		  		| realloc_sm.c | allocate memory with realloc (expected stdin: 7)|
 | 		  		| outofbound_sm.c | if stdin > array size (expected stdin: 7)|
 | Parallel Program 		|   |   |
 | Floating-point Number  	|   |   |
