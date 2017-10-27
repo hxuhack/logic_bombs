@@ -17,7 +17,7 @@ Below we list these programs and the conditions to trigger each bomb.
 |       			| vm_svd.c | the program runs on an virtual machine |
 |       			| web_svd.c | if a remote website contains the string "trigger the bomb" |
 |       			| time_svd.c | current time is after Jan 1st, 2050 |
-|       			| syscall_svd.c | the number of files under a current directory is > 2 |
+|       			| syscall_ls_svd.c | the number of files under a current directory is 7 |
 | Contextual Symbolic Value  	| file_csv.c | if stdin points to a file |
 | 			  	| ping_csv.c | if stdin points to a live IP |
 | 			  	| syscall_csv.c | if stdin is a Linux command |
