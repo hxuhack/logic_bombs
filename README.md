@@ -40,8 +40,8 @@ Below we list these programs and the conditions to trigger each bomb.
 | 	       		  	| case2_fp.c  | condition: 1 + x == 2 && x != 1  |
 | Symbolic Jump 		| jmp_sj.c | jump to an address related to stdin |
 | 		 		| arrayjmp_sj.c | a more complex case with an array |
-| Data Overflow 		|   |   |
-| External Function Call  	|   |   |
+| Data Overflow 		| plus_do.c | a + 2147483640 < 0 && a > 0  |
+| External Function Call  	| multiply_do.c | 3 * a < 0 && a > 0 |
 | Crypto Function 		|   |   |
 | Loop 				|   |   |
 
