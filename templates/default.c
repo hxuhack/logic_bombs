@@ -21,8 +21,8 @@ int main(int argc, char** argv) {
     %}
 
     switch (rt_value) {
-        case 0: printf("Normal ending"); break;
-        case 1: printf("Bomb ending"); break;
+        case 0: printf("Normal ending\n"); break;
+        case 1: printf("Bomb ending\n"); break;
     }
     return rt_value;
 }

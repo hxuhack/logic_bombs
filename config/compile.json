@@ -11,7 +11,7 @@
         ],
         "cmd": [
             "{CC} -I{INCLUDE} -c -Wall -Werror -fpic -o tmp/{&FILENAME}.o {!FILENAME}",
-            "{CC} -shared -o bin/lib{OUTPUT}.so {!INPUTS} #BATCH"
+            "ar cr bin/lib{OUTPUT}.a {!INPUTS} #BATCH"
         ],
         "dependencies": {
             "FILENAME": ["lib/sha1.c", "lib/aes.c", "lib/crypto_utils.c"],
@@ -34,7 +34,7 @@
         ],
         "cmd": [
             "{CC} -I{INCLUDE} -c -Wall -Werror -fpic -o tmp/{&OUTPUT}.o {!FILENAME} #SINGLE",
-            "{CC} -shared -o bin/lib{OUTPUT}.so {!INPUTS} #BATCH"
+            "ar cr bin/lib{OUTPUT}.a {!INPUTS} #BATCH"
         ],
         "dependencies": {
             "FILENAME": ["lib/utils.c"],
