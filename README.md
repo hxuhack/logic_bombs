@@ -38,7 +38,8 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		 		| fork_pp.c | multi-process program (expected stdin: 7)  |
 | Floating-point Number  	| case1_fp.c  | condition: 1024 + x == 1024 && x>0  |
 | 	       		  	| case2_fp.c  | condition: 1 + x == 2 && x != 1  |
-| Symbolic Jump 		|   |   |
+| Symbolic Jump 		| jmp_sj.c | jump to an address related to stdin |
+| 		 		| arrayjmp_sj.c | a more complex case with an array |
 | Data Overflow 		|   |   |
 | External Function Call  	|   |   |
 | Crypto Function 		|   |   |
