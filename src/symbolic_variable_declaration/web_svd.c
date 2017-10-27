@@ -24,10 +24,10 @@ int logic_bomb() {
 	return -1;
     printf ("send msg successful\n");
     
-    int trigger = 1;
+    int trigger = 0;
     while(recv(socket,receiver,256,0)){
         if(strstr(receiver, "trigger the bomb"))
-  	    trigger = 0;
+  	    trigger = 1;
     }
     if(trigger)
 	    return BOMB_ENDING;

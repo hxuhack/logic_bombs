@@ -42,8 +42,12 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		 		| arrayjmp_sj.c | a more complex case with an array |
 | Data Overflow 		| plus_do.c | a + 2147483640 < 0 && a > 0  |
 | 			  	| multiply_do.c | 3 * a < 0 && a > 0 |
-| External Function Call  	|   |   |
-| Crypto Function 		|   |   |
+| External Function Call  	| rand_ef.c | rand()%100 == 7 |
+| 			  	| pow_ef.c | pow(i, 2) == 49 |
+| 			  	| sin_ef.c | sin(i * PI / 180) == 0.5 |
+| 			  	| ln_ef.c | 1.94 < log(i) && log(i) < 1.95 |
+| Crypto Function 		| sha_cf.c | if sha1(i) equals to a predefined value |
+| 		 		| aes_cf.c | if aes(i, plaintext) equals to a ciphertext |
 | Loop 				|   |   |
 
 # Forrest Runner
