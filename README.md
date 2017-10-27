@@ -12,7 +12,7 @@ python3 compile.py -a
 Below we list these programs and the conditions to trigger each bomb. 
 
 | Type | Case  | Trigger Condition |
-|---|---|---|---|
+|---|---|---|
 | Symbolic Variable Declaration | cpu_cvd | the program runs on an Intel CPU |
 |       			| vm_svd | the program runs on an virtual machine |
 |       			| web_svd | if a remote website contains the string "trigger the bomb" |
