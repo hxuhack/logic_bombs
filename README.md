@@ -34,9 +34,10 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| malloc_sm.c | allocate memory with malloc (expected stdin: 7)|
 | 		  		| realloc_sm.c | allocate memory with realloc (expected stdin: 7)|
 | 		  		| outofbound_sm.c | if stdin > array size (expected stdin: 7)|
-| Parallel Program 		| pthread_pp.c | Multi-thread program (expected stdin: 7)  |
-| 		 		| fork_pp.c | Multi-process program (expected stdin: 7)  |
-| Floating-point Number  	|   |   |
+| Parallel Program 		| pthread_pp.c | multi-thread program (expected stdin: 7)  |
+| 		 		| fork_pp.c | multi-process program (expected stdin: 7)  |
+| Floating-point Number  	| case1_fp.c  | condition: 1024 + x == 1024 && x>0  |
+| 	       		  	| case2_fp.c  | condition: 1 + x == 2 && x != 1  |
 | Symbolic Jump 		|   |   |
 | Data Overflow 		|   |   |
 | External Function Call  	|   |   |
