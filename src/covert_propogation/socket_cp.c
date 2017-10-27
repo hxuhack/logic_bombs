@@ -88,12 +88,12 @@ int client_send(char char_send){
 int logic_bomb(char* s) {
     int pid1,pid2,i=0;
     if((pid1=fork())==-1)
-	return -1;
+	return NORMAL_ENDING;
     if(pid1 == 0){
         server();
     } else{
         if((pid2=fork())==-1)
-	    return -1;
+	    return NORMAL_ENDING;
         if(pid2 == 0){
             sleep(1);
             i=client_send(s[0]); 

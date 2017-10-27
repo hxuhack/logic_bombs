@@ -25,6 +25,7 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| stack_cp.c | data propagation via direct push/pop (expected stdin: 7) | 
 | 		  		| echo_cp.c | data propagation via echo (expected stdin: 7) | 
 | 		  		| echofile_cp.c | data propagation via echo and file (expected stdin: 0) | 
+| 		  		| socket_cp.c | data propagation via socket (expected stdin: 0) | 
 | 		  		| toy_eh_cp_cp.cpp | data propagation via exception handling (expected stdin: 0) | 
 | 		  		| div0_eh_cp.cpp | raise an exceptions when divided by 0 (expected stdin: 0) | 
 | 		  		| file_eh_cp.cpp | raise an exception when a file doesn't exist| 
@@ -33,7 +34,8 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| malloc_sm.c | allocate memory with malloc (expected stdin: 7)|
 | 		  		| realloc_sm.c | allocate memory with realloc (expected stdin: 7)|
 | 		  		| outofbound_sm.c | if stdin > array size (expected stdin: 7)|
-| Parallel Program 		|   |   |
+| Parallel Program 		| pthread_pp.c | Multi-thread program (expected stdin: 7)  |
+| 		 		| fork_pp.c | Multi-process program (expected stdin: 7)  |
 | Floating-point Number  	|   |   |
 | Symbolic Jump 		|   |   |
 | Data Overflow 		|   |   |
