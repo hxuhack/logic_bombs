@@ -11,23 +11,23 @@ python3 compile.py -a
 ## Details of the bombs
 Below we list these programs and the conditions to trigger each bomb. 
 
-| Type | Case  | Trigger Condition
+| Type | Case  | Trigger Condition |
 |---|---|---|---|
-| Symbolic Variable Declaration  | cpu_cvd | the program runs on an Intel CPU | |
-|       | vm_svd | the program runs on an virtual machine | |
-|       | web_svd | if a remote website contains the string "trigger the bomb" | |
-|       | time_svd | current time is after Jan 1st, 2050 | |
-|       | syscall_svd | the number of files under a current directory is > 2 | |
-| Contextual Symbolic Value  |   |   |   |
-| Covert Propagation  |   |   |   |
-| Symbolic Memory  |   |   |   |
-| Parallel Program |   |   |   |
-| Floating-point Number  |   |   |   |
-| Symbolic Jump |   |   |   |
-| Data Overflow |   |   |   |
-| External Function Call  |   |   |   |
-| Crypto Function |   |   |   |
-| Loop |   |   |   |
+| Symbolic Variable Declaration | cpu_cvd | the program runs on an Intel CPU |
+|       			| vm_svd | the program runs on an virtual machine |
+|       			| web_svd | if a remote website contains the string "trigger the bomb" |
+|       			| time_svd | current time is after Jan 1st, 2050 |
+|       			| syscall_svd | the number of files under a current directory is > 2 |
+| Contextual Symbolic Value  	|   |   |
+| Covert Propagation  		|   |   |
+| Symbolic Memory  		|   |   |
+| Parallel Program 		|   |   |
+| Floating-point Number  	|   |   |
+| Symbolic Jump 		|   |   |
+| Data Overflow 		|   |   |
+| External Function Call  	|   |   |
+| Crypto Function 		|   |   |
+| Loop 				|   |   |
 
 # Forrest Runner
 ## **NOTE**
