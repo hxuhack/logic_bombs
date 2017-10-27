@@ -1,7 +1,12 @@
 # Project Overview
 This project consists of a set of small programs with logic bombs.  The logic bomb can be triggered when certain conditions are met.  
 
-
+## Structure
+logic_bombs
+|--src: the source codes of logic bombs with C  
+|--src_cpp: the source codes of logic bombs with C++  
+|--scripts: batch evaluation of symbolic execution tools on the logic bombs  
+ 
 ## Usage
 The project is for linux platform. To compiler the logic bombs, you have to install python3.4.  
 ```
@@ -51,17 +56,10 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		 		| aes_cf.c | if aes(i, plaintext) equals to a ciphertext |
 | Loop 				|   |   |
 
-# Forrest Runner
-## **NOTE**
-Now we support a **Pythonic** grammar for template generation!!!
 
-## Motivation
+## Evaluation Scripts
 
-- Automatic run all test cases corresponding to user configure file.
-- Makefile of Makefile
-- Reduce repeated work for some common test settings.
-
-## How to use
+## Add New Logic Bombs 
 
 This core of this tool is the **config.py**, you can define a lot of rules for compiling, running and dependencies. This tool is intended for C program unit symbolic test, all test files should NOT contain main function. The main function should be generated from the templates.
 
