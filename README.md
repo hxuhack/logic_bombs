@@ -24,10 +24,10 @@ Below we list these programs and the conditions to trigger each bomb.
 | Covert Propagation  		| file_cp.c | data propagate via a file (expected stdin: 7) | 
 | 		  		| stack_cp.c | data propagation via direct push/pop (expected stdin: 7) | 
 | 		  		| echo_cp.c | data propagation via echo (expected stdin: 7) | 
-| 		  		| echofile_cp.cpp | data propagation via echo and file (expected stdin: 0) | 
-| 		  		| exception_toy_cp.cpp | data propagation via exception handling (expected stdin: 0) | 
-| 		  		| exception_div0_cp.cpp | raise an exceptions when divided by 0 (expected stdin: 0) | 
-| 		  		| exception_file_cp.cpp | raise an exception when a file doesn't exist| 
+| 		  		| echofile_cp.c | data propagation via echo and file (expected stdin: 0) | 
+| 		  		| toy_eh_cp_cp.cpp | data propagation via exception handling (expected stdin: 0) | 
+| 		  		| div0_eh_cp.cpp | raise an exceptions when divided by 0 (expected stdin: 0) | 
+| 		  		| file_eh_cp.cpp | raise an exception when a file doesn't exist| 
 | Symbolic Memory  		| stackarray_l1_sm.c | if stdin points to an array element (expected stdin: 7) |
 | 		  		| stackarray_l2_sm.c | two arrays (expected stdin: 7) |
 | 		  		| heapmalloc_sm.c | allocate memory with malloc (expected stdin: 7)|
