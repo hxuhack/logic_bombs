@@ -5,6 +5,7 @@ This project consists of a set of small programs with logic bombs.  The logic bo
 ## Usage
 The project is for linux platform. To compiler the logic bombs, you have to install python3.4.  
 ```
+pip3 install termcolor
 python3 compile.py -a
 ```
 

@@ -19,7 +19,7 @@ void aes_print(uint8_t* str) {
 int logic_bomb(char* s) {
     if(strlen(s) != 32){
         printf("please input the 128-bit keys\n");
-	return NORMAL ENDING;
+	return NORMAL_ENDING;
     }
 
     uint8_t key[16];
