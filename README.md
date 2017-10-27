@@ -13,14 +13,25 @@ Below we list these programs and the conditions to trigger each bomb.
 
 | Type | Case  | Trigger Condition |
 |---|---|---|
-| Symbolic Variable Declaration | cpu_cvd | the program runs on an Intel CPU |
-|       			| vm_svd | the program runs on an virtual machine |
-|       			| web_svd | if a remote website contains the string "trigger the bomb" |
-|       			| time_svd | current time is after Jan 1st, 2050 |
-|       			| syscall_svd | the number of files under a current directory is > 2 |
-| Contextual Symbolic Value  	|   |   |
-| Covert Propagation  		|   |   |
-| Symbolic Memory  		|   |   |
+| Symbolic Variable Declaration | cpu_svd.c | the program runs on an Intel CPU |
+|       			| vm_svd.c | the program runs on an virtual machine |
+|       			| web_svd.c | if a remote website contains the string "trigger the bomb" |
+|       			| time_svd.c | current time is after Jan 1st, 2050 |
+|       			| syscall_svd.c | the number of files under a current directory is > 2 |
+| Contextual Symbolic Value  	| file_csv.c | if stdin points to a file |
+| 			  	| ping_csv.c | if stdin points to a live IP |
+| 			  	| syscall_csv.c | if stdin is a Linux command |
+| Covert Propagation  		| file_cp.c | data propagate via a file (expected stdin: 7) | 
+| 		  		| stack_cp.c | data propagation via direct push/pop (expected stdin: 7) | 
+| 		  		| syscall_cp.c | data propagation via system calls (expected stdin: 7) | 
+| 		  		| exception_toy_cp.cpp | data propagation via exception handling (expected stdin: 0) | 
+| 		  		| exception_div0_cp.cpp | raise an exceptions when divided by 0 (expected stdin: 0) | 
+| 		  		| exception_file_cp.cpp | raise an exception when a file doesn't exist| 
+| Symbolic Memory  		| stackarray_l1i_sm.c | if stdin points to an array element (expected stdin: 7) |
+| 		  		| stackarray_l2_sm.c | two arrays (expected stdin: 7) |
+| 		  		| heapmalloc_sm.c | allocate memory with malloc (expected stdin: 7)|
+| 		  		| heaprealloc_sm.c | allocate memory with realloc (expected stdin: 7)|
+| 		  		| outofbound_sm.c | if stdin > array size (expected stdin: 7)|
 | Parallel Program 		|   |   |
 | Floating-point Number  	|   |   |
 | Symbolic Jump 		|   |   |
