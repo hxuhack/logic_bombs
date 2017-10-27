@@ -23,7 +23,8 @@ Below we list these programs and the conditions to trigger each bomb.
 | 			  	| syscall_csv.c | if stdin is a Linux command |
 | Covert Propagation  		| file_cp.c | data propagate via a file (expected stdin: 7) | 
 | 		  		| stack_cp.c | data propagation via direct push/pop (expected stdin: 7) | 
-| 		  		| syscall_cp.c | data propagation via system calls (expected stdin: 7) | 
+| 		  		| echo_cp.c | data propagation via echo (expected stdin: 7) | 
+| 		  		| echofile_cp.cpp | data propagation via echo and file (expected stdin: 0) | 
 | 		  		| exception_toy_cp.cpp | data propagation via exception handling (expected stdin: 0) | 
 | 		  		| exception_div0_cp.cpp | raise an exceptions when divided by 0 (expected stdin: 0) | 
 | 		  		| exception_file_cp.cpp | raise an exception when a file doesn't exist| 
