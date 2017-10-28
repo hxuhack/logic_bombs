@@ -31,6 +31,7 @@ Below we list these programs and the conditions to trigger each bomb.
 | Covert Propagation  		| file_cp.c | data propagate via a file (expected stdin: 7) | 
 | 		  		| stack_cp.c | data propagation via direct push/pop (expected stdin: 7) | 
 | 		  		| echo_cp.c | data propagation via echo (expected stdin: 7) | 
+| 		  		| df2cf_cp.c | data propagation via control flow (expected stdin: 7) | 
 | 		  		| echofile_cp.c | data propagation via echo and file (expected stdin: 0) | 
 | 		  		| socket_cp.c | data propagation via socket (expected stdin: 0) | 
 | 		  		| toy_eh_cp_cp.cpp | data propagation via exception handling (expected stdin: 0) | 
@@ -47,6 +48,7 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		 		| fork_pp.c | multi-process program (expected stdin: 7)  |
 | Floating-point Number  	| case1_fp.c  | condition: 1024 + x == 1024 && x>0  |
 | 	       		  	| case2_fp.c  | condition: 1 + x == 2 && x != 1  |
+| 	       		  	| case3_fp.c  | expected stdin: 7  |
 | Symbolic Jump 		| jmp_sj.c | jump to an address related to stdin |
 | 		 		| arrayjmp_sj.c | a more complex case with an array |
 | Data Overflow 		| plus_do.c | a + 2147483640 < 0 && a > 0  |
