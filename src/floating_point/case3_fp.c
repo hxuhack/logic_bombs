@@ -7,6 +7,7 @@ Solution: 1.0000001
 #include "a_tester.h"
 
 int logic_bomb(float symvar) {
+    printf("symvar = %f\n", symvar);
     float a = symvar/70.0;
     float b = 0.1;
     if(a != 0.1){
