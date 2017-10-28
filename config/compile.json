@@ -7,11 +7,11 @@
     "crypto_lib": {
         "mkdir": [
             "tmp",
-            "bin"
+            "build"
         ],
         "cmd": [
             "{CC} -I{INCLUDE} -c -Wall -Werror -fpic -o tmp/{&FILENAME}.o {!FILENAME}",
-            "ar cr bin/lib{OUTPUT}.a {!INPUTS} #BATCH"
+            "ar cr build/lib{OUTPUT}.a {!INPUTS} #BATCH"
         ],
         "dependencies": {
             "FILENAME": ["lib/sha1.c", "lib/aes.c", "lib/crypto_utils.c"],
@@ -30,11 +30,11 @@
     "utils_lib": {
         "mkdir": [
             "tmp",
-            "bin"
+            "build"
         ],
         "cmd": [
             "{CC} -I{INCLUDE} -c -Wall -Werror -fpic -o tmp/{&OUTPUT}.o {!FILENAME} #SINGLE",
-            "ar cr bin/lib{OUTPUT}.a {!INPUTS} #BATCH"
+            "ar cr build/lib{OUTPUT}.a {!INPUTS} #BATCH"
         ],
         "dependencies": {
             "FILENAME": ["lib/utils.c"],
@@ -43,7 +43,7 @@
             "OUTPUT": "utils"
         },
         "exceptions": [
-            "src/src_cpp"
+            "src_cpp"
         ],
         "rm": [
             "tmp"
@@ -52,10 +52,10 @@
 
     "src": {
         "mkdir": [
-            "bin/output/"
+            "build"
         ],
         "cmd": [
-            "{CC} -I{INCLUDE} -Lbin -o bin/output/{&FILENAME} -xc - -lpthread -lm -lutils -lcrypto #PIPE"
+            "{CC} -I{INCLUDE} -Lbuild -o build/{&FILENAME} -xc - -lpthread -lm -lutils -lcrypto #PIPE"
         ],
         "dependencies": {
             "PATH": "src/",
@@ -71,10 +71,10 @@
     "src_cpp": {
         "CC": "g++",
         "mkdir": [
-            "bin/output/"
+            "build"
         ],
         "cmd": [
-            "{CC} -I{INCLUDE} -Lbin -o bin/output/{&FILENAME} -xc++ - -lpthread -lm -lutils #PIPE"
+            "{CC} -I{INCLUDE} -Lbuild -o build/{&FILENAME} -xc++ - -lpthread -lm -lutils #PIPE"
         ],
         "dependencies": {
             "PATH": "src_cpp/",
