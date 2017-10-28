@@ -52,10 +52,10 @@
 
     "src": {
         "mkdir": [
-            "bin/"
+            "bin/output/"
         ],
         "cmd": [
-            "{CC} -I{INCLUDE} -Lbin -o bin/{&FILENAME} -xc - -lpthread -lm -lutils -lcrypto #PIPE"
+            "{CC} -I{INCLUDE} -Lbin -o bin/output/{&FILENAME} -xc - -lpthread -lm -lutils -lcrypto #PIPE"
         ],
         "dependencies": {
             "PATH": "src/",
@@ -63,7 +63,6 @@
             "TEMPLATE": "templates/default.c"
         },
         "exceptions": [
-            "src_cpp"
         ],
         "rm": [
         ]
@@ -72,13 +71,13 @@
     "src_cpp": {
         "CC": "g++",
         "mkdir": [
-            "bin/"
+            "bin/output/"
         ],
         "cmd": [
-            "{CC} -I{INCLUDE} -Lbin -o bin/{&FILENAME} -xc++ - -lpthread -lm -lutils #PIPE"
+            "{CC} -I{INCLUDE} -Lbin -o bin/output/{&FILENAME} -xc++ - -lpthread -lm -lutils #PIPE"
         ],
         "dependencies": {
-            "PATH": "src_cpp",
+            "PATH": "src_cpp/",
             "INCLUDE": "include",
             "TEMPLATE": "templates/default.c"
         },
