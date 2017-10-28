@@ -41,6 +41,8 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| malloc_sm.c | allocate memory with malloc (expected stdin: 7)|
 | 		  		| realloc_sm.c | allocate memory with realloc (expected stdin: 7)|
 | 		  		| outofbound_sm.c | if stdin > array size (expected stdin: 7)|
+| 		  		| vector_sm.cpp | with std::vector (expected stdin: 7)|
+| 		  		| list_sm.cpp | with std::list (expected stdin: 7)|
 | Parallel Program 		| pthread_pp.c | multi-thread program (expected stdin: 7)  |
 | 		 		| fork_pp.c | multi-process program (expected stdin: 7)  |
 | Floating-point Number  	| case1_fp.c  | condition: 1024 + x == 1024 && x>0  |
