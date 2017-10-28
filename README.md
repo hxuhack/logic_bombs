@@ -44,8 +44,10 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| outofbound_sm.c | if stdin > array size (expected stdin: 7)|
 | 		  		| vector_sm.cpp | with std::vector (expected stdin: 7)|
 | 		  		| list_sm.cpp | with std::list (expected stdin: 7)|
-| Parallel Program 		| pthread_pp.c | multi-thread program (expected stdin: 7)  |
-| 		 		| fork_pp.c | multi-process program (expected stdin: 7)  |
+| Parallel Program 		| pthread_pp_l1.c | multi-thread program (expected stdin: 7)  |
+| 		 		| fork_pp_l1.c | multi-process program (expected stdin: 7)  |
+| 		 		| pthread_pp_l2.c | multi-thread program (random result)  |
+| 		 		| fork_pp_l2.c | multi-process program (random result)  |
 | Floating-point Number  	| float1_fp_l1.c | expected stdin: 7 |
 | 	       		  	| float2_fp_l1.c | expected stdin: 7 |
 | 	       		  	| float3_fp_l2.c | expected stdin: 0.1  |

@@ -1,12 +1,7 @@
-/*
-   TOY:
- */
 #include <unistd.h>
 #include "utils.h"
-
 #include "a_tester.h"
 
-// {"s":{"length": 16}}
 int logic_bomb(char* s) {
     int pid, fd[2];
     pipe(fd);
@@ -22,10 +17,8 @@ int logic_bomb(char* s) {
         close(fd[1]);
         read(fd[0], content, 8);
         if (strcmp(content, "7") == 0) {
-            Bomb();
+            return BOMB_ENDING;
         }
-        else {
-            Foobar();
-        }
+        return NORMAL_ENDING; 
     }
 }
