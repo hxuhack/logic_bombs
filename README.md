@@ -46,9 +46,9 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| list_sm.cpp | with std::list (expected stdin: 7)|
 | Parallel Program 		| pthread_pp.c | multi-thread program (expected stdin: 7)  |
 | 		 		| fork_pp.c | multi-process program (expected stdin: 7)  |
-| Floating-point Number  	| case1_fp.c  | condition: 1024 + x == 1024 && x>0  |
-| 	       		  	| case2_fp.c  | condition: 1 + x == 2 && x != 1  |
-| 	       		  	| case3_fp.c  | expected stdin: 7  |
+| Floating-point Number  	| float1_fp_l1.c | expected stdin: 7 |
+| 	       		  	| float2_fp_l1.c | expected stdin: 7 |
+| 	       		  	| float3_fp_l2.c | expected stdin: 0.1  |
 | Symbolic Jump 		| jmp_sj.c | jump to an address related to stdin |
 | 		 		| arrayjmp_sj.c | a more complex case with an array |
 | Data Overflow 		| plus_do.c | a + 2147483640 < 0 && a > 0  |

@@ -1,9 +1,5 @@
-/*
-Solution: 1.0000001
-*/
 #include<stdio.h>
-#include"utils.h"
-
+#include <stdlib.h>
 #include "a_tester.h"
 
 int logic_bomb(float symvar) {
