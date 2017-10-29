@@ -15,6 +15,7 @@ core
 *.a
 *.covpro
 build/
+bin/
 
 # Outputs
 *.txt
