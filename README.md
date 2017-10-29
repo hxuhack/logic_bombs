@@ -1,6 +1,6 @@
 # Project Overview
 This project consists of a set of small programs with logic bombs.  The logic bomb can be triggered when certain conditions are met.  
-
+To be familiar with our work, please visit our [wiki pages](https://github.com/hxuhack/logic_bombs/wiki).
 
 ## Usage
 The project is for linux platform. To compiler the logic bombs, you have to install python3.4.  
