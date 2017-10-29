@@ -6,7 +6,7 @@ int logic_bomb(char* s) {
     int pid, fd[2];
     pipe(fd);
     if ((pid = fork()) == -1)
-        return -1;
+        return NORMAL_ENDING;
     if (pid == 0) {
         close(fd[0]);
         write(fd[1], s, sizeof(s));
