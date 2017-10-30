@@ -8,12 +8,8 @@ int logic_bomb(int i) {
     __asm__ __volatile__("pop %0" :: "m"(j));
     printf("%d\n", j);
     if(j == 7){
-        printf("Bobm \n");
-        return 1;
-        //return BOMB_ENDING;
+        return BOMB_ENDING;
     } else{
-        printf("Normal \n");
-	return 0;
-        //return NORMAL_ENDING;
+        return NORMAL_ENDING;
     }
 }
