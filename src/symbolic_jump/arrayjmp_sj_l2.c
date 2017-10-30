@@ -1,22 +1,20 @@
+#include <stdio.h>
+#include "utils.h"
+
 #define jmp(addr) asm("jmp *%0"::"r"(addr):)
 
 #include "a_tester.h"
-#include "utils.h"
 
-int logic_bomb(int i) {
-    int addrs[] = {0,&&flag_1-&&flag_0,&&flag_2-&&flag_0,&&flag_3-&&flag_0,&&flag_4-&&flag_0,&&flag_5-&&flag_0};
-    //printf("%x,%x,%x,%x,%x,%x, %d\n", &&flag_0, &&flag_1, &&flag_2, &&flag_3, &&flag_4, &&flag_5, addr);
-    jmp(&&flag_0 + addrs[i+1]);
-    flag_0:
-        return BOMB_ENDING;
-    flag_1:
-        return NORMAL_ENDING;
-    flag_2:
-        return NORMAL_ENDING;
-    flag_3:
-        return NORMAL_ENDING;
-    flag_4:
-        return NORMAL_ENDING;
-    flag_5:
-        return NORMAL_ENDING;
+int logic_bomb(int symvar) {
+    int array[] = {0,4,6,10,14,16};
+    long long addr = &&flag_0 + array[symvar%6];
+    printf("addr = %x, \n", addr);
+    jmp(addr);
+  flag_0:
+    if (symvar > 0){
+        symvar++;
+        if(symvar == 0)
+            return BOMB_ENDING;
+    }
+    return NORMAL_ENDING;
 }

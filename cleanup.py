@@ -3,7 +3,7 @@ import os
 from shutil import rmtree
 
 
-dirs_gonna_remove = ['tmp', 'angr', 'triton', 'klee', 'bin']
+dirs_gonna_remove = ['tmp', 'angr', 'triton', 'klee', 'build']
 list(map(lambda x: rmtree(x, True), dirs_gonna_remove))
 
 files_gonna_remove = ['core', 'tmp.covpro']
