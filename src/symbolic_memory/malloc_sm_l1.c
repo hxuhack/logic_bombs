@@ -10,8 +10,7 @@ int logic_bomb(int i) {
 	array[k] = k;
     }
     if(array[i] == 7){
-        return BOMB_ENDING;
-     }
-    else
-	return NORMAL_ENDING;
+       return BOMB_ENDING;
+    }
+    return NORMAL_ENDING;
 }

@@ -15,8 +15,7 @@ int logic_bomb(int i) {
     }
     if(array[i] == 7){
         return BOMB_ENDING;
-     }
-    else
-        return NORMAL_ENDING;
+    }
+    return NORMAL_ENDING;
 }
 
