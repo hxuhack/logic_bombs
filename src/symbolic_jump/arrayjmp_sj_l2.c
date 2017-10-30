@@ -6,8 +6,8 @@
 #include "a_tester.h"
 
 int logic_bomb(int symvar) {
-    int array[] = {0,4,6,10,14,16};
-    long long addr = &&flag_0 + array[symvar%6];
+    int array[] = {0,7,13,14,15,16,21,22,23,24,31,37};
+    long long addr = &&flag_0 + array[symvar%12];
     printf("addr = %x, \n", addr);
     jmp(addr);
   flag_0:

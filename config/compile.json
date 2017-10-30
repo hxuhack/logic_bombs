@@ -1,7 +1,7 @@
 {
     "general": {
-        "CC": "gcc",
-        "CPP": "g++"
+        "CC": "clang",
+        "CPP": "clang++"
     },
 
     "crypto_lib": {
