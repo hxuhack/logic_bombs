@@ -47,6 +47,7 @@ Below we list these programs and the conditions to trigger each bomb.
 | 	       		  	| float5_fp_l2.c | expected stdin: 0.00001  |
 | Symbolic Jump 		| jmp_sj_l1.c | jump to an address related to stdin (expected stdin: 37)|
 | 		 		| arrayjmp_sj_l2.c | a more complex case with an array (expected stdin: 11,23...)|
+| 		 		| ret_sj_l2.c | return oriented programming (expected stdin: 0000000000000)|
 | Data Overflow 		| plus_do.c | a + 2147483640 < 0 && a > 0  |
 | 			  	| multiply_do.c | 3 * a < 0 && a > 0 |
 | External Function Call  	| rand_ef.c | rand()%100 == 7 |

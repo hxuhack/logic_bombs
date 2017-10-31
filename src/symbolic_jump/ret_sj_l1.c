@@ -10,13 +10,18 @@ TOY:
 #define ret() asm volatile ("ret :: "m")
 #define jmp(addr) asm("jmp *%0"::"r"(addr):)
 
-int logic_bomb(int i) {
-    int j;
-    push(i); 
-    pop(j);
-    if(j == 7){
+int flag = 0;
+
+void trigger() {
+     flag = 1;
+}
+
+int logic_bomb(char* symvar) {
+    int flag = 0;
+    char* buf[2];
+    strcpy(buf, symvar);
+    if(flag == 1){
         return BOMB_ENDING;
-    } else{
-        return NORMAL_ENDING;
     }
+    return NORMAL_ENDING;
 }
