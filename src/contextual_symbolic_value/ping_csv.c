@@ -1,10 +1,3 @@
-/*
-*Read ping result as symbolic variables, if the address is not reachable,the bomb would be triggered.
-*Evaluation:
---Triton: fail
---Angr:
---BAP:
-*/
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
@@ -16,8 +9,7 @@
 #include <arpa/inet.h>
 #include <sys/select.h>
 
-//note, to allow root to use icmp sockets, run:
-//sysctl -w net.ipv4.ping_group_range="0 10"
+// {"s":{"length": 32}}
 
 int ping_it(struct in_addr *dst)
 {
