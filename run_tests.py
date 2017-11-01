@@ -117,7 +117,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
                     cmds.append(cmds_tp[0] % outname)
                     cmds.append(cmds_tp[1] % outname)
                     cmds.append(cmds_tp[2] % 2)
-                    p = subprocess.Popen(cmds[0].split(' '), stdout=subprocess.PIPE)
+                    p = subprocess.Popen(cmds[0].split(' '), stdin=subprocess.PIPE)
                     p.communicate(res.encode('utf8'))
                     cp_value = p.wait()
                     if cp_value:
