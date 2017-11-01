@@ -50,7 +50,7 @@ Below we list these programs and the conditions to trigger each bomb.
 | Data Overflow 		| plus_do.c | a + 2147483640 < 0 && a > 0  |
 | 			  	| multiply_do.c | 3 * a < 0 && a > 0 |
 | Memory Overflow 		| stack_mo_l1.c | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`|
-| 		 		| stack_mo_l2.c | stdin to be determined|
+| 		 		| stack_mo_l2.c | expected stdin: \`python -c 'print "x\90" * 32 + "\x00\x40\x06\x73"[::-1]'\` |
 | 		 		| heap_mo_l2.c | TO BE ADDED|
 | External Function Call  	| rand_ef.c | rand()%100 == 7 |
 | 			  	| pow_ef.c | pow(i, 2) == 49 |
