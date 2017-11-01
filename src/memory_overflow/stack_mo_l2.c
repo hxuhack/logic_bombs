@@ -1,6 +1,3 @@
-/*
-TOY:
-*/
 #include <string.h> 
 #include "utils.h"
 #include "a_tester.h"

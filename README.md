@@ -49,7 +49,7 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		 		| arrayjmp_sj_l2.c | a more complex case with an array (expected stdin: 11,23...)|
 | Data Overflow 		| plus_do.c | a + 2147483640 < 0 && a > 0  |
 | 			  	| multiply_do.c | 3 * a < 0 && a > 0 |
-| Memory Overflow 		| stack_mo_l1.c | expected stdin: `python -c 'print "AAAAAAAA\x01\x00\x00\x00"'`|
+| Memory Overflow 		| stack_mo_l1.c | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`|
 | 		 		| stack_mo_l2.c | stdin to be determined|
 | 		 		| heap_mo_l2.c | TO BE ADDED|
 | External Function Call  	| rand_ef.c | rand()%100 == 7 |
