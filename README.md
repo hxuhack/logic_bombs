@@ -59,4 +59,5 @@ Below we list these programs and the conditions to trigger each bomb.
 | 			  	| ln_ef.c | 1.94 < log(i) && log(i) < 1.95 |
 | Crypto Function 		| sha_cf.c | if sha1(i) equals to a predefined value |
 | 		 		| aes_cf.c | if aes(i, plaintext) equals to a ciphertext |
-| Loop 				|   |   |
+| Loop 				| collaz_lo_l1.c  | if it loops 25 times (example stdin:101) |
+|  				| collaz_lo_l2.c  | if it loops 986 times (example stdin:670617279) |
