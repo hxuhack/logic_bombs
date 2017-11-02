@@ -8,7 +8,8 @@ Below we list these programs and the conditions to trigger each bomb.
 
 | Type | Case  | Trigger Condition |
 |---|---|---|
-| Symbolic Variable Declaration | cpu_svd.c | the program runs on an Intel CPU |
+| Symbolic Variable Declaration | stdin_svd.c | user inputs 7 |
+|  				| cpu_svd.c | the program runs on an Intel CPU |
 |       			| time_svd.c | current time is after Jan 1st, 2050 |
 |       			| pid_svd.c | the process id is 4096 |
 |       			| vm_svd.c | the program runs on an virtual machine |
@@ -49,9 +50,9 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		 		| arrayjmp_sj_l2.c | a more complex case with an array (expected stdin: 11,23...)|
 | Data Overflow 		| plus_do.c | a + 2147483640 < 0 && a > 0  |
 | 			  	| multiply_do.c | 3 * a < 0 && a > 0 |
-| Memory Overflow 		| stack_mo_l1.c | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`|
-| 		 		| stack_mo_l2.c | expected stdin: TO BE FIGURE OUT |
-| 		 		| heap_mo_l2.c | TO BE ADDED|
+| Buffer Overflow 		| stack_bo_l1.c | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`|
+| 		 		| stack_bo_l2.c | expected stdin: TO FIGURE OUT |
+| 		 		| heap_bo_l1.c | expected stdin: TO FIGURE OUR|
 | External Function Call  	| rand_ef.c | rand()%100 == 7 |
 | 			  	| pow_ef.c | pow(i, 2) == 49 |
 | 			  	| sin_ef.c | sin(i * PI / 180) == 0.5 |
