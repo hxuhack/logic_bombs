@@ -5,12 +5,16 @@
 long f(long x){
     if (x%2 == 0)
 	return x/2;
-    return 3*x + 1;
+    else if (x%3 == 0)
+	return x/3;
+    else if (x%5 == 0)
+	return x/5;
+    else
+        return 7*x + 1;
 }
 
 int logic_bomb(int i) {
-    if(i>999999999)
-	return NORMAL_ENDING;
+    printf("i = %d\n", i);
     long j = f(i);
     int loopcount = 1;
     while(j != 1){
@@ -18,7 +22,7 @@ int logic_bomb(int i) {
         loopcount ++;
     }
     printf("loopcount = %d\n", loopcount);
-    if(loopcount == 986)
+    if(loopcount == 25)
         return BOMB_ENDING;
     else
         return NORMAL_ENDING;
