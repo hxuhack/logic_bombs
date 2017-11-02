@@ -1,11 +1,9 @@
-/*
-TOY:
-*/
 #include <string.h> 
 #include "utils.h"
 
 #include "a_tester.h"
 
+// {"s":{"length": 16}}
 char* shell(const char* cmd)
 {
     char* rs = "";

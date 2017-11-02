@@ -1,3 +1,4 @@
+// {"s":{"length": 128}}
 #include <string.h> 
 #include "utils.h"
 #include "a_tester.h"

@@ -1,6 +1,4 @@
-/*
-TOY:
-*/
+// {"s":{"length": 64}}
 #include <string.h> 
 #include "utils.h"
 #include "a_tester.h"
