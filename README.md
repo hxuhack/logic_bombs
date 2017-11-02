@@ -48,11 +48,12 @@ Below we list these programs and the conditions to trigger each bomb.
 | 	       		  	| float5_fp_l2.c | expected stdin: 0.00001  |
 | Symbolic Jump 		| jmp_sj_l1.c | jump to an address related to stdin (expected stdin: 37)|
 | 		 		| arrayjmp_sj_l2.c | a more complex case with an array (expected stdin: 11,23...)|
+| 		 		| vectorjmp_sj_l2.c | a more complex case with an vector (expected stdin: 5...)|
 | Data Overflow 		| plus_do.c | a + 2147483640 < 0 && a > 0  |
 | 			  	| multiply_do.c | 3 * a < 0 && a > 0 |
 | Buffer Overflow 		| stack_bo_l1.c | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`|
 | 		 		| stack_bo_l2.c | expected stdin: TO FIGURE OUT |
-| 		 		| heap_bo_l1.c | expected stdin: TO FIGURE OUR|
+| 		 		| heap_bo_l1.c | expected stdin: TO FIGURE OUT|
 | External Function Call  	| rand_ef.c | rand()%100 == 7 |
 | 			  	| pow_ef.c | pow(i, 2) == 49 |
 | 			  	| sin_ef.c | sin(i * PI / 180) == 0.5 |
@@ -63,3 +64,4 @@ Below we list these programs and the conditions to trigger each bomb.
 |  				| 5n+1_lo_l1.c  | if it loops 25 times (example stdin:101) |
 |  				| 7n+1_lo_l1.c  | if it loops 50 times (example stdin:1111) |
 |  				| collaz_lo_l2.c  | if it loops 986 times (example stdin:670617279) |
+|  				| paraloop_lo_l2.c  | a loop terminated by another thread (expected stdin: 7) |
