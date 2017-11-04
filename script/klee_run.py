@@ -14,9 +14,8 @@ args = parser.parse_args()
 print(colored('[+] Compiling ...', 'green'))
 
 # os.system('sh /home/klee/ConcTrignr/klee/run_program.sh')
-cmd = 'gcc -Iinclude -L ' + lib_path + ' -Lbin -o klee/a.out klee/a.c -lkleeRuntest -lpthread -lutils -lcrypto -lm'
+cmd = 'clang -Iinclude -L ' + lib_path + ' -Lbuild -o klee/a.out klee/a.c -lkleeRuntest -lpthread -lutils -lcrypto -lm'
 p = Popen(cmd.split(' '))
-# os.system('gcc -Iinclude -L ' + lib_path + ' -Lbin -o klee/a.out klee/a.c -lkleeRuntest -lpthread -lutils -lcrypto -lm')
 rt_value = p.wait()
 if rt_value != 0:
     exit(3)

@@ -41,7 +41,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
     CompTError = 3
     TLE = 4
 
-    MAX_TIME = 60
+    MAX_TIME = 300
     test_results = {}
 
     func_pattern = re.compile(r'int[ \t\n]+%s\(([^)]*)\);*' % func_name)
@@ -111,6 +111,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
                 elif prefix == 'klee':
                     if not os.path.exists('klee'):
                         os.mkdir('klee')
+
                     with open('klee/a.c', 'w') as f:
                         f.write(res)
 
@@ -125,15 +126,19 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
                         print('========= Compile Error! ==========')
                         continue
 
-                    p = subprocess.Popen(cmds[1].split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                    errored = False
-                    out, err = p.communicate()
-                    if 'KLEE: ERROR:' in err.decode('utf8', 'ignore'):
-                        test_results[fp] = 255
-                        errored = True
-
-                    rt_vale = p.wait()
-                    if errored:
+                    try:
+                        p = subprocess.Popen(cmds[1].split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                        errored = False
+                        out, err = p.communicate(timeout=MAX_TIME)
+                        if 'KLEE: ERROR:' in err.decode('utf8', 'ignore'):
+                            test_results[fp] = 255
+                            errored = True
+                            if errored:
+                                continue
+                        rt_vale = p.wait(timeout=MAX_TIME)
+                    except subprocess.TimeoutExpired:
+                        test_results[fp] = TLE
+                        p.kill()
                         continue
 
                     p = subprocess.Popen(cmds[2].split(' '))
@@ -170,7 +175,7 @@ if __name__ == '__main__':
     from config.test_settings import src_dirs, switches, FUNC_NAME
     from collections import OrderedDict
 
-    res = ATKrun(switches['triton'], src_dirs, func_name=FUNC_NAME)
+    res = ATKrun(switches['klee'], src_dirs, func_name=FUNC_NAME)
 
     results = {}
     for key, item in res.items():
