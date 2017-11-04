@@ -1,7 +1,6 @@
 {
     "general": {
-        "CC": "clang",
-        "CPP": "clang++"
+        "CC": "clang"
     },
 
     "crypto_lib": {
@@ -69,7 +68,7 @@
     },
 
     "src_cpp": {
-        "CC": "g++",
+        "CC": "clang++",
         "mkdir": [
             "build"
         ],

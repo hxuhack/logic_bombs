@@ -18,17 +18,17 @@ src_dirs = [
     # 'src/symbolic_variable',
 ]
 
-cmds_tp_angr = ["gcc -Iinclude -Lbin -o angr/%s.out -xc - -lutils -lpthread -lcrypto -lm",
+cmds_tp_angr = ["gcc -Iinclude -Lbuild -o angr/%s.out -xc - -lutils -lpthread -lcrypto -lm",
             "python script/angr_run.py -r -l%d angr/%s.out"]
 
 cmds_tp_klee = [
-    "clang -Iinclude -Lbin -emit-llvm -o klee/%s.bc -c -g klee/a.c -lpthread -lutils -lcrypto -lm",
+    "clang -Iinclude -Lbuild -emit-llvm -o klee/%s.bc -c -g klee/a.c -lpthread -lutils -lcrypto -lm",
     "klee klee/%s.bc",
     "python3 script/klee_run.py -e%d"
 ]
 
 cmds_tp_triton = [
-    "gcc -Iinclude -Lbin -o triton/%s.out -xc - -lutils -lpthread -lcrypto -lm",
+    "gcc -Iinclude -Lbuild -o triton/%s.out -xc - -lutils -lpthread -lcrypto -lm",
     "python script/triton_caller.py -l%d -m%d -f%s -i%s -p triton/%s.out"
 ]
 
