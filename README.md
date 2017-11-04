@@ -1,6 +1,12 @@
 # A Dataset of Logic Bombs
 ## Project Overview
-This project consists of a set of small programs with logic bombs.  The logic bomb can be triggered when certain conditions are met.  
+This project includes a set of small programs with logic bombs.  The logic bomb can be triggered when certain conditions are met. 
+We release the dataset for benchmarking purposes.  Any dynamic testing tools (especially symbolic execution) can employ the dataset to benchmark their capabilities. 
+The dataset is originally realeased with our paper:
+
+[1] "Concolic Execution on Small-Size Binary Codes: Challenges and Empirical Study," Hui Xu, Yangfan Zhou, Yu Kang, and Michael R. Lyu, in the 47th IEEE/IFIP International Conference on Dependable Systems and Networks (DSN 2017)
+ 
+
 To find out more details, please visit our [wiki](https://github.com/hxuhack/logic_bombs/wiki).
 
 ## Details of the bombs
