@@ -9,6 +9,7 @@
 #include "utils.h"
 #include "a_tester.h"
 
+// {"s":{"length": 2}}
 int logic_bomb(char* symvar) {
     char *p_addr, *c_addr;
     int flag = 0;

@@ -9,7 +9,6 @@
 #include <arpa/inet.h>
 #include <sys/select.h>
 
-// {"s":{"length": 32}}
 
 int ping_it(struct in_addr *dst)
 {
@@ -80,6 +79,7 @@ int ping_it(struct in_addr *dst)
 
 #include "a_tester.h"
 
+// {"s":{"length": 32}}
 int logic_bomb(char* s) {
     struct in_addr dst;
 

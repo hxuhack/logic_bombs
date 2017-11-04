@@ -2,23 +2,26 @@
 FUNC_NAME = 'logic_bomb'
 
 src_dirs = [
+    'src/buffer_overflow',
+    'src/contextual_symbolic_value',
     'src/covert_propogation',
+    'src/crypto_functions',
+    'src/data_overflow',
+    'src/external_functions',
+    'src/floating_point',
+    'src/loop',
+    'src/parallel_program',
+    'src/symbolic_jump',
+    'src/symbolic_memory',
 
-    # 'src/exception_handling',
+    # 'src_cpp/covert_propagation',
+    # 'src_cpp/symbolic_jump',
+    # 'src_cpp/symbolic_memory',
 
-    # 'src/external_functions',
-    # 'src/floatpoint',
-    'src/hash',
-    # 'src/overflow',
-    # 'src/parallel_program',
-    # 'src/symbolic_array',
-    # 'src/symbolic_jump',
-    # 'src/symbolic_value',
-
-    # 'src/symbolic_variable',
+    # 'src/symbolic_variable_declaration',
 ]
 
-cmds_tp_angr = ["gcc -Iinclude -Lbuild -o angr/%s.out -xc - -lutils -lpthread -lcrypto -lm",
+cmds_tp_angr = ["clang -Iinclude -Lbuild -o angr/%s.out -xc - -lutils -lpthread -lcrypto -lm",
             "python script/angr_run.py -r -l%d angr/%s.out"]
 
 cmds_tp_klee = [
@@ -28,7 +31,7 @@ cmds_tp_klee = [
 ]
 
 cmds_tp_triton = [
-    "gcc -Iinclude -Lbuild -o triton/%s.out -xc - -lutils -lpthread -lcrypto -lm",
+    "clang -Iinclude -Lbuild -o triton/%s.out -xc - -lutils -lpthread -lcrypto -lm",
     "python script/triton_caller.py -l%d -m%d -f%s -i%s -p triton/%s.out"
 ]
 

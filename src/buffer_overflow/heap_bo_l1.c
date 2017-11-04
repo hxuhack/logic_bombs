@@ -1,9 +1,10 @@
-// {"s":{"length": 256}}
 #include <string.h> 
 #include "utils.h"
 #include "a_tester.h"
 
 int n = 5;
+
+// {"symvar":{"length": 256}}
 int logic_bomb(char* symvar) {
     char *p, *q;
     p = malloc(16);

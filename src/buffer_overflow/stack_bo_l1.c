@@ -1,8 +1,9 @@
-// {"s":{"length": 64}}
 #include <string.h> 
 #include "utils.h"
 #include "a_tester.h"
 
+
+// {"symvar":{"length": 64}}
 int logic_bomb(char* symvar) {
     int flag = 0;
     char buf[8];

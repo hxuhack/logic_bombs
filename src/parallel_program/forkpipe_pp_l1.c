@@ -2,6 +2,7 @@
 #include "utils.h"
 #include "a_tester.h"
 
+// {"s":{"length": 2}}
 int logic_bomb(char* s) {
     int pid, fd[2];
     pipe(fd);
