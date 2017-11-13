@@ -23,6 +23,7 @@ bin/
 angr/
 klee/
 triton/
+res.json
 
 # Assembly
 *.s
