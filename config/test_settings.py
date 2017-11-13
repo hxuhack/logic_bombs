@@ -9,7 +9,7 @@ src_dirs = [
     # 'src/data_overflow',
     # 'src/external_functions',
     # 'src/floating_point',
-    # # 'src/loop',
+    # 'src/loop',
     # 'src/parallel_program',
     # 'src/symbolic_jump',
     # 'src/symbolic_memory',
@@ -33,6 +33,12 @@ cmds_tp_klee = [
     "python3 script/klee_run.py -e%d"
 ]
 
+cmds_tp_klee_cpp = [
+    "clang++ -Iinclude -Lbuild -emit-llvm -o klee/%s.bc -c -g klee/a.c -lpthread -lutils -lcrypto -lm",
+    "klee klee/%s.bc",
+    "python3 script/klee_run_cpp.py -e%d"
+]
+
 cmds_tp_triton = [
     "clang -Iinclude -Lbuild -o triton/%s.out -xc - -lutils -lpthread -lcrypto -lm",
     "python script/triton_caller.py -l%d -m%d -f%s -i%s -p triton/%s.out"
@@ -52,7 +58,8 @@ switches = {
     'angr_cpp': [cmds_tp_angr_cpp, angr_tp_path, 'angr'],
     'triton': [cmds_tp_triton, triton_tp_path, 'triton'],
     'triton_cpp': [cmds_tp_triton_cpp, triton_tp_path, 'triton'],
-    'klee': [cmds_tp_klee, klee_tp_path, 'klee']
+    'klee': [cmds_tp_klee, klee_tp_path, 'klee'],
+    'klee_cpp': [cmds_tp_klee_cpp, klee_tp_path, 'klee']
 }
 
 # ============ triton Setting ==============

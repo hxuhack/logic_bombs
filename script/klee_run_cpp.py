@@ -14,7 +14,7 @@ args = parser.parse_args()
 print(colored('[+] Compiling ...', 'green'))
 
 # os.system('sh /home/klee/ConcTrignr/klee/run_program.sh')
-cmd = 'clang -Iinclude -L ' + lib_path + ' -Lbuild -o klee/a.out klee/a.c -lkleeRuntest -lpthread -lutils -lcrypto -lm'
+cmd = 'clang++ -Iinclude -L ' + lib_path + ' -Lbuild -o klee/a.out klee/a.c -lkleeRuntest -lpthread -lutils -lcrypto -lm'
 p = Popen(cmd.split(' '))
 rt_value = p.wait()
 if rt_value != 0:
@@ -30,6 +30,15 @@ for file in os.listdir(os.path.join('klee', 'klee-last')):
         running_res.add(res)
 
 tests = running_res
+# print(tests)
+# if args.expected is None:
+#     standard = {0, 1}
+# elif args.expected == 2:
+#     standard = {0, 1}
+# elif args.expected == 1:
+#     standard = {0, }
+# else:
+#     exit(-1)
 
 if 1 in tests:
     exit(1)
