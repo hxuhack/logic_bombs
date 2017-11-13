@@ -2,21 +2,21 @@
 FUNC_NAME = 'logic_bomb'
 
 src_dirs = [
-    # 'src/buffer_overflow',
-    # 'src/contextual_symbolic_value',
-    # 'src/covert_propogation',
-    # 'src/crypto_functions',
-    # 'src/data_overflow',
-    # 'src/external_functions',
-    # 'src/floating_point',
-    # # 'src/loop',
-    # 'src/parallel_program',
-    # 'src/symbolic_jump',
-    # 'src/symbolic_memory',
+    'src/buffer_overflow',
+    'src/contextual_symbolic_value',
+    'src/covert_propogation',
+    'src/crypto_functions',
+    'src/data_overflow',
+    'src/external_functions',
+    'src/floating_point',
+    'src/loop',
+    'src/parallel_program',
+    'src/symbolic_jump',
+    'src/symbolic_memory',
 
-    'src_cpp/covert_propagation',
-    'src_cpp/symbolic_jump',
-    'src_cpp/symbolic_memory',
+    # 'src_cpp/covert_propagation',
+    # 'src_cpp/symbolic_jump',
+    # 'src_cpp/symbolic_memory',
 
     # 'src/symbolic_variable_declaration',
 ]

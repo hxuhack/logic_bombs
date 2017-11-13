@@ -174,7 +174,7 @@ if __name__ == '__main__':
     from config.test_settings import src_dirs, switches, FUNC_NAME
     from collections import OrderedDict
 
-    res = ATKrun(switches['triton_cpp'], src_dirs, func_name=FUNC_NAME)
+    res = ATKrun(switches['angr'], src_dirs, func_name=FUNC_NAME)
 
     results = {}
     for key, item in res.items():
