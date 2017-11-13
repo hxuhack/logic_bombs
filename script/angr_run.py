@@ -120,17 +120,8 @@ if __name__ == '__main__':
         if errored:
             exit(-1)
         else:
-            tests = set(tests)
-            if args.expected is None:
-                standard = {0, 1}
-            elif args.expected == 2:
-                standard = {0, 1}
-            elif args.expected == 1:
-                standard = {0, }
+            if 1 in tests:
+                exit(1)
             else:
-                exit(-1)
+                exit(0)
 
-            for i in tests:
-                if i in standard:
-                    standard.remove(i)
-            exit(2 - len(standard))

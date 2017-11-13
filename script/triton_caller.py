@@ -77,9 +77,9 @@ elif args.expected == 1:
 else:
     exit(-1)
 
-for i in tests:
-    if i in standard:
-        standard.remove(i)
-    elif i == 139:
-        exit(-1)
-exit(2 - len(standard))
+if 1 in tests:
+    exit(1)
+elif 139 in tests:
+    exit(-1)
+else:
+    exit(0)
