@@ -42,7 +42,7 @@ while time.time() - start < args.max_time:
     time.sleep(0.1)
 print(time.time() - start)
 if time.time() - start > args.max_time:
-    p.kill()
+    print(p.kill())
     print('timeout!!!!')
     exit(4)
 
@@ -65,8 +65,19 @@ print(reses)
 tests = set()
 for res in reses:
     p = subprocess.Popen([prog, res])
-    rt_value = p.wait()
-    tests.add(rt_value)
+    start = time.time()
+    while time.time() - start < args.max_time:
+        rt_value = p.poll()
+        if rt_value is not None:
+            print(rt_value)
+            break
+        time.sleep(0.1)
+    if time.time() - start > args.max_time:
+        tests.add(0)
+        p.kill()
+        print('\nTest case timeout!!!!\n')
+    else:
+        tests.add(0)
 
 if args.expected is None:
     standard = {0, 1}

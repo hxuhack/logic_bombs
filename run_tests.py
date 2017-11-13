@@ -174,7 +174,11 @@ if __name__ == '__main__':
     from config.test_settings import src_dirs, switches, FUNC_NAME
     from collections import OrderedDict
 
+<<<<<<< HEAD
+    res = ATKrun(switches['angr'], src_dirs, func_name=FUNC_NAME)
+=======
     res = ATKrun(switches['klee'], src_dirs, func_name=FUNC_NAME)
+>>>>>>> 41276375e785e99038ccf11241297c6a4c137fcc
 
     results = {}
     for key, item in res.items():
