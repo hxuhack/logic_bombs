@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "a_tester.h"
 
-int logic_bomb(float symvar) {
+int logic_bomb(int symvar) {
     printf("symvar = %f\n", symvar);
     float a = symvar/70.0;
     float b = 0.1;
