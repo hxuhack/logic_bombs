@@ -51,7 +51,7 @@ Below we list these programs and the conditions to trigger each bomb.
 | 	       		  	| float2_fp_l1.c | expected stdin: 7 |
 | 	       		  	| float3_fp_l2.c | expected stdin: 0.1  |
 | 	       		  	| float4_fp_l2.c | expected stdin: -0.1  |
-| 	       		  	| float5_fp_l2.c | expected stdin: 0.00001  |
+| 	       		  	| float5_fp_l2.c | expected stdin: 0.41421  |
 | Symbolic Jump 		| jmp_sj_l1.c | jump to an address related to stdin (expected stdin: 37)|
 | 		 		| arrayjmp_sj_l2.c | a more complex case with an array (expected stdin: 11,23...)|
 | 		 		| vectorjmp_sj_l2.c | a more complex case with an vector (expected stdin: 5...)|
