@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "a_tester.h"
 
-int logic_bomb(float symvar) {
+int logic_bomb(int symvar) {
     float x = symvar + 0.0000005;
     if(x != 7){
         float x = symvar + 1;

@@ -10,7 +10,7 @@ int logic_bomb(int symvar) {
     for (int i=0; i<10; i++){
 	myvector.push_back(i);
     }
-    if(myvector.at(symvar) == 7)
+    if(myvector.at(symvar%10) == 7)
         return BOMB_ENDING;
     else
         return NORMAL_ENDING;

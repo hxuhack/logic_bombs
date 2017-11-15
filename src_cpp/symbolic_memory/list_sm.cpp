@@ -12,7 +12,7 @@ int logic_bomb(int symvar) {
 	mylist.push_back(i);
     }
     list<int>::iterator it = mylist.begin();
-    advance(it, symvar);
+    advance(it, symvar%10);
     if(*it == 7)
         return BOMB_ENDING;
     else

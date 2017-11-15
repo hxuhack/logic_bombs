@@ -9,7 +9,6 @@ int logic_bomb(float symvar) {
     if (x > 0.1)
 	x -= x;
     else
-	x += x;
         printf("x = %f\n", x);
     if(x != 0.02){
         x = x + 7.98;
