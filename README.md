@@ -34,12 +34,12 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| toy_eh_cp_cp.cpp | data propagation via exception handling (expected stdin: 0) | 
 | 		  		| div0_eh_cp.cpp | raise an exceptions when divided by 0 (expected stdin: 0) | 
 | 		  		| file_eh_cp.cpp | raise an exception when a file doesn't exist| 
-| Symbolic Memory  		| stackarray_sm_l1.c | if stdin points to an array element (expected stdin: 7) |
+| Symbolic Memory  		| stackarray_sm_l1.c | if stdin points to an array element (expected stdin: 4) |
 | 		  		| malloc_sm_l1.c | allocate memory with malloc (expected stdin: 7)|
 | 		  		| realloc_sm_l1.c | allocate memory with realloc (expected stdin: 7)|
 | 		  		| vector_sm_l1.cpp | with std::vector (expected stdin: 7)|
 | 		  		| list_sm_l1.cpp | with std::list (expected stdin: 7)|
-| 		  		| stackarray_sm_l2.c | two arrays (expected stdin: 7) |
+| 		  		| stackarray_sm_l2.c | two arrays (expected stdin: 2) |
 | 		  		| heapoutofbound_sm_l2.c | if array index equals array size (expected stdin: 6)|
 | 		  		| stackoutofbound_sm_l2.c | if array index equal array size (expected stdin: 10)|
 | Parallel Program 		| 2thread_pp_l1.c | two-thread program (expected stdin: 7)  |
