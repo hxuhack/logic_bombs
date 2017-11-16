@@ -7,8 +7,8 @@ Solution: 7
 #include "a_tester.h"
 
 int logic_bomb(int symvar) {
-    printf("symvar = %d", symvar);
-    if(symvar == 7){
+    printf("symvar = %d\n", symvar);
+    if(symvar == 196){
         return BOMB_ENDING;
     }else{
         return NORMAL_ENDING;

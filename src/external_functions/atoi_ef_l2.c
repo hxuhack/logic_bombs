@@ -1,14 +1,15 @@
 /*
 TOY:
-Solution: 7
 */
 #include <string.h> 
+#include <math.h>
 #include "utils.h"
 #include "a_tester.h"
 
-int logic_bomb(float symvar) {
-    printf("symvar = %f", symvar);
-    if(symvar - 7 == 0){
+// {"s":{"length": 3}}
+int logic_bomb(char* symvar) {
+    int i = atoi(symvar);
+    if(i==199){
         return BOMB_ENDING;
     }else{
         return NORMAL_ENDING;
