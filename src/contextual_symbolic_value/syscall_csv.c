@@ -8,6 +8,10 @@ TOY:
 
 // {"s":{"length": 16}}
 int logic_bomb(char* s) {
+    if(s == NULL)
+	return NORMAL_ENDING;
+    if(s[0]=='\0')
+	return NORMAL_ENDING;
     int trigger = 0;
     trigger = system(s);
     if(trigger == 0) {
