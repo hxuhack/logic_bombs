@@ -7,7 +7,6 @@
 
 int logic_bomb() {
    int pid = (int) getpid();
-   printf ("current pid is %d\n%", pid);
    if(pid == 4096)
     return BOMB_ENDING;
    else

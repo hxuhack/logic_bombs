@@ -18,9 +18,7 @@ int logic_bomb(int symvar) {
     myvector.push_back(21);
 
     int idx = symvar%myvector.size();
-    printf("idx:ele = %d:%d, \n", idx,myvector.at(idx));
     long long addr = (long long) &&flag_0 + myvector.at(idx);
-    printf("addr = %x, \n", addr);
     jmp(addr);
   flag_0:
     if (symvar > 0){

@@ -25,7 +25,6 @@ int logic_bomb(char* symvar) {
     if (pid > 0){
 	sleep(1);
         c_addr = shmat(shmid,0,0);
-        printf("%s\n", c_addr);
         if(strcmp(c_addr, "7") == 0)
 	    flag = 1;
         shmctl(shmid,IPC_RMID,0);

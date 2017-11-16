@@ -15,7 +15,6 @@ int logic_bomb(int i) {
 	j = f(j);
         loopcount ++;
     }
-    printf("loopcount = %d\n", loopcount);
     if(loopcount == 25)
         return BOMB_ENDING;
     else
