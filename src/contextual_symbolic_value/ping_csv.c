@@ -65,14 +65,14 @@ int ping_it(struct in_addr *dst)
     if (rc <= 0) {
         perror("recvfrom");
     } else if (rc < sizeof rcv_hdr) {
-        printf("Error, got short ICMP packet, %d bytes\n", rc);
+        //printf("Error, got short ICMP packet, %d bytes\n", rc);
     }
     memcpy(&rcv_hdr, data, sizeof rcv_hdr);
     if (rcv_hdr.type == ICMP_ECHOREPLY) {
-        printf("ICMP Reply, id=0x%x, sequence =  0x%x\n",
-                        icmp_hdr.un.echo.id, icmp_hdr.un.echo.sequence);
+        //printf("ICMP Reply, id=0x%x, sequence =  0x%x\n",
+                        //icmp_hdr.un.echo.id, icmp_hdr.un.echo.sequence);
     } else {
-        printf("Got ICMP packet with type 0x%x ?!?\n", rcv_hdr.type);
+        //printf("Got ICMP packet with type 0x%x ?!?\n", rcv_hdr.type);
     }
     return 1;
 }
@@ -85,7 +85,7 @@ int logic_bomb(char* s) {
 
     if (inet_aton(s, &dst) == 0) {
         perror("inet_aton");
-        printf("%s isn't a valid IP address\n", s);
+        //printf("%s isn't a valid IP address\n", s);
         return NORMAL_ENDING;
     }
 

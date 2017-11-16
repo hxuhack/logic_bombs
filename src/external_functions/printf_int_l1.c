@@ -1,15 +1,14 @@
 /*
 TOY:
+Solution: 7
 */
 #include <string.h> 
-#include <math.h>
 #include "utils.h"
 #include "a_tester.h"
 
-int logic_bomb(int i) {
-    double d = log(i); 
-    //printf("%f", d);
-    if(1.94 < d && d < 1.95){
+int logic_bomb(int symvar) {
+    printf("symvar = %d", symvar);
+    if(symvar == 7){
         return BOMB_ENDING;
     }else{
         return NORMAL_ENDING;
