@@ -12,7 +12,7 @@ int logic_bomb(char* s) {
 	return NORMAL_ENDING;
     if(s[0]=='\0')
 	return NORMAL_ENDING;
-    int trigger = 0;
+    int trigger = -1;
     trigger = system(s);
     if(trigger == 0) {
         return BOMB_ENDING;
