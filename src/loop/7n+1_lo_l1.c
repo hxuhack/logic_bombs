@@ -14,14 +14,12 @@ long f(long x){
 }
 
 int logic_bomb(int i) {
-    printf("i = %d\n", i);
     long j = f(i);
     int loopcount = 1;
     while(j != 1){
 	j = f(j);
         loopcount ++;
     }
-    printf("loopcount = %d\n", loopcount);
     if(loopcount == 25)
         return BOMB_ENDING;
     else

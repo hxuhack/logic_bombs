@@ -23,7 +23,6 @@ int ThreadProp(int in){
 
 int logic_bomb(int symvar) {
     int i=ThreadProp(symvar);
-    printf ("%d\n", i);
     if(i == 50)
         return  BOMB_ENDING;
     return  NORMAL_ENDING;

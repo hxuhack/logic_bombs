@@ -7,7 +7,6 @@
 
 int logic_bomb(int symvar) {
     long long addr = &&flag_0 + symvar;
-    printf("addr = %x, \n", addr);
     if(symvar > 30 && symvar < 40){
         if (symvar%6 == 1)
             jmp(addr);

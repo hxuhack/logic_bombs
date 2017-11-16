@@ -7,7 +7,6 @@
 
 int logic_bomb(int symvar) {
    int pid = (int) getpid();
-   printf ("current pid is %d\n%", pid);
    if(pid == symvar)
     return BOMB_ENDING;
    else

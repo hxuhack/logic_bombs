@@ -18,7 +18,6 @@ int logic_bomb(int symvar) {
         i ++;
     }
     rc = pthread_join(tid, NULL); 
-    printf("symvar = %d\n", symvar);
     if(symvar == 13)
         return  BOMB_ENDING;
     return  NORMAL_ENDING;

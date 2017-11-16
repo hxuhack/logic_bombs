@@ -6,7 +6,6 @@ int logic_bomb(int i) {
     int j;
     __asm__ __volatile__("push %0" :: "m"(i));
     __asm__ __volatile__("pop %0" :: "m"(j));
-    printf("%d\n", j);
     if(j == 7){
         return BOMB_ENDING;
     } else{

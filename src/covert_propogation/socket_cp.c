@@ -23,7 +23,7 @@ int server(){
     bind(server_sockfd,(struct sockaddr *)&server_address,server_len);  
       
     listen(server_sockfd,5);  
-    printf("server waiting for connect\n");  
+    //printf("server waiting for connect\n");  
       
     client_len = sizeof(client_address);  
     client_sockfd = accept(server_sockfd,(struct sockaddr *)&client_address,(socklen_t *)&client_len);  
@@ -33,7 +33,7 @@ int server(){
         perror("recv");  
         exit(EXIT_FAILURE);  
     }  
-    printf("receive from client is %c\n",char_recv);  
+    //printf("receive from client is %c\n",char_recv);  
 
     char_send = char_recv;  
     if(btye = send(client_sockfd,&char_send,1,0) == -1)  
@@ -47,7 +47,7 @@ int server(){
 }
 
 int client_send(char char_send){
-    printf("client start\n");  
+    //printf("client start\n");  
     int sockfd;  
     int len;  
     struct sockaddr_in address;  
@@ -79,7 +79,7 @@ int client_send(char char_send){
         perror("recv");  
         exit(EXIT_FAILURE);  
     }  
-    printf("receive from server %c\n",char_recv);  
+    //printf("receive from server %c\n",char_recv);  
     close(sockfd);  
     return atoi(char_recv);
 }
@@ -97,7 +97,7 @@ int logic_bomb(char* s) {
         if(pid2 == 0){
             sleep(1);
             i=client_send(s[0]); 
-            printf("i=%d\n",i);
+            //printf("i=%d\n",i);
     	    if(i==7){
                 return BOMB_ENDING;
     	    }else{
