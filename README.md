@@ -40,8 +40,8 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| vector_sm_l1.cpp | with std::vector (expected stdin: 7)|
 | 		  		| list_sm_l1.cpp | with std::list (expected stdin: 7)|
 | 		  		| stackarray_sm_l2.c | two arrays (expected stdin: 2) |
-| 		  		| heapoutofbound_sm_l2.c | if array index equals array size (expected stdin: 6)|
-| 		  		| stackoutofbound_sm_l2.c | if array index equal array size (expected stdin: 10)|
+| 		  		| stackoutofbound_sm_l2.c | if array index equal array size (expected stdin: 7)|
+| 		  		| heapoutofbound_sm_l2.c | if array index equals array size (expected stdin: 10)|
 | Parallel Program 		| 2thread_pp_l1.c | two-thread program (expected stdin: 7)  |
 | 		 		| forkpipe_pp_l1.c | two-process program with pipe (expected stdin: 7)  |
 | 		 		| forkshm_pp_l1.c | two-process program with shared memory (expected stdin: 7)  |

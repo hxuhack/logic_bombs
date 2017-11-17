@@ -9,10 +9,7 @@ int logic_bomb(int i) {
     for (k=0; k<10; k++){
 	array[k] = k;
     }
-    if (i < 0 || i > 10){
-	return NORMAL_ENDING;
-    }
-    if(array[i] > 10){
+    if(array[i]<0 || array[i]>10){
        return BOMB_ENDING;
     }
     return NORMAL_ENDING;
