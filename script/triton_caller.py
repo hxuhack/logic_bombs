@@ -4,6 +4,10 @@ import os
 import re
 import sys
 import time
+import signal
+import psutil
+
+from threading import Timer
 
 
 parser = argparse.ArgumentParser()
@@ -32,7 +36,8 @@ with open('triton/triton_run.py', 'w') as f:
 
 print(' '.join([TRITON_INSTALLATION_PATH, 'triton/triton_run.py', prog]))
 
-p = subprocess.Popen([TRITON_INSTALLATION_PATH, 'triton/triton_run.py', prog, '0' * args.length], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+p = subprocess.Popen([TRITON_INSTALLATION_PATH, 'triton/triton_run.py', prog, '0' * args.length], stdout=subprocess.PIPE, stderr=subprocess.PIPE, preexec_fn=os.setsid)
+print(p.pid)
 start = time.time()
 while time.time() - start < args.max_time:
     rt_value = p.poll()
@@ -42,7 +47,11 @@ while time.time() - start < args.max_time:
     time.sleep(0.1)
 print(time.time() - start)
 if time.time() - start > args.max_time:
-    print(p.kill())
+    # p.kill()
+    parent = psutil.Process(p.pid)
+    for child in parent.children(recursive=True):
+        child.kill()
+    parent.kill()
     print('timeout!!!!')
     exit(4)
 
@@ -56,28 +65,34 @@ reses = ['0' * args.length, ]
 for testcase in pt.finditer(out):
     tmp = case_pt.findall(out)
     tmp = ''.join(list(map(chr, map(int, tmp))))
-    print(repr(list(tmp)))
+    print("New test case:", repr(list(tmp)))
     tmp = tmp.replace('\x00', '')
     reses.append(tmp)
 
-print(reses)
+print "%d test case(s) generated" % len(reses)
 
 tests = set()
 for res in reses:
-    p = subprocess.Popen([prog, res])
+    p = subprocess.Popen([prog, res], preexec_fn=os.setsid)
     start = time.time()
     while time.time() - start < args.max_time:
         rt_value = p.poll()
         if rt_value is not None:
-            print(rt_value)
+            print("Return Value:", rt_value)
             break
         time.sleep(0.1)
     if time.time() - start > args.max_time:
         tests.add(0)
-        p.kill()
+        print(p.pid)
+        # p.kill()
+        parent = psutil.Process(p.pid)
+        for child in parent.children(recursive=True):
+            child.kill()
+        parent.kill()
+
         print('\nTest case timeout!!!!\n')
     else:
-        tests.add(0)
+        tests.add(rt_value)
 
 if args.expected is None:
     standard = {0, 1}
