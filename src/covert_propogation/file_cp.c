@@ -14,7 +14,7 @@ int logic_bomb(int i) {
     FILE *fp = fopen(file, "ab+");
     if(fp == NULL)
     {
-        printf("Error!");   
+        //printf("Error!");   
         exit(1);             
     }
     fprintf(fp,"%d",i);
@@ -22,7 +22,6 @@ int logic_bomb(int i) {
 
     fp = fopen("tmp.covpro", "r");
     fscanf(fp,"%d",&j);
-    printf("i = %d, j = %d\n", i,j);   
     fclose(fp);
     remove(file);
     if(j == 7){

@@ -26,7 +26,7 @@ void run_command(char *cmd, char *detphrase, int dp_length){
     FILE *fp;
 
     if((fp = popen(cmd, "r")) == NULL){
-        printf("Error");
+        //printf("Error");
     }
 
     if(fgets(buf, BUFSIZE, fp) != NULL){
@@ -40,7 +40,7 @@ void run_command(char *cmd, char *detphrase, int dp_length){
     }
 
     if(pclose(fp)){
-        printf("Command not found or exited with error status \n");
+        //printf("Command not found or exited with error status \n");
     }
 }
 
@@ -54,11 +54,11 @@ int logic_bomb() {
     run_command("sudo dmidecode -s system-manufacturer", "VMware", 6);
     /*If vm_score is less than 3, we are likely running on physical hardware*/
     if(vm_score < 3){
-        printf("No virtual machine detected\n");
+        //printf("No virtual machine detected\n");
         return NORMAL_ENDING;
     }
     else{
-        printf("Virtual Machine detected\n");
+        //printf("Virtual Machine detected\n");
         return BOMB_ENDING;
     }
     return 0;

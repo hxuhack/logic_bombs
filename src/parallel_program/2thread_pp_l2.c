@@ -7,7 +7,6 @@ void* Inc(void* i){
     int count = 0;
     while (*((int *) i) > -500 && count++ < 1000){
 	++ *((int*) i);
-        printf("%d\n", *((int*) i));
     }
 }
 
@@ -15,7 +14,6 @@ void* Dec(void* i){
     int count = 0;
     while (*((int *) i) < 500 && count++ < 1000){
 	-- *((int*) i);
-        printf("%d\n", *((int*) i));
     }
 }
 
@@ -30,7 +28,6 @@ int ThreadProp(int in){
 
 int logic_bomb(int symvar) {
     int i=ThreadProp(symvar) % 10;
-    printf("i=%d\n",i);
     if(i == 7)
         return  BOMB_ENDING;
     return  NORMAL_ENDING;

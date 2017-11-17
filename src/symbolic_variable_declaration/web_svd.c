@@ -17,12 +17,12 @@ int logic_bomb() {
     socket = open_socket("www.cudroid.com", "80");
     if(socket==-1)
 	return -1;
-    printf ("socket connect successful\n");
+    //printf ("socket connect successful\n");
 
     int ret=send(socket,get_msg,strlen(get_msg),0);
     if(ret==-1)
 	return -1;
-    printf ("send msg successful\n");
+    //printf ("send msg successful\n");
     
     int trigger = 0;
     while(recv(socket,receiver,256,0)){

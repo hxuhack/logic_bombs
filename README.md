@@ -60,10 +60,14 @@ Below we list these programs and the conditions to trigger each bomb.
 | Buffer Overflow 		| stack_bo_l1.c | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`|
 | 		 		| stack_bo_l2.c | expected stdin: TO FIGURE OUT |
 | 		 		| heap_bo_l1.c | expected stdin: TO FIGURE OUT|
-| External Function Call  	| rand_ef.c | rand()%100 == 7 |
-| 			  	| pow_ef.c | pow(i, 2) == 49 |
-| 			  	| sin_ef.c | sin(i * PI / 180) == 0.5 |
-| 			  	| ln_ef.c | 1.94 < log(i) && log(i) < 1.95 |
+| External Function Call  	| printint_ef_l1.c | expected stdin: 196 |
+| 			  	| printfloat_ef_l1.c | expected stdin: 196 |
+| 			  	| atoi_ef_l2.c | expected stdin: 199 |
+| 			  	| atof_ef_l2.c | expected stdin: 199 |
+|  				| rand_ef_l2.c | rand()%100 == 7 |
+| 			  	| pow_ef_l2.c | pow(i, 2) == 49 |
+| 			  	| sin_ef_l2.c | sin(i * PI / 180) == 0.5 |
+| 			  	| ln_ef_l2.c | 1.94 < log(i) && log(i) < 1.95 |
 | Crypto Function 		| sha_cf.c | if sha1(i) equals to a predefined value |
 | 		 		| aes_cf.c | if aes(i, plaintext) equals to a ciphertext |
 | Loop 				| collaz_lo_l1.c  | if it loops 25 times (example stdin:101) |

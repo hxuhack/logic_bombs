@@ -31,7 +31,6 @@ char* shell(const char* cmd)
 int logic_bomb() {
    char cmd[] = "ls -l |grep '^-'|wc -l";
    char* rs = shell(cmd);
-   printf("file num: %s\n",rs);
    if(atoi(rs) == 7)
     return BOMB_ENDING;
    else
