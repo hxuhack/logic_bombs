@@ -5,8 +5,16 @@ import template_parser as tpp
 import script_runner as sr
 import shutil
 import json
+import psutil
 
 from config.test_settings import TRITON_INSTALLATION_PATH, FUNC_NAME
+
+
+def kill_all(process):
+    parent = psutil.Process(process.pid)
+    for child in parent.children(recursive=True):
+        child.kill()
+    parent.kill()
 
 
 def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
@@ -41,7 +49,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
     TLE = 4
     RUNTIME_ERROR = 255
 
-    MAX_TIME = 1800
+    MAX_TIME = 60
     test_results = {}
 
     func_pattern = re.compile(r'int[ \t\n]+%s\(([^)]*)\);*' % func_name)
@@ -101,12 +109,13 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
                         continue
                     # Run test
                     p = subprocess.Popen(cmds[1].split(' '))
+                    print(p.pid)
                     try:
                         rt_vale = p.wait(timeout=MAX_TIME)
                         test_results[fp] = rt_vale
                     except subprocess.TimeoutExpired:
                         test_results[fp] = TLE
-                        p.kill()
+                        kill_all(p)
 
                 elif prefix == 'klee':
                     if not os.path.exists('klee'):
@@ -137,7 +146,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
                         rt_vale = p.wait(timeout=MAX_TIME)
                     except subprocess.TimeoutExpired:
                         test_results[fp] = TLE
-                        p.kill()
+                        kill_all(p)
                         continue
 
                     p = subprocess.Popen(cmds[2].split(' '))
@@ -146,7 +155,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
                         test_results[fp] = rt_vale
                     except subprocess.TimeoutExpired:
                         test_results[fp] = TLE
-                        p.kill()
+                        kill_all(p)
                     shutil.rmtree('klee')
                 elif prefix == 'triton':
                     cmds.append(cmds_tp[0] % outname)
@@ -163,6 +172,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
                         continue
 
                     # Run test
+                    print("=== Run test!", outname, "===")
                     p = subprocess.Popen(cmds[1].split(' '))
                     rt_vale = p.wait()
                     test_results[fp] = rt_vale

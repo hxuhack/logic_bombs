@@ -2,22 +2,23 @@
 FUNC_NAME = 'logic_bomb'
 
 src_dirs = [
-    'src/buffer_overflow',
+    # 'src/buffer_overflow',
     'src/contextual_symbolic_value',
-    'src/covert_propogation',
-    'src/crypto_functions',
-    'src/data_overflow',
-    'src/external_functions',
-    'src/floating_point',
-    'src/loop',
-    'src/parallel_program',
-    'src/symbolic_jump',
-    'src/symbolic_memory',
+    # 'src/covert_propogation',
+    # 'src/crypto_functions',
+    # 'src/data_overflow',
+    # 'src/external_functions',
+    # 'src/floating_point',
+    # 'src/loop',
+    # 'src/parallel_program',
+    # 'src/symbolic_jump',
+    # 'src/symbolic_memory',
 
     # 'src_cpp/covert_propagation',
     # 'src_cpp/symbolic_jump',
     # 'src_cpp/symbolic_memory',
 
+    # 'sick/'
     # 'src/symbolic_variable_declaration',
 ]
 
@@ -49,8 +50,8 @@ cmds_tp_triton_cpp = [
     "python script/triton_caller.py -l%d -m%d -f%s -i%s -p triton/%s.out"
 ]
 
-angr_tp_path = 'templates/default.c'
-triton_tp_path = 'templates/default.c'
+angr_tp_path = 'templates/default_no_printf.c'
+triton_tp_path = 'templates/default_no_printf.c'
 klee_tp_path = 'templates/klee.c'
 
 switches = {
