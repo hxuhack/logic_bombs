@@ -33,6 +33,7 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| socket_cp.c | data propagation via socket (expected argv[1][0]: '7') | 
 | 		  		| toy_eh_cp.cpp | data propagation via exception handling (expected argv[1][0]: '7') | 
 | 		  		| div0_eh_cp.cpp | raise an exceptions when divided by 0 (expected argv[1][0]: '7') | 
+| 		  		| file_eh_cp.cpp | expected argv[1]: an existed file | 
 | Symbolic Memory  		| stackarray_sm_l1.c | if stdin points to an array element (expected argv[1][0]: '4') |
 | 		  		| malloc_sm_l1.c | allocate memory with malloc (expected argv[1][0]: '7')|
 | 		  		| realloc_sm_l1.c | allocate memory with realloc (expected argv[1][0]: '7')|
