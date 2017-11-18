@@ -9,6 +9,7 @@ int f(int x){
 }
 
 int logic_bomb(int i) {
+    i = i + 94;
     int j = f(i);
     int loopcount = 1;
     while(j != 1){

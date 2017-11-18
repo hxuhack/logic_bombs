@@ -6,11 +6,11 @@ TOY:
 
 #include "a_tester.h"
 
-int logic_bomb(int i) {
-    int j = i;
+int logic_bomb(int symvar) {
+    int j;
     char file[] = "tmp.covpro";
     char cmd[256];
-    sprintf(cmd, "echo %d > %s\n", i, file); 
+    sprintf(cmd, "echo %d > %s\n", symvar, file); 
     system(cmd);
 
     FILE *fp = stdin;

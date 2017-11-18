@@ -9,6 +9,7 @@ long f(long x){
 }
 
 int logic_bomb(int i) {
+    i = i + 670617272;
     if(i>999999999)
 	return NORMAL_ENDING;
     long j = f(i);

@@ -17,8 +17,7 @@ int logic_bomb(char* s) {
         return NORMAL_ENDING;
     }
     catch (const ifstream::failure& e) {
-        cout << "Exception opening/reading file:" <<e.what()<<"\n";
-	if (strstr(e.what(), "basic_ios::clear"))
+	//if (strstr(e.what(), "basic_ios::clear"))
         return BOMB_ENDING;
     }
     return NORMAL_ENDING;

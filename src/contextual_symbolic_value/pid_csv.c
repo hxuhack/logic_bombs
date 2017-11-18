@@ -7,7 +7,7 @@
 
 int logic_bomb(int symvar) {
    int pid = (int) getpid();
-   if(pid == symvar)
+   if(pid%78 == symvar)
     return BOMB_ENDING;
    else
     return NORMAL_ENDING;

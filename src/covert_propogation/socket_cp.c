@@ -80,29 +80,29 @@ int client_send(char char_send){
         exit(EXIT_FAILURE);  
     }  
     //printf("receive from server %c\n",char_recv);  
+    int ret = char_recv-48;
     close(sockfd);  
-    return atoi(char_recv);
+    return ret;
 }
 
 // {"s":{"length": 16}}
 int logic_bomb(char* s) {
-    int pid1,pid2,i=0;
-    if((pid1=fork())==-1)
+    int pid1,status,i=0;
+    pid1=fork();
+    if(pid1 < 0){
 	return NORMAL_ENDING;
-    if(pid1 == 0){
+    }
+    else if(pid1 == 0){
         server();
-    } else{
-        if((pid2=fork())==-1)
-	    return NORMAL_ENDING;
-        if(pid2 == 0){
-            sleep(1);
-            i=client_send(s[0]); 
-            //printf("i=%d\n",i);
-    	    if(i==7){
-                return BOMB_ENDING;
-    	    }else{
-                return NORMAL_ENDING;
-    	    }
-        }
+        waitpid(NULL);
+    }else{ 
+        sleep(1);
+        i=client_send(s[0]); 
+        //printf("i = %d\n",i);
+        if(i == 7){
+            return BOMB_ENDING;
+         }else{
+            return NORMAL_ENDING;
+         }
     }
 }

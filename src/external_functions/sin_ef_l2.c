@@ -11,8 +11,8 @@ Solution: 30
 #include "a_tester.h"
 
 int logic_bomb(int i) {
-    float v = sin(i*PI/180);
-    if(v == 0.5){
+    float v = sin(i*PI/30);
+    if(v > 0.5){
         return BOMB_ENDING;
     }else{
         return NORMAL_ENDING;

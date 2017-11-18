@@ -12,6 +12,7 @@ long f(long x){
 }
 
 int logic_bomb(int i) {
+    i = i + 94;
     long j = f(i);
     int loopcount = 1;
     while(j != 1){

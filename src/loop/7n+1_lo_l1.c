@@ -14,13 +14,14 @@ long f(long x){
 }
 
 int logic_bomb(int i) {
+    i = i + 1104;
     long j = f(i);
     int loopcount = 1;
     while(j != 1){
 	j = f(j);
         loopcount ++;
     }
-    if(loopcount == 25)
+    if(loopcount == 50)
         return BOMB_ENDING;
     else
         return NORMAL_ENDING;

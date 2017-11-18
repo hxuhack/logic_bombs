@@ -8,8 +8,8 @@ Triton: Pin is out of memory: MmapChecked
 #include "utils.h"
 #include "a_tester.h"
 
-int logic_bomb(int i) {
-    int j = i;
+int logic_bomb(int symvar) {
+    int j;
     char file[] = "tmp.covpro";
     FILE *fp = fopen(file, "ab+");
     if(fp == NULL)
@@ -17,7 +17,7 @@ int logic_bomb(int i) {
         //printf("Error!");   
         exit(1);             
     }
-    fprintf(fp,"%d",i);
+    fprintf(fp,"%d",symvar);
     fclose(fp);
 
     fp = fopen("tmp.covpro", "r");
