@@ -19,7 +19,9 @@ char* shell(const char* cmd)
     return rs;
 }
 
-int logic_bomb(int symvar) {
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
     char cmd[256];
     sprintf(cmd, "echo %d\n", symvar); 
     char* rs = shell(cmd);

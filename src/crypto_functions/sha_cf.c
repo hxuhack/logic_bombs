@@ -6,8 +6,10 @@ TOY:
 
 #include "a_tester.h"
 
-int logic_bomb(int i) {
-    int plaintext = i;
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    int plaintext = symvar;
     unsigned cipher[5];
     cipher[0] = 0X902ba3cd;
     cipher[1] = 0Xa1883801;

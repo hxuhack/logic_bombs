@@ -47,12 +47,14 @@ int df2cf(char a)
     return b;
 }
 
-int logic_bomb(int symvar) {
-   int a = df2cf(symvar%10);
-   a++;
-   int b = symvar + a;
-   if(b == 15)
-    return BOMB_ENDING;
-   else
-    return NORMAL_ENDING;
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    int a = df2cf(symvar%10);
+    a++;
+    int b = symvar + a;
+    if(b == 15)
+        return BOMB_ENDING;
+    else
+        return NORMAL_ENDING;
 }

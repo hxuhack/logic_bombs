@@ -31,9 +31,8 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| df2cf_cp.c | data propagation via control flow (expected argv[1][0]: '7') | 
 | 		  		| echofile_cp.c | data propagation via echo and file (expected argv[1][0]: '7') | 
 | 		  		| socket_cp.c | data propagation via socket (expected argv[1][0]: '7') | 
-| 		  		| toy_eh_cp_cp.cpp | data propagation via exception handling (expected argv[1][0]: '7') | 
+| 		  		| toy_eh_cp.cpp | data propagation via exception handling (expected argv[1][0]: '7') | 
 | 		  		| div0_eh_cp.cpp | raise an exceptions when divided by 0 (expected argv[1][0]: '7') | 
-| 		  		| file_eh_cp.cpp | raise an exception when a file doesn't exist| 
 | Symbolic Memory  		| stackarray_sm_l1.c | if stdin points to an array element (expected argv[1][0]: '4') |
 | 		  		| malloc_sm_l1.c | allocate memory with malloc (expected argv[1][0]: '7')|
 | 		  		| realloc_sm_l1.c | allocate memory with realloc (expected argv[1][0]: '7')|
@@ -41,11 +40,11 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| list_sm_l1.cpp | with std::list (expected argv[1][0]: '7')|
 | 		  		| stackarray_sm_l2.c | two arrays (expected argv[1][0]: '2') |
 | 		  		| stackoutofbound_sm_l2.c | if array index equal array size (expected argv[1][0]: '7')|
-| 		  		| heapoutofbound_sm_l2.c | if array index equals array size (expected argv[1][0]: '10')|
+| 		  		| heapoutofbound_sm_l2.c | if array index equals array size (expected argv[1][0]: ':')|
 | Parallel Program 		| 2thread_pp_l1.c | two-thread program (expected argv[1][0]: '7')  |
 | 		 		| forkpipe_pp_l1.c | two-process program with pipe (expected argv[1][0]: '7')  |
 | 		 		| forkshm_pp_l1.c | two-process program with shared memory (expected argv[1][0]: '7')  |
-| 		 		| 2pthread_pp_l2.c | two-thread program with random result (high chance argv[1][0]: '9') |
+| 		 		| 2thread_pp_l2.c | two-thread program with random result (high chance argv[1][0]: '9') |
 | 		 		| mthread_pp_l2.c | multi-thread program with random result (high chance argv[1][0]: '9') |
 | Floating-point Number  	| float1_fp_l1.c | expected argv[1][0]: '7' |
 | 	       		  	| float2_fp_l1.c | expected argv[1][o]: '7' |

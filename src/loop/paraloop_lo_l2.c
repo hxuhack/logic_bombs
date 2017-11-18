@@ -8,7 +8,9 @@ void* trigger(void* i){
     ++ *((int*) i);
 }
 
-int logic_bomb(int symvar) {
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
     int i = symvar + 1;
     pthread_t tid;
     int rc = pthread_create(&tid, NULL, trigger, (void *) &symvar); 

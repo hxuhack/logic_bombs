@@ -7,7 +7,9 @@ using namespace std;
 
 #define jmp(addr) asm("jmp *%0"::"r"(addr):)
 
-int logic_bomb(int symvar) {
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
     vector<int> myvector;
     myvector.push_back(7);
     myvector.push_back(13);

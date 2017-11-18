@@ -6,7 +6,9 @@ Solution: 7
 #include "utils.h"
 #include "a_tester.h"
 
-int logic_bomb(int symvar) {
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
     int x = symvar + 190;
     printf("x = %d\n", x);
     if(x == 197){

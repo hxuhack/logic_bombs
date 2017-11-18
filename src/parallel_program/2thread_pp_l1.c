@@ -21,7 +21,9 @@ int ThreadProp(int in){
 	return out;
 }
 
-int logic_bomb(int symvar) {
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
     int i=ThreadProp(symvar);
     if(i == 50)
         return  BOMB_ENDING;

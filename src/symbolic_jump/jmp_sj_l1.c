@@ -5,7 +5,9 @@
 
 #include "a_tester.h"
 
-int logic_bomb(int symvar) {
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
     int x = symvar + 30;
     long long addr = &&flag_0 + x;
     if(x > 30 && x < 40){
