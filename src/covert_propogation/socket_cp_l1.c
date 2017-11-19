@@ -15,7 +15,7 @@ int server(){
       
     server_address.sin_family = AF_INET;  
     server_address.sin_addr.s_addr = inet_addr("127.0.0.1");  
-    server_address.sin_port = 8080;  
+    server_address.sin_port = 19991;  
     server_len = sizeof(server_address);  
       
     server_sockfd = socket(AF_INET,SOCK_STREAM,0);  
@@ -42,8 +42,8 @@ int server(){
         exit(EXIT_FAILURE);  
     }  
   
-    shutdown(client_sockfd,2);  
-    shutdown(server_sockfd,2);   
+    close(client_sockfd);  
+    close(server_sockfd);   
 }
 
 int client_send(char char_send){
@@ -61,7 +61,7 @@ int client_send(char char_send){
     }  
     address.sin_family = AF_INET;  
     address.sin_addr.s_addr = inet_addr("127.0.0.1");  
-    address.sin_port = 8080;  
+    address.sin_port = 19991;  
     len = sizeof(address);  
     if((result = connect(sockfd,(struct sockaddr *)&address,len)) == -1)  
     {  
@@ -95,8 +95,9 @@ int logic_bomb(char* s) {
     else if(pid1 == 0){
         server();
         waitpid(NULL);
+	exit(0);
     }else{ 
-        sleep(1);
+        sleep(5);
         i=client_send(s[0]); 
         //printf("i = %d\n",i);
         if(i == 7){
