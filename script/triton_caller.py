@@ -47,7 +47,6 @@ while time.time() - start < args.max_time:
     time.sleep(0.1)
 print(time.time() - start)
 if time.time() - start > args.max_time:
-    # p.kill()
     parent = psutil.Process(p.pid)
     for child in parent.children(recursive=True):
         child.kill()
@@ -62,6 +61,8 @@ err = err.decode('utf8', 'ignore')
 print(out)
 print(err)
 reses = ['0' * args.length, ]
+
+print(reses)
 for testcase in pt.finditer(out):
     tmp = case_pt.findall(out)
     tmp = ''.join(list(map(chr, map(int, tmp))))
@@ -69,10 +70,11 @@ for testcase in pt.finditer(out):
     tmp = tmp.replace('\x00', '')
     reses.append(tmp)
 
-print "%d test case(s) generated" % len(reses)
+print("%d test case(s) generated" % len(reses))
 
 tests = set()
 for res in reses:
+    print "Calling:", prog, res
     p = subprocess.Popen([prog, res], preexec_fn=os.setsid)
     start = time.time()
     while time.time() - start < args.max_time:

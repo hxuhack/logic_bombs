@@ -3,8 +3,8 @@ FUNC_NAME = 'logic_bomb'
 
 src_dirs = [
     # 'src/buffer_overflow',
-    'src/contextual_symbolic_value',
-    # 'src/covert_propogation',
+    # 'src/contextual_symbolic_value',
+    'src/covert_propogation',
     # 'src/crypto_functions',
     # 'src/data_overflow',
     # 'src/external_functions',

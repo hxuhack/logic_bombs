@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
             elif {<str(type)>} == {<"int">}:
                 {<var>} \= atoi(argv[{<index>}]);
 
-        rt_value = logic_bomb({<params>});
+        rt_value = {<func_name>}({<params>});
     %}
 
     return rt_value;
