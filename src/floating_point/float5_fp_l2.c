@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include "a_tester.h"
 
-int logic_bomb(float symvar) {
-    float x = symvar/10.0;
+// {"s":{"length": 8}}
+int logic_bomb(char* symvar) {
+    float x = atof(symvar);
+    x = x/10.0;
     x = x + 0.1;
     x = x * x;
     if (x > 0.1)

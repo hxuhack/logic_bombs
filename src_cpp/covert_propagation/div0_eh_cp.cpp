@@ -13,14 +13,15 @@ double division(int numerator, int denominator) {
 #include "a_tester.h"
 
 
-int logic_bomb(int i) {
-   int num = 10;
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    int num = 10;
 
-   try {
-      division(num, i);
-      return NORMAL_ENDING;
-   }catch (const char* msg) {
-      cerr << msg << endl;
-      return BOMB_ENDING;
-   }
+    try {
+       division(num, symvar-7);
+       return NORMAL_ENDING;
+    }catch (const char* msg) {
+       return BOMB_ENDING;
+    }
 }

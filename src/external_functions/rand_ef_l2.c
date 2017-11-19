@@ -6,8 +6,10 @@ Solution: 7
 #include "utils.h"
 #include "a_tester.h"
 
-int logic_bomb(int i) {
-    srand(i);
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0];
+    srand(symvar);
     int r = rand()%100;
     if(r == 77){
         return BOMB_ENDING;

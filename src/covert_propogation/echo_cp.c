@@ -19,10 +19,11 @@ char* shell(const char* cmd)
     return rs;
 }
 
-int logic_bomb(int i) {
-    int j = i;
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
     char cmd[256];
-    sprintf(cmd, "echo %d\n", i); 
+    sprintf(cmd, "echo %d\n", symvar); 
     char* rs = shell(cmd);
 
    if(atoi(rs) == 7)

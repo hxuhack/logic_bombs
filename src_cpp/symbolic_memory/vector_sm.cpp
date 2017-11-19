@@ -5,7 +5,9 @@
 
 using namespace std;
 
-int logic_bomb(int symvar) {
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
     vector<int> myvector;
     for (int i=0; i<10; i++){
 	myvector.push_back(i);

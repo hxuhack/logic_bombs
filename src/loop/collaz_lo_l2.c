@@ -8,10 +8,13 @@ long f(long x){
     return 3*x + 1;
 }
 
-int logic_bomb(int i) {
-    if(i>999999999)
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    symvar = symvar + 670617272;
+    if(symvar>999999999)
 	return NORMAL_ENDING;
-    long j = f(i);
+    long j = f(symvar);
     int loopcount = 1;
     while(j != 1){
 	j = f(j);
