@@ -57,8 +57,8 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
     for src_dir in src_dirs:
         print('===========')
         print('In dir ' + src_dir)
-        for root, dirs, files in os.walk(src_dir):
-            for file in files:
+        for root, dirs, files in sorted(os.walk(src_dir)):
+            for file in sorted(files):
                 cmds = []
                 fp = os.path.join(root, file)
                 print('-----------------------------')
@@ -84,7 +84,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
                         length = cmt_dict.get(var_name, {}).get('length', 0)
                         params_list_with_length.append((var_type, var_name, length))
 
-                init_vars = dict(vp=params_list_with_length, params=params)
+                init_vars = dict(vp=params_list_with_length, params=params, func_name=FUNC_NAME)
                 tp = tpp.TemplateParser(tp_path)
                 sruner = sr.ScriptRunner(init_vars)
                 res = sruner.run(tp.parse()[0])
@@ -126,7 +126,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
 
                     cmds.append(cmds_tp[0] % outname)
                     cmds.append(cmds_tp[1] % outname)
-                    cmds.append(cmds_tp[2] % 2)
+                    cmds.append(cmds_tp[2] % (2, outname))
                     p = subprocess.Popen(cmds[0].split(' '), stdin=subprocess.PIPE)
                     p.communicate(res.encode('utf8'))
                     cp_value = p.wait()

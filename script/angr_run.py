@@ -7,6 +7,7 @@ import sys
 import time
 import argparse
 import subprocess
+import csv
 
 from termcolor import colored
 
@@ -21,18 +22,17 @@ def run_symexe(path, argv_size=2, show_bytes=True, show_model=False):
         return None
 
     state = p.factory.entry_state(args=[p.filename, sym_argv])
-    pg = p.factory.path_group(state)
+    pg = p.factory.simgr(state)
 
-    while len(pg.active) > 0:
-        if len(pg.errored) > 0:
-            break
-        pg.step()
+    # while len(pg.active) > 0:
+    #     pg.step()
+    pg.run()
 
     print colored('[*] Paths found: ' + str(len(pg.deadended)), 'white')
 
     results = []
     for dd in pg.deadended:
-        res = dd.state.se.any_str(sym_argv)
+        res = dd.state.solver.eval(sym_argv, cast_to=str)
         results.append(res)
         if show_bytes:
             print colored('[+] New Input: ' + res + ' |', 'green'),
@@ -89,12 +89,17 @@ if __name__ == '__main__':
         results, errored = run_symexe(bin_path, args.length, show_model=args.constraints)
     print colored('[*] Analysis completed\n', 'green')
 
+    tohex = lambda x: ''.join(['\\x%02x' % ord(c) for c in x])
+    with open('angr_outputs.csv', 'ab') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([args.file_path, ] + [tohex(_) for _ in results])
+
     tests = []
     if results is not None and args.run_program:
         bin_dir, filename = os.path.split(args.file_path)
         for i, res in enumerate(results):
             print colored('[*] Result ' + str(i + 1) + ':', 'yellow')
-            res = res.replace('\x00', '')
+            res = res.split('\x00')[0]
             print 'Calling: ' + ' '.join([os.path.join(bin_dir, filename), res])
             pipe = subprocess.Popen([os.path.join(bin_dir, filename), res])
             single_run = pipe.wait()
@@ -117,11 +122,13 @@ if __name__ == '__main__':
                 color = 'yellow'
             else:
                 color = 'red'
-        if errored:
+        
+        if 1 in tests:
+            exit(1)
+        elif errored or 139 in tests:
             exit(-1)
+        elif 0 in tests:
+            exit(0)
         else:
-            if 1 in tests:
-                exit(1)
-            else:
-                exit(0)
+            exit(-1)
 
