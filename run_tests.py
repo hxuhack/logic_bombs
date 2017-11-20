@@ -57,8 +57,8 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
     for src_dir in src_dirs:
         print('===========')
         print('In dir ' + src_dir)
-        for root, dirs, files in os.walk(src_dir):
-            for file in files:
+        for root, dirs, files in sorted(os.walk(src_dir)):
+            for file in sorted(files):
                 cmds = []
                 fp = os.path.join(root, file)
                 print('-----------------------------')
@@ -126,7 +126,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
 
                     cmds.append(cmds_tp[0] % outname)
                     cmds.append(cmds_tp[1] % outname)
-                    cmds.append(cmds_tp[2] % 2)
+                    cmds.append(cmds_tp[2] % (2, outname))
                     p = subprocess.Popen(cmds[0].split(' '), stdin=subprocess.PIPE)
                     p.communicate(res.encode('utf8'))
                     cp_value = p.wait()
@@ -184,7 +184,7 @@ if __name__ == '__main__':
     from config.test_settings import src_dirs, switches, FUNC_NAME
     from collections import OrderedDict
 
-    res = ATKrun(switches['triton'], src_dirs, func_name=FUNC_NAME)
+    res = ATKrun(switches['angr'], src_dirs, func_name=FUNC_NAME)
 
     results = {}
     for key, item in res.items():

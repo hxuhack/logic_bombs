@@ -6,6 +6,7 @@ import sys
 import time
 import signal
 import psutil
+import csv
 
 from threading import Timer
 
@@ -67,8 +68,13 @@ for testcase in pt.finditer(out):
     tmp = case_pt.findall(out)
     tmp = ''.join(list(map(chr, map(int, tmp))))
     print("New test case:", repr(list(tmp)))
-    tmp = tmp.replace('\x00', '')
+    tmp = tmp.split('\x00')[0]
     reses.append(tmp)
+
+tohex = lambda x: ''.join(['\\x%02x' % ord(c) for c in x])
+with open('triton_outputs.csv', 'ab') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow([prog, ] + [tohex(_) for _ in reses])
 
 print("%d test case(s) generated" % len(reses))
 
@@ -109,5 +115,7 @@ if 1 in tests:
     exit(1)
 elif 139 in tests:
     exit(-1)
-else:
+elif 0 in tests:
     exit(0)
+else:
+    exit(-1)
