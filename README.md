@@ -48,7 +48,7 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		 		| 2thread_pp_l2.c | two-thread program with random result (high chance argv[1][0]: '9') |
 | 		 		| mthread_pp_l2.c | multi-thread program with random result (high chance argv[1][0]: '9') |
 | Floating-point Number  	| float1_fp_l1.c | expected argv[1][0]: '7' |
-| 	       		  	| float2_fp_l1.c | expected argv[1][o]: '7' |
+| 	       		  	| float2_fp_l1.c | expected argv[1][0]: '7' |
 | 	       		  	| float3_fp_l2.c | expected argv[1]: "0.1"  |
 | 	       		  	| float4_fp_l2.c | expected argv[1]: "-0.1"  |
 | 	       		  	| float5_fp_l2.c | expected argv[1]: "0.41421"  |
