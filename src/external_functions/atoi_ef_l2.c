@@ -9,7 +9,7 @@ TOY:
 // {"s":{"length": 3}}
 int logic_bomb(char* symvar) {
     int i = atoi(symvar);
-    if(i==199){
+    if(i==7){
         return BOMB_ENDING;
     }else{
         return NORMAL_ENDING;

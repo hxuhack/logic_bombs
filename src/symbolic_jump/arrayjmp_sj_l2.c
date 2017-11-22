@@ -5,9 +5,11 @@
 
 #include "a_tester.h"
 
-int logic_bomb(int symvar) {
-    int array[] = {0,7,13,14,15,16,21,22,23,24,31,37};
-    long long addr = &&flag_0 + array[symvar%12];
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    int array[] = {7,13,14,15,16,21,22,37,23,24};
+    long long addr = &&flag_0 + array[symvar%10];
     jmp(addr);
   flag_0:
     if (symvar > 0){

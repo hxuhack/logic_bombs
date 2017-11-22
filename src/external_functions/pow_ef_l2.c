@@ -6,8 +6,10 @@ TOY:
 #include "utils.h"
 #include "a_tester.h"
 
-int logic_bomb(int i) {
-    if(pow(i, 2) == 49){
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    if(pow(symvar, 2) == 49){
         return BOMB_ENDING;
     }else{
         return NORMAL_ENDING;

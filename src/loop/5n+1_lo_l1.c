@@ -11,8 +11,11 @@ long f(long x){
         return 3*x + 1;
 }
 
-int logic_bomb(int i) {
-    long j = f(i);
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    symvar = symvar + 94;
+    long j = f(symvar);
     int loopcount = 1;
     while(j != 1){
 	j = f(j);

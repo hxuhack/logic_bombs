@@ -4,7 +4,7 @@
 using namespace std;
 
 double toy(int num) {
-   if( num == 0 ) {
+   if( num == 7 ) {
       throw "zero condition!";
    }
    return (num++);
@@ -15,12 +15,13 @@ double toy(int num) {
 #include "a_tester.h"
 
 
-int logic_bomb(int i) {
-   try {
-      toy(i);
-      return NORMAL_ENDING;
-   }catch (const char* msg) {
-      cerr << msg << endl;
-      return BOMB_ENDING;
-   }
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    try {
+       toy(symvar);
+       return NORMAL_ENDING;
+    }catch (const char* msg) {
+       return BOMB_ENDING;
+    }
 }

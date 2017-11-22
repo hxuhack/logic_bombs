@@ -5,12 +5,13 @@
 
 #include "a_tester.h"
 
-int logic_bomb(int symvar) {
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    if (symvar%6 != 1 || symvar < 10|| symvar > 40 || symvar == 19)
+	symvar = 13;
     long long addr = &&flag_0 + symvar;
-    if(symvar > 30 && symvar < 40){
-        if (symvar%6 == 1)
-            jmp(addr);
-    }
+    jmp(addr);
   flag_0:
     if (symvar > 0){
         symvar++;

@@ -12,6 +12,7 @@ int logic_bomb(char* s) {
         close(fd[0]);
         write(fd[1], s, sizeof(s));
         wait(NULL);
+	exit(0);
     }
     else {
         char content[8];

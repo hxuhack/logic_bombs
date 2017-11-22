@@ -5,30 +5,35 @@
 
 void* Inc(void* i){
     int count = 0;
-    while (*((int *) i) > -500 && count++ < 1000){
-	++ *((int*) i);
+    while (*((int *) i) > -1000 && count++ < 1000){
+	++ *((int *) i);
+        //printf("%d\n", *((int*) i));
     }
 }
 
 void* Dec(void* i){
     int count = 0;
-    while (*((int *) i) < 500 && count++ < 1000){
-	-- *((int*) i);
+    while (*((int *) i) <  1000 && count++ < 1000){
+	-- *((int *) i);
+        //printf("%d\n", *((int *) i));
     }
 }
 
 int ThreadProp(int in){
     pthread_t tid[2];
-    int rc1 = pthread_create(&tid[0], NULL, Inc, (void *) &in); 
-    int rc2 = pthread_create(&tid[1], NULL, Dec, (void *) &in); 
-    rc1 = pthread_join(tid[0], NULL); 
-    rc2 = pthread_join(tid[1], NULL); 
+    pthread_create(&tid[0], NULL, Inc, (void *) &in); 
+    pthread_create(&tid[1], NULL, Dec, (void *) &in); 
+    pthread_join(tid[0], NULL); 
+    pthread_join(tid[1], NULL); 
     return in;
 }
 
-int logic_bomb(int symvar) {
-    int i=ThreadProp(symvar) % 10;
-    if(i == 7)
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    int i=ThreadProp(symvar-909);
+    //printf("%d\n",i);
+    if(i == -1900)
         return  BOMB_ENDING;
     return  NORMAL_ENDING;
 }

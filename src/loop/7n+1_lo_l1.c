@@ -13,14 +13,17 @@ long f(long x){
         return 7*x + 1;
 }
 
-int logic_bomb(int i) {
-    long j = f(i);
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    symvar = symvar + 1104;
+    long j = f(symvar);
     int loopcount = 1;
     while(j != 1){
 	j = f(j);
         loopcount ++;
     }
-    if(loopcount == 25)
+    if(loopcount == 50)
         return BOMB_ENDING;
     else
         return NORMAL_ENDING;

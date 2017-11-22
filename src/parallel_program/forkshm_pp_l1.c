@@ -21,6 +21,7 @@ int logic_bomb(char* symvar) {
 	p_addr = shmat(shmid,0,0);
         memset(p_addr,'/0',1024);
         strncpy(p_addr, symvar, 1024);
+	exit(0);
     }
     if (pid > 0){
 	sleep(1);

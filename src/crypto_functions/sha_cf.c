@@ -6,14 +6,16 @@ TOY:
 
 #include "a_tester.h"
 
-int logic_bomb(int i) {
-    int plaintext = i;
+// {"s":{"length": 4}}
+int logic_bomb(char* s) {
+    int symvar = s[0] - 48;
+    int plaintext = symvar;
     unsigned cipher[5];
-    cipher[0] = 0X77de68da;
-    cipher[1] = 0Xecd823ba;
-    cipher[2] = 0Xbbb58edb;
-    cipher[3] = 0X1c8e14d7;
-    cipher[4] = 0X106e83bb;
+    cipher[0] = 0X902ba3cd;
+    cipher[1] = 0Xa1883801;
+    cipher[2] = 0X594b6e1b;
+    cipher[3] = 0X452790cc;
+    cipher[4] = 0X53948fda;
 
     if(SHA1_COMP(plaintext,cipher)==0){
         return BOMB_ENDING;
