@@ -12,7 +12,7 @@ Solution: 30
 
 // {"s":{"length": 4}}
 int logic_bomb(char* s) {
-    int symvar = s[0] - 48;
+    int symvar = s[0];
     float v = sin(symvar*PI/30);
     if(v > 0.5){
         return BOMB_ENDING;

@@ -1,8 +1,11 @@
 import sys
 import os
+import re
+import subprocess
 from termcolor import colored
 from subprocess import Popen, call, PIPE
 import argparse
+import csv
 
 
 os.environ['LD_LIBRARY_PATH'] = '/home/klee/klee_build/klee/lib/:$LD_LIBRARY_PAT'
@@ -20,7 +23,7 @@ rt_value = p.wait()
 if rt_value != 0:
     exit(3)
 
-pattern = re.compile(r'data:([ \w\d]*)\n')
+pattern = re.compile(r"data:(.*)\n")
 tests = []
 running_res = set()
 for file in os.listdir(os.path.join('klee', 'klee-last')):
@@ -28,16 +31,17 @@ for file in os.listdir(os.path.join('klee', 'klee-last')):
         cmd = 'KTEST_FILE=klee/klee-last/%s' % file
         res = os.system(cmd + ' klee/a.out') >> 8
         running_res.add(res)
-        p = subprocess.Popen(str.split("ktest-tool --write-ints klee-last/%s" % file, ' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen(str.split("ktest-tool --write-ints klee/klee-last/%s" % file, ' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
         out = out.decode('utf8')
-        res = pattern.findall(out).strip()
+        print(out)
+        res = pattern.findall(out)[0].strip()
         tests.append(res)
 
-tohex = lambda x: ''.join(['\\x%02x' % ord(c) for c in x])
-with open('klee_outputs.csv', 'a', newline='', encoding='utf-8-sig') as f:
+# tohex = lambda x: ''.join(['\\x%02x' % ord(c) for c in x])
+with open('klee_outputs.csv', 'a', newline='', encoding='utf-8-sig') as csvfile:
     writer = csv.writer(csvfile)
-    writer.writerow([args.program, ] + [tohex(_) for _ in tests])
+    writer.writerow([args.program, ] + [_ for _ in tests])
 
 tests = running_res
 

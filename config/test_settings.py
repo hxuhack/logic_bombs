@@ -2,7 +2,8 @@
 FUNC_NAME = 'logic_bomb'
 
 src_dirs = [
-    'src/',
+    # 'src/',
+    'src/external_functions',
     # 'src_cpp/',
 ]
 
@@ -13,7 +14,7 @@ cmds_tp_angr_cpp = ["clang++ -Iinclude -Lbuild -o angr/%s.out -xc++ - -lutils -l
             "python script/angr_run.py -r -l%d angr/%s.out"]
 
 cmds_tp_klee = [
-    "clang -Iinclude -Lbuild -emit-llvm -o klee/%s.bc -c -g klee/a.c -lpthread -lutils -lcrypto -lm",
+    "clang -Iinclude -Lbuild -Wno-unused-parameter -emit-llvm -o klee/%s.bc -c -g klee/a.c -lpthread -lutils -lcrypto -lm",
     "klee klee/%s.bc",
     "python3 script/klee_run.py -e%d -p%s"
 ]
