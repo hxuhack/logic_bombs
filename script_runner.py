@@ -83,8 +83,15 @@ class ScriptRunner:
                 if i == len(stms) - 1:
                     raise SyntaxError(stm.stm)
                 tmp_iter = self.evaluate(stm.parsed[-1])
+                print(stm.parsed)
                 for tmp in tmp_iter:
-                    self.variables.append({key: tmp[index] for index, key in enumerate(stm.parsed[1])})
+                    try:
+                        self.variables.append({key: tmp[index] for index, key in enumerate(stm.parsed[1])})
+                    except TypeError:
+                        if len(stm.parsed[1]) > 1:
+                            raise RuntimeError("Too many variable to unpack")
+                        else:
+                            self.variables.append({stm.parsed[1][0]: tmp})
                     results.extend(self.run(stms, i + 1, base_indent + 1)[1])
                     self.variables.pop(-1)
                 i = self.__step_out__(stms, in_index + 1, base_indent)
@@ -169,21 +176,3 @@ class ScriptRunner:
                 raise RuntimeError(str(func), str(param_list))
         else:
             raise RuntimeError(str(func), str(param_list))
-
-
-if __name__ == '__main__':
-    tp = tpp.TemplateParser('templates/angr.c')
-    sr = ScriptRunner(dict(vp=[('int', 'a'), ('char*', 'b'), ('char**', 'c'), ('float', 'd')], params=', '.join(['a', 'b', 'c', 'd'])))
-
-    res = sr.run(tp.parse()[0])
-    print('\n==================================\n')
-    res = '\n'.join(res[1])
-    print(tp.replace([res, ]))
-    # for stm, indent in tp.parse()[0]:
-    #     stm = stm.parsed
-    #     print(stm)
-    #     print(sr.__parser__(stm[0], stm[-1]))
-
-    # tpv = tpp.TPVariable(256, 'test', [None, ['len', [None, 'c']]])
-    # s = ScriptRunner({'c': [1,2,34]})
-    # print(s.evaluate(tpv))
