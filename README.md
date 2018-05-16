@@ -52,7 +52,8 @@ Below we list these programs and the conditions to trigger each bomb.
 | 	       		  	| float3_fp_l2.c | expected argv[1]: "0.1"  |
 | 	       		  	| float4_fp_l2.c | expected argv[1]: "-0.1"  |
 | 	       		  	| float5_fp_l2.c | expected argv[1]: "0.41421"  |
-| Symbolic Jump 		| jmp_sj_l1.c | jump to an address related to stdin (expected argv[1][0]: 'U')|
+| Symbolic Jump 		| pointers_sj_l1.c | call a function related to stdin (expected argv[1][0]: '5')|
+| 		 		| jmp_sj_l1.c | jump to an address related to stdin (expected argv[1][0]: 'U')|
 | 		 		| arrayjmp_sj_l2.c | a more complex case with an array (expected argv[1][0]: '7')|
 | 		 		| vectorjmp_sj_l2.c | a more complex case with an vector (expected argv[1][0]: '7')|
 | Data Overflow 		| plus_do.c | a + 2147483640 < 0 && a > 0 (expected argv[1][0]: '8')  |
