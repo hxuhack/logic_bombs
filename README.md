@@ -52,13 +52,14 @@ Below we list these programs and the conditions to trigger each bomb.
 | 	       		  	| float3_fp_l2.c | expected argv[1]: "0.1"  |
 | 	       		  	| float4_fp_l2.c | expected argv[1]: "-0.1"  |
 | 	       		  	| float5_fp_l2.c | expected argv[1]: "0.41421"  |
-| Symbolic Jump 		| pointers_sj_l1.c | call a function related to stdin (expected argv[1][0]: '5')|
+| Symbolic Jump 		| funcpointers_sj_l1.c | call a function related to stdin (expected argv[1][0]: '5')|
 | 		 		| jmp_sj_l1.c | jump to an address related to stdin (expected argv[1][0]: 'U')|
 | 		 		| arrayjmp_sj_l2.c | a more complex case with an array (expected argv[1][0]: '7')|
 | 		 		| vectorjmp_sj_l2.c | a more complex case with an vector (expected argv[1][0]: '7')|
 | Data Overflow 		| plus_do.c | a + 2147483640 < 0 && a > 0 (expected argv[1][0]: '8')  |
 | 			  	| multiply_do.c | 254748364 * a < 0 && a > 0 (expected argv[1][0]: '9')|
-| Buffer Overflow 		| stack_bo_l1.c | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`|
+| Buffer Overflow 		| stacknocrash_bo_l1.c | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`|
+| 		 		| stack_bo_l1.c | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`|
 | 		 		| stack_bo_l2.c | expected stdin: TO FIGURE OUT |
 | 		 		| heap_bo_l1.c | expected stdin: TO FIGURE OUT|
 | External Function Call  	| printint_ef_l1.c | expected argv[1][0]: '7' |
