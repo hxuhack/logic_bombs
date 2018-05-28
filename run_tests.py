@@ -191,10 +191,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     try:
-        res = ATKrun(switches[parser.engine], src_dirs, func_name=FUNC_NAME, maxtime=parser.maxtime)
+        res = ATKrun(switches[args.engine], src_dirs, func_name=FUNC_NAME, maxtime=args.maxtime)
     except KeyError:
         print('Invalid symbolic engine!')
-        return
+        exit(1)
 
     results = {}
     for key, item in res.items():
@@ -212,7 +212,7 @@ if __name__ == '__main__':
 
     import csv
 
-    with open('results-{}-{}.csv'.format(parser.engine, parser.maxtime), 'w', newline='', encoding='utf-8-sig') as csvfile:
+    with open('results-{}-{}.csv'.format(args.engine, args.maxtime), 'w', newline='', encoding='utf-8-sig') as csvfile:
         writer = csv.writer(csvfile)
         for parent in results:
             for name in results[parent]:
