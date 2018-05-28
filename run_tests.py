@@ -17,7 +17,7 @@ def kill_all(process):
     parent.kill()
 
 
-def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10:int, maxtime=60:int):
+def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10, maxtime=60):
     def params_list_parser(params):
         if len(params.strip()) == 0:
             return []
