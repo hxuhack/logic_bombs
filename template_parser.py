@@ -215,10 +215,13 @@ class TemplateParser:
     def __variable_replacer__(self, stm: str, vars_table: dict=None):
         if not vars_table:
             vars_table = {}
+
+        stm = stm.replace('{', '{{')
+        stm = stm.replace('}', '}}')
         for index, var in enumerate(self.func_call_pattern.finditer(stm)):
             var_name = 'VAR%d' % index
             var = var.group()
-            stm = stm.replace(var, '{%s}' % var_name)
+            stm = stm.replace(var, var_name)
             tpk = self.__token_parser__(var)
             vars_table[var_name] = TPVariable(self.UNV, var_name, tpk)
         return stm, vars_table
@@ -400,9 +403,3 @@ class TPToken:
 
     def __str__(self):
         return str(self.call_stack)
-
-
-if __name__ == '__main__':
-    tp = TemplateParser('templates/angr.c')
-    for stm, indent in tp.parse()[0]:
-        print(stm.s_type, stm.stm, stm.parsed, indent)

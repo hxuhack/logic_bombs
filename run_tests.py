@@ -17,7 +17,7 @@ def kill_all(process):
     parent.kill()
 
 
-def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
+def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10, maxtime=60):
     def params_list_parser(params):
         if len(params.strip()) == 0:
             return []
@@ -49,7 +49,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
     TLE = 4
     RUNTIME_ERROR = 255
 
-    MAX_TIME = 60
+    MAX_TIME = maxtime
     test_results = {}
 
     func_pattern = re.compile(r'int[ \t\n]+%s\(([^)]*)\);*' % func_name)
@@ -183,8 +183,18 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10):
 if __name__ == '__main__':
     from config.test_settings import src_dirs, switches, FUNC_NAME
     from collections import OrderedDict
+    import argparse
 
-    res = ATKrun(switches['klee'], src_dirs, func_name=FUNC_NAME)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-e", "--engine", required=True, type=str, help="Symbolic execution engine")
+    parser.add_argument("-t", "--maxtime", required=True, type=int, help="Max running time for a program")
+    args = parser.parse_args()
+
+    try:
+        res = ATKrun(switches[args.engine], src_dirs, func_name=FUNC_NAME, maxtime=args.maxtime)
+    except KeyError:
+        print('Invalid symbolic engine!')
+        exit(1)
 
     results = {}
     for key, item in res.items():
@@ -202,7 +212,7 @@ if __name__ == '__main__':
 
     import csv
 
-    with open('results.csv', 'w', newline='', encoding='utf-8-sig') as csvfile:
+    with open('results-{}-{}.csv'.format(args.engine, args.maxtime), 'w', newline='', encoding='utf-8-sig') as csvfile:
         writer = csv.writer(csvfile)
         for parent in results:
             for name in results[parent]:
