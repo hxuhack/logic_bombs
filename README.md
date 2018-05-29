@@ -33,6 +33,9 @@ Then, compile the dependencies:
 `python3 compile.py -l`
 To change our default compiler, please visit `config/compile.json` to modify the `CC` to your preferred compiler.
 To change the test cases' root folder, please visit `config/test_settings.py` to change the `src_dirs`.
+
+**Pay attention!** If you are using Triton, please change the Triton installation path at the end of `config/test_settings.py`
+
 To start the test:
 `python3 run_tests.py -e YourEngineName -t MaxRunningTime`
 The available engine names are:
