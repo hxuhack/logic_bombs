@@ -10,7 +10,7 @@ The dataset is originally realeased with our paper:
 To find out more details, please visit our [wiki](https://github.com/hxuhack/logic_bombs/wiki).
 
 ## Dependencies
-- clang [How to install clang](https://clang.llvm.org/get_started.html)
+- Clang [How to install Clang](https://clang.llvm.org/get_started.html)
 - Python3 [How to install python](https://www.python.org/)
     - termcolor
     - psutil
