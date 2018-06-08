@@ -138,11 +138,6 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10, maxt
                         p = subprocess.Popen(cmds[1].split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                         errored = False
                         out, err = p.communicate(timeout=MAX_TIME)
-                        if 'KLEE: ERROR:' in err.decode('utf8', 'ignore'):
-                            test_results[fp] = 255
-                            errored = True
-                            if errored:
-                                continue
                         rt_vale = p.wait(timeout=MAX_TIME)
                     except subprocess.TimeoutExpired:
                         test_results[fp] = TLE
