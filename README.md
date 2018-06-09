@@ -9,6 +9,46 @@ The dataset is originally realeased with our paper:
 
 To find out more details, please visit our [wiki](https://github.com/hxuhack/logic_bombs/wiki).
 
+## Dependencies
+- Clang [How to install Clang](https://clang.llvm.org/get_started.html)
+- Python3 [How to install python](https://www.python.org/)
+    - termcolor
+    - psutil
+- Python
+    - termcolor
+    - psutil
+ [How to install python packages](https://packaging.python.org/tutorials/installing-packages/)
+ 
+As angr and triton scripts were written by Python 2, you should install `termcolor` and `psutil` for both Python 2 and Python 3.
+ 
+Besides these dependencies, you should also build the environment for your target symbolic engines.
+- [How to install angr](https://docs.angr.io/INSTALL.html)
+- [How to install KLEE](http://klee.github.io/getting-started/)
+- [How to install Triton](https://triton.quarkslab.com/documentation/doxygen/#install_sec)
+
+
+## How to run it?
+First, clone our repo by using  `git clone https://github.com/hxuhack/logic_bombs.git`.
+
+Then, compile the dependencies: `python3 compile.py -l`
+
+To change our default compiler, please visit `config/compile.json` to modify the `CC` to your preferred compiler.
+
+To change the test cases' root folder, please visit `config/test_settings.py` to change the `src_dirs`.
+
+**Pay attention!** If you are using Triton, please change the Triton installation path at the end of `config/test_settings.py`
+
+To start the test:
+`python3 run_tests.py -e YourEngineName -t MaxRunningTime`
+The available engine names are:
+ - angr
+ - angr_cpp
+ - triton
+ - triton_cpp
+ - klee
+
+And the typical max running time setting is 60s or 300s.
+
 ## Details of the bombs
 Below we list these programs and the conditions to trigger each bomb. 
 
@@ -48,7 +88,7 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		 		| 2thread_pp_l2.c | two-thread program with random result (high chance argv[1][0]: '9') |
 | 		 		| mthread_pp_l2.c | multi-thread program with random result (high chance argv[1][0]: '9') |
 | Floating-point Number  	| float1_fp_l1.c | expected argv[1][0]: '7' |
-| 	       		  	| float2_fp_l1.c | expected argv[1][o]: '7' |
+| 	       		  	| float2_fp_l1.c | expected argv[1][0]: '7' |
 | 	       		  	| float3_fp_l2.c | expected argv[1]: "0.1"  |
 | 	       		  	| float4_fp_l2.c | expected argv[1]: "-0.1"  |
 | 	       		  	| float5_fp_l2.c | expected argv[1]: "0.41421"  |

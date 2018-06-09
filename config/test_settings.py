@@ -2,9 +2,7 @@
 FUNC_NAME = 'logic_bomb'
 
 src_dirs = [
-    # 'src/',
-    'src/external_functions',
-    # 'src_cpp/',
+    'src/',
 ]
 
 cmds_tp_angr = ["clang -Iinclude -Lbuild -o angr/%s.out -xc - -lutils -lpthread -lcrypto -lm",
