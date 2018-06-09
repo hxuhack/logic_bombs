@@ -26,7 +26,7 @@ if rt_value != 0:
 pattern = re.compile(r"data:(.*)\n")
 tests = []
 running_res = set()
-for file in os.listdir(os.path.join('klee', 'klee-last')):
+for file in sorted(os.listdir(os.path.join('klee', 'klee-last'))):
     if file.endswith('.ktest'):
         cmd = 'KTEST_FILE=klee/klee-last/%s' % file
         res = os.system(cmd + ' klee/a.out') >> 8
@@ -37,11 +37,6 @@ for file in os.listdir(os.path.join('klee', 'klee-last')):
         print(out)
         res = pattern.findall(out)[0].strip()
         tests.append(res)
-
-# tohex = lambda x: ''.join(['\\x%02x' % ord(c) for c in x])
-with open('klee_outputs.csv', 'a', newline='', encoding='utf-8-sig') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow([args.program, ] + [_ for _ in tests])
 
 tests = running_res
 

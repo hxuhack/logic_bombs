@@ -17,7 +17,7 @@ def kill_all(process):
     parent.kill()
 
 
-def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10, maxtime=60):
+def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10, maxtime=60, source=None, skip=False):
     def params_list_parser(params):
         if len(params.strip()) == 0:
             return []
@@ -40,8 +40,8 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10, maxt
     if not os.path.exists(prefix):
         os.mkdir(prefix)
 
-    if not os.path.exists('tmp'):
-        os.mkdir('tmp')
+    if source and not os.path.exists(source):
+        os.mkdir(source)
 
     ERROR = 0
     CORRECT = 1
@@ -93,8 +93,11 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10, maxt
                 print(res)
                 res = '\n'.join([content, res])
                 outname = file if len(file.split('.')) == 1 else file.split('.')[0]
-                with open('tmp/' + file, 'w') as f:
+                if source:
+                    with open(os.path.join(source, file), 'w') as f:
                         f.write(res)
+                    if skip:
+                        continue
                 if prefix == 'angr':
                     cmds.append(cmds_tp[0] % outname)
                     cmds.append(cmds_tp[1] % (default_stdin_len, outname))
@@ -182,11 +185,18 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-e", "--engine", required=True, type=str, help="Symbolic execution engine")
-    parser.add_argument("-t", "--maxtime", required=True, type=int, help="Max running time for a program")
+    parser.add_argument("-t", "--maxtime", required=False, default=60, type=int, help="Max running time for a program")
+    parser.add_argument("-s", "--source", required=False, type=str, help="Output source code into a directory")
+    parser.add_argument("-n", "--no_test", action="store_true", help="Don't do the test")
     args = parser.parse_args()
+    
+    if args.source:
+        print("Saving output results in ", args.source)
 
     try:
-        res = ATKrun(switches[args.engine], src_dirs, func_name=FUNC_NAME, maxtime=args.maxtime)
+        res = ATKrun(switches[args.engine], src_dirs, func_name=FUNC_NAME, maxtime=args.maxtime, source=args.source, skip=args.no_test)
+        if args.source and args.no_test:
+            exit(0)
     except KeyError:
         print('Invalid symbolic engine!')
         exit(1)
