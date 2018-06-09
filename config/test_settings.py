@@ -13,7 +13,7 @@ cmds_tp_angr_cpp = ["clang++ -Iinclude -Lbuild -o angr/%s.out -xc++ - -lutils -l
 
 cmds_tp_klee = [
     "clang -Iinclude -Lbuild -Wno-unused-parameter -emit-llvm -o klee/%s.bc -c -g klee/a.c -lpthread -lutils -lcrypto -lm",
-    "klee klee/%s.bc",
+    "klee --libc=uclibc --posix-runtime klee/%s.bc",
     "python3 script/klee_run.py -e%d -p%s"
 ]
 
