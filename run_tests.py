@@ -17,7 +17,7 @@ def kill_all(process):
     parent.kill()
 
 
-def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10, maxtime=60, source=None, skip=False):
+def ATKrun(target, func_name='logic_bomb', default_stdin_len=10, maxtime=60, source=None, skip=False):
     def params_list_parser(params):
         if len(params.strip()) == 0:
             return []
@@ -36,7 +36,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10, maxt
                 res.append((var_type, var_name))
             return res
 
-    cmds_tp, tp_path, prefix = target
+    cmds_tp, tp_path, prefix, src_dirs = target
     if not os.path.exists(prefix):
         os.mkdir(prefix)
 
@@ -179,7 +179,7 @@ def ATKrun(target , src_dirs, func_name='logic_bomb', default_stdin_len=10, maxt
 
 
 if __name__ == '__main__':
-    from config.test_settings import src_dirs, switches, FUNC_NAME
+    from config.test_settings import switches, FUNC_NAME
     from collections import OrderedDict
     import argparse
 
@@ -194,7 +194,7 @@ if __name__ == '__main__':
         print("Saving output results in ", args.source)
 
     try:
-        res = ATKrun(switches[args.engine], src_dirs, func_name=FUNC_NAME, maxtime=args.maxtime, source=args.source, skip=args.no_test)
+        res = ATKrun(switches[args.engine], func_name=FUNC_NAME, maxtime=args.maxtime, source=args.source, skip=args.no_test)
         if args.source and args.no_test:
             exit(0)
     except KeyError:

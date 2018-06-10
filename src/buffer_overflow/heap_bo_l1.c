@@ -7,8 +7,8 @@ int n = 5;
 // {"symvar":{"length": 256}}
 int logic_bomb(char* symvar) {
     char *p, *q;
-    p = malloc(16);
-    q = malloc(16);
+    p = (char*)malloc(16);
+    q = (char*)malloc(16);
     strcpy(p, symvar);
     free(q);
     if (n != 5){
