@@ -40,7 +40,7 @@ for file in sorted(os.listdir(os.path.join('klee', 'klee-last'))):
 
 tests = running_res
 
-if 1 in tests:
+if 3 in tests:
     exit(1)
 elif 139 in tests:
     exit(-1)

@@ -111,7 +111,7 @@ elif args.expected == 1:
 else:
     exit(-1)
 
-if 1 in tests:
+if 3 in tests:
     exit(1)
 elif 139 in tests:
     exit(-1)
