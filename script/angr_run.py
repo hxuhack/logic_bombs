@@ -123,7 +123,7 @@ if __name__ == '__main__':
             else:
                 color = 'red'
         
-        if 1 in tests:
+        if 3 in tests:
             exit(1)
         elif errored or 139 in tests:
             exit(-1)

@@ -17,7 +17,7 @@ def kill_all(process):
     parent.kill()
 
 
-def ATKrun(target, func_name='logic_bomb', default_stdin_len=10, maxtime=60, source=None, skip=False):
+def ATKrun(target, func_name='logic_bomb', default_stdin_len=10, maxtime=60, source=None, skip=False, folder=None):
     def params_list_parser(params):
         if len(params.strip()) == 0:
             return []
@@ -37,6 +37,8 @@ def ATKrun(target, func_name='logic_bomb', default_stdin_len=10, maxtime=60, sou
             return res
 
     cmds_tp, tp_path, prefix, src_dirs = target
+    if folder:
+        src_dirs = (folder, )
     if not os.path.exists(prefix):
         os.mkdir(prefix)
 
@@ -188,13 +190,14 @@ if __name__ == '__main__':
     parser.add_argument("-t", "--maxtime", required=False, default=60, type=int, help="Max running time for a program")
     parser.add_argument("-s", "--source", required=False, type=str, help="Output source code into a directory")
     parser.add_argument("-n", "--no_test", action="store_true", help="Don't do the test")
+    parser.add_argument("-f", "--folder", type=str, help="Overide test dir in config")
     args = parser.parse_args()
     
     if args.source:
         print("Saving output results in ", args.source)
 
     try:
-        res = ATKrun(switches[args.engine], func_name=FUNC_NAME, maxtime=args.maxtime, source=args.source, skip=args.no_test)
+        res = ATKrun(switches[args.engine], func_name=FUNC_NAME, maxtime=args.maxtime, source=args.source, skip=args.no_test, folder=args.folder)
         if args.source and args.no_test:
             exit(0)
     except KeyError:
