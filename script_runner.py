@@ -83,7 +83,6 @@ class ScriptRunner:
                 if i == len(stms) - 1:
                     raise SyntaxError(stm.stm)
                 tmp_iter = self.evaluate(stm.parsed[-1])
-                print(stm.parsed)
                 for tmp in tmp_iter:
                     try:
                         self.variables.append({key: tmp[index] for index, key in enumerate(stm.parsed[1])})

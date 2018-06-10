@@ -1,4 +1,4 @@
-int main() {
+int main(int argc, char** argv) {
     {%
         for {<type>}, {<var>}, {<size>} in {<vp>}:
             if {<type>} == {<"char*">}:
