@@ -80,6 +80,7 @@ Below we list these programs and the conditions to trigger each bomb.
 | 		  		| vector_sm_l1.cpp | with std::vector (expected argv[1][0]: '7')|
 | 		  		| list_sm_l1.cpp | with std::list (expected argv[1][0]: '7')|
 | 		  		| stackarray_sm_l2.c | two arrays (expected argv[1][0]: '2') |
+| 		  		| stackarray_sm_ln.c | several levels of arrays (expected argv[1][0]: '6') |
 | 		  		| stackoutofbound_sm_l2.c | if array index equal array size (expected argv[1][0]: '7')|
 | 		  		| heapoutofbound_sm_l2.c | if array index equals array size (expected argv[1][0]: ':')|
 | Parallel Program 		| 2thread_pp_l1.c | two-thread program (expected argv[1][0]: '7')  |
