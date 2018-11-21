@@ -1,4 +1,14 @@
 # A Dataset of Logic Bombs
+## Citation
+```
+@article{xu2018benchmarking,
+  title={Benchmarking the Capability of Symbolic Execution Tools with Logic Bombs},
+  author={Xu, Hui and Zhao, Zirui and Zhou, Yangfan and Lyu, Michael R},
+  journal={IEEE Transactions on Dependable and Secure Computing},
+  year={2018},
+  publisher={IEEE}
+}
+```
 ## Project Overview
 This project includes a set of small programs with logic bombs.  The logic bomb can be triggered when certain conditions are met. 
 We release the dataset for benchmarking purposes.  Any dynamic testing tools (especially symbolic execution) can employ the dataset to benchmark their capabilities. 
