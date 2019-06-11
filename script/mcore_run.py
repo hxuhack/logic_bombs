@@ -7,35 +7,41 @@ import csv
 
 from manticore.native import Manticore
 from manticore.core.smtlib.solver import Z3Solver
+from manticore.utils import config
 from termcolor import colored
 
 def run_symexe(path, argv_size=2, show_bytes=True, show_model=False):
 
+    consts = config.get_group("core")
+    consts.procs = 1
+    #consts.mprocessing = "single"
+    
     try:
         m = Manticore(path, argv=['+'*argv_size])
     except:
         print(colored('Invalid path: \"' + path + '\"', 'red'))
         return None
 
-    m.run()
-    results = []
+    with m.kill_timeout(60):
+        m.run()
+        results = []
 
-    for state in m.all_states:
-        for symbol in state.input_symbols:
-            if (symbol.name == 'ARGV1'):
-                res = Z3Solver().get_value(state.constraints, symbol)
-                results.append(res)
+        for state in m.all_states:
+            for symbol in state.input_symbols:
+                if (symbol.name == 'ARGV1'):
+                    res = Z3Solver().get_value(state.constraints, symbol)
+                    results.append(res)
 
-        if show_bytes:
-            print(colored(b'[+] New Input: ' + res + b' |', 'green'))
-            # print(colored('ASCII:', 'cyan'), end="")
-            # for char in res:
-            #     print(colored(ord(char), 'cyan'), end=" ")
-            # print('')
-            if show_model:
-                print(colored(str(dd.solver.constraints), 'yellow'))
-        else:
-            print(colored('[+] New Input: ' + res, 'green'))
+            if show_bytes:
+                print(colored(b'[+] New Input: ' + res + b' |', 'green'))
+                # print(colored('ASCII:', 'cyan'), end="")
+                # for char in res:
+                #     print(colored(ord(char), 'cyan'), end=" ")
+                # print('')
+                if show_model:
+                    print(colored(str(state.constraints), 'yellow'))
+            else:
+                print(colored('[+] New Input: ' + res, 'green'))
 
     errored = False
     return results, errored

@@ -138,9 +138,9 @@ def ATKrun(target, func_name='logic_bomb', default_stdin_len=10, maxtime=60, sou
                     p = subprocess.Popen(cmds[1].split(' '))
                     print(p.pid)
                     try:
-                        rt_vale = p.wait(timeout=MAX_TIME)
-                        test_results[fp] = rt_vale
-                    except subprocess.TimeoutExpired:
+                      rt_vale = p.wait()
+                      test_results[fp] = rt_vale
+                    except:
                         test_results[fp] = TLE
                         kill_all(p)
 
