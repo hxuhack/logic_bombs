@@ -122,6 +122,28 @@ def ATKrun(target, func_name='logic_bomb', default_stdin_len=10, maxtime=60, sou
                         test_results[fp] = TLE
                         kill_all(p)
 
+                if prefix == 'mcore':
+                    cmds.append(cmds_tp[0] % outname)
+                    cmds.append(cmds_tp[1] % (default_stdin_len, outname))
+
+                    # Compile
+                    p = subprocess.Popen(cmds[0].split(' '), stdin=subprocess.PIPE)
+                    p.communicate(res.encode('utf8'))
+                    cp_value = p.wait()
+                    if cp_value:
+                        test_results[fp] = COMPILE_ERROR
+                        print('========= Compile Error! ==========')
+                        continue
+                    # Run test
+                    p = subprocess.Popen(cmds[1].split(' '))
+                    print(p.pid)
+                    try:
+                        rt_vale = p.wait(timeout=MAX_TIME)
+                        test_results[fp] = rt_vale
+                    except subprocess.TimeoutExpired:
+                        test_results[fp] = TLE
+                        kill_all(p)
+
                 elif prefix == 'klee':
                     if not os.path.exists('klee'):
                         os.mkdir('klee')
