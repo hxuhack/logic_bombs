@@ -124,7 +124,7 @@ def ATKrun(target, func_name='logic_bomb', default_stdin_len=10, maxtime=60, sou
 
                 if prefix == 'mcore':
                     cmds.append(cmds_tp[0] % outname)
-                    cmds.append(cmds_tp[1] % (default_stdin_len, outname))
+                    cmds.append(cmds_tp[1] % (MAX_TIME, default_stdin_len, outname))
 
                     # Compile
                     p = subprocess.Popen(cmds[0].split(' '), stdin=subprocess.PIPE)

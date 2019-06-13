@@ -24,10 +24,10 @@ cmds_tp_triton_cpp = [
 ]
 
 cmds_tp_mcore = ["clang -static -O0 -Iinclude -Lbuild -o mcore/%s.out -xc - -lutils -lpthread -lcrypto -lm",
-            "python3 script/mcore_run.py -r -l%d mcore/%s.out"]
+            "python3 script/mcore_run.py -t%d -r -l%d mcore/%s.out"]
 
 cmds_tp_mcore_cpp = ["clang++ -static -O0 -Iinclude -Lbuild -o mcore/%s.out -xc++ - -lutils -lpthread -lcrypto -lm",
-            "python3 script/mcore_run.py -r -l%d mcore/%s.out"]
+            "python3 script/mcore_run.py -t%d -r -l%d mcore/%s.out"]
 
 angr_tp_path = 'templates/default_no_printf.c'
 triton_tp_path = 'templates/default_no_printf.c'

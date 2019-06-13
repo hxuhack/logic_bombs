@@ -10,7 +10,7 @@ from manticore.core.smtlib.solver import Z3Solver
 from manticore.utils import config
 from termcolor import colored
 
-def run_symexe(path, argv_size=2, show_bytes=True, show_model=False):
+def run_symexe(path, argv_size=2, show_bytes=True, show_model=False, timeout=60):
 
     consts = config.get_group("core")
     consts.procs = 1
@@ -22,7 +22,7 @@ def run_symexe(path, argv_size=2, show_bytes=True, show_model=False):
         print(colored('Invalid path: \"' + path + '\"', 'red'))
         return None
 
-    with m.kill_timeout(60):
+    with m.kill_timeout(timeout):
         m.run()
         results = []
 
@@ -56,6 +56,8 @@ if __name__ == '__main__':
     parser.add_argument("-r", "--run_program", help="Run program after analysis", action="store_true")
     parser.add_argument("-s", "--summary", type=int, help="Display summary information")
     parser.add_argument("-e", "--expected", type=int, help="Expected amount of results")
+    parser.add_argument("-t", "--timeout", type=int, help="Timeout (in seconds)")
+
     parser.add_argument("file_path", type=str, help="Binary path")
     args = parser.parse_args()
 
@@ -76,9 +78,9 @@ if __name__ == '__main__':
 
     #print(colored('[*] Analysing...', 'cyan'))
     if args.length is None:
-        results, errored = run_symexe(bin_path, 10, show_model=args.constraints)
+        results, errored = run_symexe(bin_path, 10, show_model=args.constraints, timeout=args.timeout)
     else:
-        results, errored = run_symexe(bin_path, args.length, show_model=args.constraints)
+        results, errored = run_symexe(bin_path, args.length, show_model=args.constraints, timeout=args.timeout)
     print(colored('[*] Analysis completed\n', 'green'))
 
     # tohex = lambda x: ''.join(['\\x%02x' % ord(c) for c in x])
