@@ -124,7 +124,7 @@ def ATKrun(target, func_name='logic_bomb', default_stdin_len=10, maxtime=60, sou
 
                 if prefix == 'mcore':
                     cmds.append(cmds_tp[0] % outname)
-                    cmds.append(cmds_tp[1] % (MAX_TIME, default_stdin_len, outname))
+                    cmds.append(cmds_tp[1] % (MAX_TIME-30, default_stdin_len, outname))
 
                     # Compile
                     p = subprocess.Popen(cmds[0].split(' '), stdin=subprocess.PIPE)
@@ -138,7 +138,7 @@ def ATKrun(target, func_name='logic_bomb', default_stdin_len=10, maxtime=60, sou
                     p = subprocess.Popen(cmds[1].split(' '))
                     print(p.pid)
                     try:
-                      rt_vale = p.wait()
+                      rt_vale = p.wait(timeout=MAX_TIME)
                       test_results[fp] = rt_vale
                     except:
                         test_results[fp] = TLE

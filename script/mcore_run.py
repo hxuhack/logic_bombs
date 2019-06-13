@@ -13,8 +13,7 @@ from termcolor import colored
 def run_symexe(path, argv_size=2, show_bytes=True, show_model=False, timeout=60):
 
     consts = config.get_group("core")
-    consts.procs = 1
-    #consts.mprocessing = "single"
+    consts.procs = 4
     
     try:
         m = Manticore(path, argv=['+'*argv_size])
