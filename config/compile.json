@@ -1,6 +1,6 @@
 {
     "general": {
-        "CC": "clang"
+        "CC": "gcc"
     },
 
     "crypto_lib": {
@@ -54,7 +54,7 @@
             "build"
         ],
         "cmd": [
-            "{CC} -I{INCLUDE} -Lbuild -o build/{&FILENAME} -xc - -lpthread -lm -lutils -lcrypto #PIPE"
+            "{CC} -I{INCLUDE} -static -O0 -Lbuild -o build/{&FILENAME} -xc - -lpthread -lm -lutils -lcrypto #PIPE"
         ],
         "dependencies": {
             "PATH": "src/",
