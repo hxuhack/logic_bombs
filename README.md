@@ -2,9 +2,12 @@
 ## Citation
 ```
 @article{xu2018benchmarking,
-  title={Benchmarking the Capability of Symbolic Execution Tools with Logic Bombs},
+  title={Benchmarking the capability of symbolic execution tools with logic bombs},
   author={Xu, Hui and Zhao, Zirui and Zhou, Yangfan and Lyu, Michael R},
   journal={IEEE Transactions on Dependable and Secure Computing},
+  volume={17},
+  number={6},
+  pages={1243--1256},
   year={2018},
   publisher={IEEE}
 }
