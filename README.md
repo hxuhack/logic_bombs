@@ -43,12 +43,13 @@ To find out more details, please visit our [wiki](https://github.com/hxuhack/log
  [How to install python packages](https://packaging.python.org/tutorials/installing-packages/)
  
 As angr and triton scripts were written by Python 2, you should install `termcolor` and `psutil` for both Python 2 and Python 3.
+Manticore will only run with Python 3.6 (or greater)
  
 Besides these dependencies, you should also build the environment for your target symbolic engines.
 - [How to install angr](https://docs.angr.io/INSTALL.html)
 - [How to install KLEE](http://klee.github.io/getting-started/)
 - [How to install Triton](https://triton.quarkslab.com/documentation/doxygen/#install_sec)
-
+- [How to install Manticore](https://github.com/trailofbits/manticore#quickstart)
 
 ## How to run it?
 First, clone our repo by using  `git clone https://github.com/hxuhack/logic_bombs.git`.
@@ -69,6 +70,7 @@ The available engine names are:
  - triton
  - triton_cpp
  - klee
+ - manticore
 
 And the typical max running time setting is 60s or 300s.
 

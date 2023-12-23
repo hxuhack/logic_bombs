@@ -23,9 +23,16 @@ cmds_tp_triton_cpp = [
     "python script/triton_caller.py -l%d -m%d -f%s -i%s -p triton/%s.out"
 ]
 
+cmds_tp_mcore = ["clang -static -O0 -Iinclude -Lbuild -o mcore/%s.out -xc - -lutils -lpthread -lcrypto -lm",
+            "python3 script/mcore_run.py -t%d -r -l%d mcore/%s.out"]
+
+cmds_tp_mcore_cpp = ["clang++ -static -O0 -Iinclude -Lbuild -o mcore/%s.out -xc++ - -lutils -lpthread -lcrypto -lm",
+            "python3 script/mcore_run.py -t%d -r -l%d mcore/%s.out"]
+
 angr_tp_path = 'templates/default_no_printf.c'
 triton_tp_path = 'templates/default_no_printf.c'
 klee_tp_path = 'templates/klee.c'
+mcore_tp_path = 'templates/default_no_printf.c'
 
 switches = {
     'angr': [cmds_tp_angr, angr_tp_path, 'angr', ('src/', )],
@@ -33,6 +40,8 @@ switches = {
     'triton': [cmds_tp_triton, triton_tp_path, 'triton', ('src/', )],
     'triton_cpp': [cmds_tp_triton_cpp, triton_tp_path, 'triton', ('src_cpp/', )],
     'klee': [cmds_tp_klee, klee_tp_path, 'klee', ('src/', )],
+    'mcore': [cmds_tp_mcore, mcore_tp_path, 'mcore', ('src/', )],
+    'mcore_cpp': [cmds_tp_mcore_cpp, mcore_tp_path, 'mcore', ('src_cpp/', )],
 }
 
 # ============ triton Setting ==============
